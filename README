@@ -1,0 +1,17 @@
+Cloth Sharing Website
+This is a Django web app for a cloth sharing website.
+Users can create accounts, list their clothes, and borrow clothes from other users.
+
+Installation
+Clone the repository: git clone https://github.com/BS-PMC-2023/BS-PMC-2023-Team18
+Create a virtual environment: python3 -m venv venv
+Activate the virtual environment: source venv/bin/activate
+Install dependencies: pip install -r requirements.txt
+Create a local database: python manage.py migrate
+Create a superuser: python manage.py createsuperuser
+Run the server: python manage.py runserver
+Usage
+Navigate to http://localhost:8000/ in your web browser.
+Sign up for an account or log in with an existing account.
+List clothes that you are willing to share or browse clothes that other users have listed.
+Contributions are welcome! Please submit a pull request with your changes.
