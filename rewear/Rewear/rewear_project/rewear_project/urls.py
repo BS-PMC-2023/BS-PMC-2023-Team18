@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from rewear_app import views
+from django.conf.urls import include
+from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^', views.index, name='index'),
+    url(r'^rewear_app/',include('rewear_app.urls')),
 ]
