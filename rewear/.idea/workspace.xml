@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7061578a-f43e-42e1-b330-a50865c68906" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Rewear/rewear_project/templates/rewear_app/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/rewear_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/rewear_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/templates/rewear_app/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/rewear_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/rewear_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/templates/rewear_app/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/templates/rewear_app/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
