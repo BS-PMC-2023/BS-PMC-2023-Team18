@@ -15,6 +15,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="starter.*" />
+          <option value="first_project.first_project.urls.first_app" />
         </list>
       </option>
     </inspection_tool>
