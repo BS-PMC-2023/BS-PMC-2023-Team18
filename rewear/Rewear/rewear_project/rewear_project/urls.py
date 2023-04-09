@@ -18,8 +18,12 @@ from django.urls import path
 from rewear_app import views
 from django.conf.urls import include
 from django.conf.urls import url
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r'^', views.index, name='index'),
-    url(r'^rewear_app/',include('rewear_app.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^rewear_app/', include('rewear_app.urls')),
+    url(r'^$', views.HomePage, name='HomePage'),
+    url(r'^user_login/', views.user_login, name='user_login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
+    #url(r'special/', views.special, name='special'),
 ]
