@@ -98,6 +98,24 @@
 			</td>
 		</tr>
 	</table>
+
+
+<!-- search bar -->
+	<form method="post" action='/search/'>
+		{% csrf_token %}
+		<input type="text" name="city" placeholder="Search for a Market">
+		<input type="submit" value="Search">
+	</form>
+
+	{% if markets %}
+		{% for market in markets %}
+			<p>{{market.name}}</p>
+			<p>{{market.city}}</p>
+			<p>{{market.state}}</p>
+			<p>{{market.zip}}</p>
+			<a href="/market/{{market.id}}/">{{market.name}}</a>
+		{% endfor %}
+	{% endif %}
 </center>
 
 {% endblock %}

@@ -86,3 +86,39 @@ def profile(response, username):
 
 def areyousure(response):
     return render(response, "main/areyousure.html", {})
+
+
+def search(response):
+    if response.method == 'POST':
+       # markets = market.objects.all()
+        city = response.POST['city']
+        print("This is market number: " + city)
+        resulut = market.objects.get(city=city, status="active")
+        return render(response, "main/home.html",{"search": resulut })
+    else:
+        return render(response, "main/home.html", {"search": "Not Found"})
+
+#  name , city , address , facebook , description , picture , market_manager , date , capacity , status , rating
+def insert_market(response):
+    my_dict = {'inserted': False}
+    if response.method == 'POST':
+        name = response.POST['name']
+        city = response.POST['city']
+        address = response.POST['address']
+        facebook = response.POST['facebook']
+        description = response.POST['description']
+        picture = response.POST['picture']
+        market_manager = response.POST['market_manager']
+        date = response.POST['date']
+        capacity = response.POST['capacity']
+        status = response.POST['status']
+        rating = response.POST['rating']
+        google_location = response.POST['google_location']
+
+        market.objects.create(name=name, city=city, address=address, facebook=facebook, description=description, picture=picture, market_manager=market_manager, date=date, capacity=capacity, status=status, rating=rating, google_location=google_location)
+        my_dict = {'inserted': True}
+    return render(response, "main/insert_market.html", context=my_dict)
+
+# def market_page(response, name):
+#     market = market.objects.get(name=name)
+#     return render(response, "main/market_page.html", {'market': market})
