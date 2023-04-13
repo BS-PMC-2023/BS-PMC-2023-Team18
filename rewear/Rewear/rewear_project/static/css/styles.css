@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
+@import url('https://fonts.googleapis.com/css?family=Arvo:300,400');
+
+@font-face {
+    font-family: "Arvo";
+    src: url("../fonts/Arvo.ttf") format("ttf")
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Raleway;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+}
+
+.nav a {
+    display: inline-block;
+    padding: .5em;
+    color: white;
+    text-decoration: none;
+}
+
+.main-nav {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: lighter;
+    display: inline;
+}
+
+.main-nav li {
+    padding: 0 1%;
+}
+
+.nav a:hover {
+    background-color: rgba(255, 255, 255, .3)
+}
+
+.main-header {
+    background-color: rgba(0, 0, 0, .6);
+    background-image: url("../media/Header Background.jpeg");
+    background-blend-mode: multiply;
+    background-size: cover;
+}
+
+.header-name {
+    text-align: center;
+    margin: 0;
+    font-size: 4em;
+    font-family: "Arvo";
+    font-weight: normal;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, .3)
+}
+
+.header-name-large {
+    font-size: 8em;
+}

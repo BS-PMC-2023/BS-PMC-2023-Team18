@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<center><h1>Sign Up</h1></center>
+	
+<form method="POST" action="/signup/" class="form-group" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form|crispy}}
+		{{user_form.username|as_crispy_field}}
+		{{user_form.first_name|as_crispy_field}}
+		{{user_form.last_name|as_crispy_field}}
+		{{user_form.email|as_crispy_field}}
+		{{profile_form.phone|as_crispy_field}}
+		{{user_form.password|as_crispy_field}}
+		{{user_form.password_confirm|as_crispy_field}}
+		{{profile_form.userType|as_crispy_field}}
+		{{profile_form.picture|as_crispy_field}}
+		<button type="submit" class="btn btn-primary" value="Sign Up">Sign Up</button>
+	</form>
+{% endblock %}

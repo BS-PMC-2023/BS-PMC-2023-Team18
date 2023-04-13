@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<center><h1>Profile</h1></center>
+<br>
+<center><h4>Are you sure you want to make your account inactive?</h4>
+<p>Others will not see you, but you will <b>not</b> be able to sign into your account.<br>
+</p>
+
+<form method="POST" action="/active/" class="form-group">
+		{% csrf_token %}
+		{{form|crispy}}
+		<button type="submit" class="btn btn-danger">I am sure. Make my account inactive.</button>
+</form>
+
+<form method="POST" action="/profile/" class="form-group">
+		{% csrf_token %}
+		{{form|crispy}}
+		<button class="btn btn-success">No, take me back.</button>
+</form>
+
+</center>
+
+{% endblock %}

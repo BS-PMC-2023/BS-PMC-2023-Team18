@@ -1,0 +1,103 @@
+{% extends 'main/base.html' %}
+
+{% block style %}
+	img {
+		border-radius: 10%;
+		border: 2px solid #3880fa;
+		object-fit: cover;
+	}
+
+	table {
+    	table-layout: fixed;
+    	width: 800px;
+	}
+	td {
+		vertical-align: top;
+	}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<center><h1>Home</h1></center>
+
+{% if not user.is_authenticated %}
+	<a href="/login/"><p>Login</p></a>
+	<p>Not registered yet? <a href="/signup/">Sign up</a></p>
+{% endif %}
+
+<center>
+
+	<p>
+		Become a part of a growing community!
+	</p>
+
+	<table>
+		<tr>
+			<td><center>
+				<img src='{% static "\\media\\home_pics\\1.jpg" %}' alt="Avatar" height=180px width=180px>
+			</center></td>
+
+			<td><center>
+				<img src='{% static "\\media\\home_pics\\2.jpeg" %}' alt="Avatar" height=180px width=180px>
+			</center></td>
+
+			<td><center>
+				<img src='{% static "\\media\\home_pics\\3.jpeg" %}' alt="Avatar" height=180px width=180px>
+			</center></td>
+
+			<td><center>
+				<img src='{% static "\\media\\home_pics\\4.jpeg" %}' alt="Avatar" height=180px width=180px>
+			</center></td>
+		</tr>
+
+		<tr>
+			<td>
+				<center><b>Recycle:</b></center>
+					<ul>
+						<li>1st bulletpoint</li>
+						<li>2nd bulletpoint</li>
+						<li>3rd bulletpoint</li>
+						<li>4th bulletpoint</li>
+						<li>5th bulletpoint</li>
+					</ul>
+			</td>
+
+			<td>
+				<center><b>Save money:</b></center>
+					<ul>
+						<li>1st bulletpoint</li>
+						<li>2nd bulletpoint</li>
+						<li>3rd bulletpoint</li>
+						<li>4th bulletpoint</li>
+						<li>5th bulletpoint</li>
+					</ul>
+			</td>
+
+			<td>
+				<center><b>Join the community:</b></center>
+					<ul>
+						<li>1st bulletpoint</li>
+						<li>2nd bulletpoint</li>
+						<li>3rd bulletpoint</li>
+						<li>4th bulletpoint</li>
+						<li>5th bulletpoint</li>
+					</ul>
+			</td>
+
+			<td>
+				<center><b>Get new clothing items:</b></center>
+					<ul>
+						<li>1st bulletpoint</li>
+						<li>2nd bulletpoint</li>
+						<li>3rd bulletpoint</li>
+						<li>4th bulletpoint</li>
+						<li>5th bulletpoint</li>
+					</ul>
+			</td>
+		</tr>
+	</table>
+</center>
+
+{% endblock %}

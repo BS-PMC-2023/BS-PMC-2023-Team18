@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Edit About{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<center><h1>Edit About</h1></center>
+	
+<h3>About me:</h3>
+<form method="post" action='/saveabout/' class="form-group">
+	{% csrf_token %}
+	<textarea name="message" rows="8" cols="50" const placeholder="Click to edit">{{about}}</textarea>
+	<br>
+    <input type="submit" class="btn btn-success">
+</form>
+{% endblock %}

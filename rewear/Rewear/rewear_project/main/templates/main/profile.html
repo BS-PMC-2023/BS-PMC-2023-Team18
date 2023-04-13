@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{user}}'s Profile{% endblock %}
+
+{% block style %}
+	img {
+		border-radius: 50%;
+		border: 2px solid #3880fa;
+		object-fit: cover;
+	}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<center><h1>{{profileinfo}}'s Profile</h1></center>
+
+{% if not user.is_authenticated %}
+	<p>Not logged into any account.</p>
+	<a href="/login/"><p>Login</p></a>
+	
+{% else %}
+	{% if profile_pic %}
+	<center>
+		<br>
+		<img src='{% static profile_pic %}' alt="Avatar" height=180px width=180px>
+	</center>
+	{% endif %}
+	<table>
+		<tr>
+			<td>Username:&nbsp;&nbsp;&nbsp;</td>
+			<td>{{profileinfo}}</td>
+		</tr>
+		<tr>
+			<td>Email address:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>{{user.email}} &nbsp; <a href="/messagetouser/{{user.username}}">send message</a></td>
+		</tr>
+		{% if user.first_name %}
+		<tr>
+			<td>First Name:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>{{user.first_name.capitalize}}</td>
+		</tr>
+		{% endif %}
+		{% if user.last_name %}
+		<tr>
+			<td>Last Name:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>{{user.last_name.capitalize}}</td>
+		</tr>
+		{% endif %}
+		{% if profileinfo.phone %}
+		<tr>
+			<td>Phone number:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>{{profileinfo.phone}}</td>
+		</tr>
+		{% endif %}
+		<tr>
+			<td>User type:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td>
+				{% if user.groups.get.name.capitalize == 'Eventmanager' %}
+				Event Manager
+				{% else %}
+				{{user.groups.get.name.capitalize}}
+				{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td>About me:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td><td>
+		<tr>
+			<td></td>
+			<td>{{profileinfo.about|linebreaks}}<td>
+		</tr>
+		
+	</table>
+	
+{% endif %}
+
+{% endblock %}%}
