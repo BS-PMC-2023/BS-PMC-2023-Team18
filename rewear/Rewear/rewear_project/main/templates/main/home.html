@@ -154,7 +154,6 @@ function updateCityOptions() {
 
 <br />
 
-	{% if markets %}
 		<table>
 			<tr>
 				<th>
@@ -172,7 +171,7 @@ function updateCityOptions() {
 				<th>
 					Link
 				</th>
-			{% for market in markets %}
+			{% for market in search %}
 			<tr>
 				<td>
 					{{market.name}}
@@ -193,7 +192,6 @@ function updateCityOptions() {
 			</tr>
 			{% endfor %}
 		</table>
-	{% endif %}
 
 </center>
 
