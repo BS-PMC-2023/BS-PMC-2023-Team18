@@ -12,4 +12,5 @@ path("messagetouser/<username>", views.messagetouser, name="messagetouser"),
 path("sendmessage/<username>", views.sendmessage, name="sendmessage"),
 path("editabout/", views.editabout, name="editabout"),
 path("saveabout/", views.saveabout, name="saveabout"),
+path("search/", views.search, name="search"),
 ]
