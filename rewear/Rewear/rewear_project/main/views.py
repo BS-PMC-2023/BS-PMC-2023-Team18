@@ -128,3 +128,6 @@ def insert_market(response):
 # def market_page(response, name):
 #     market = market.objects.get(name=name)
 #     return render(response, "main/market_page.html", {'market': market})
+def market_page(response, id):
+    cur_market = market.objects.get(id=id)
+    return render(response, "main/market_page.html", {'market': cur_market})
