@@ -90,18 +90,24 @@ def profile(response, username):
 def areyousure(response):
     return render(response, "main/areyousure.html", {})
 
-
 def search(response):
     if response.method == 'POST':
-       # markets = market.objects.all()
         city = response.POST['city']
-        print("This is market number: " + city)
-        resulut = market.objects.get(city=city, status="active")
-        return render(response, "main/home.html",{"search": resulut })
+        address = response.POST['address']
+        if address == "All" and city == "All":
+            markets = market.objects.all()
+            return render(response, "main/home.html", {'markets': markets})
+        if address == "All":
+            markets = market.objects.filter(city=city)
+            return render(response, "main/home.html", {'markets': markets})
+        if city == "All":
+            markets = market.objects.filter(address=address)
+            return render(response, "main/home.html", {'markets': markets})
+        markets = market.objects.filter(city=city, address=address)
+        return render(response, "main/home.html", {'markets': markets})
     else:
         return render(response, "main/home.html", {"search": "Not Found"})
 
-#  name , city , address , facebook , description , picture , market_manager , date , capacity , status , rating
 def insert_market(response):
     my_dict = {'inserted': False}
     if response.method == 'POST':
