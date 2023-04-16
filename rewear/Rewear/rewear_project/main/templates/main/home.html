@@ -99,23 +99,105 @@
 		</tr>
 	</table>
 
+<br />
 
-<!-- search bar -->
-	<form method="post" action='/search/'>
-		{% csrf_token %}
-		<input type="text" name="city" placeholder="Search for a Market">
-		<input type="submit" value="Search">
-	</form>
+<form method="post" action='/search/'>
+	{% csrf_token %}
+	<select name="city" id="city-select" onchange="updateAddressOptions()">
+		<option value="All">All cities</option>
+		{% for market in markets %}
+		<option value="{{market.city}}" data-address="{{market.address}}">{{market.city}}</option>
+		{% endfor %}
+	</select>
+	<select name="address" id="address-select" onchange="updateCityOptions()">
+		<option value="All">All addresses</option>
+			{% for market in markets %}
+				<option value="{{market.address}}" data-city="{{market.city}}">{{market.address}}</option>
+			{% endfor %}
+	</select>
+	<input type="submit" value="Search">
+</form>
+
+<script>
+function updateAddressOptions() {
+  var citySelect = document.getElementsByName("city")[0];
+  var addressSelect = document.getElementById("address-select");
+  var selectedCity = citySelect.value;
+
+  for (var i = 0; i < addressSelect.options.length; i++) {
+    var option = addressSelect.options[i];
+    if (selectedCity === "All" || option.getAttribute("data-city") === selectedCity || option.value === "All") {
+      option.style.display = "";
+    } else {
+      option.style.display = "none";
+    }
+  }
+}
+</script>
+
+<script>
+function updateCityOptions() {
+  var addressSelect = document.getElementsByName("address")[0];
+  var citySelect = document.getElementById("city-select");
+  var selectedAddress = addressSelect.value;
+
+  for (var i = 0; i < citySelect.options.length; i++) {
+    var option = citySelect.options[i];
+    if (selectedAddress === "All" || option.getAttribute("data-address") === selectedAddress || option.value === "All") {
+      option.style.display = "";
+    } else {
+      option.style.display = "none";
+    }
+  }
+}
+</script>
+
+<br />
 
 	{% if markets %}
-		{% for market in markets %}
-			<p>{{market.name}}</p>
-			<p>{{market.city}}</p>
-			<p>{{market.state}}</p>
-			<p>{{market.zip}}</p>
-			<a href="/market/{{market.id}}/">{{market.name}}</a>
-		{% endfor %}
+		<table>
+			<tr>
+				<th>
+					Market Name
+				</th>
+				<th>
+					City
+				</th>
+				<th>
+					Address
+				</th>
+				<th>
+					Zip
+				</th>
+				<th>
+					Link
+				</th>
+			{% for market in markets %}
+			<tr>
+				<td>
+					{{market.name}}
+				</td>
+				<td>
+					{{market.city}}
+				</td>
+				<td>
+					{{market.address}}
+				</td>
+				<td>
+					{{market.zip}}
+				</td>
+				<td>
+					<a href="/market/{{market.id}}/">{{market.name}}</a>
+				</td>
+
+			</tr>
+			{% endfor %}
+		</table>
 	{% endif %}
+
+
+
+
 </center>
 
 {% endblock %}

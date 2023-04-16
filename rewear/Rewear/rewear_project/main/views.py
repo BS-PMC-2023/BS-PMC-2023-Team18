@@ -9,6 +9,7 @@ from registry.models import UserProfileInfo
 import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from .models import market
 # Create your views here.
 
 def getUserProfileInfo(usr):
@@ -16,7 +17,9 @@ def getUserProfileInfo(usr):
         return upi
 
 def home(response):
-    return render(response, "main/home.html", {})
+    markets = market.objects.all()
+    return render(response, "main/home.html", {'markets': markets})
+    # return render(response, "main/home.html", { })
 
 def myprofile(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
