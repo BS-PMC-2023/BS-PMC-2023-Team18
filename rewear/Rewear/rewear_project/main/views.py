@@ -9,6 +9,7 @@ from registry.models import UserProfileInfo
 import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from .models import market
 # Create your views here.
 
 def getUserProfileInfo(usr):
@@ -16,7 +17,13 @@ def getUserProfileInfo(usr):
         return upi
 
 def home(response):
+    markets = market.objects.all()
+    # return render(response, "main/home.html", {'markets': markets, 'search': markets})
     return render(response, "main/home.html", {})
+
+def search_page(response):
+    markets = market.objects.all()
+    return render(response, "main/search.html", {'markets': markets, 'search': markets})
 
 def myprofile(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
@@ -86,3 +93,46 @@ def profile(response, username):
 
 def areyousure(response):
     return render(response, "main/areyousure.html", {})
+
+def search(response):
+    if response.method == 'POST':
+        city = response.POST['city']
+        address = response.POST['address']
+        if address == "All" and city == "All":
+            markets = market.objects.all()
+        elif address == "All":
+            markets = market.objects.filter(city=city)
+        elif city == "All":
+            markets = market.objects.filter(address=address)
+        else:
+            markets = market.objects.filter(city=city, address=address)
+        return render(response, "main/search.html", {'markets': market.objects.all(), 'search': markets})
+    else:
+        return render(response, "main/search.html", {})
+
+def insert_market(response):
+    my_dict = {'inserted': False}
+    if response.method == 'POST':
+        name = response.POST['name']
+        city = response.POST['city']
+        address = response.POST['address']
+        facebook = response.POST['facebook']
+        description = response.POST['description']
+        picture = response.POST['picture']
+        market_manager = response.POST['market_manager']
+        date = response.POST['date']
+        capacity = response.POST['capacity']
+        status = response.POST['status']
+        rating = response.POST['rating']
+        google_location = response.POST['google_location']
+
+        market.objects.create(name=name, city=city, address=address, facebook=facebook, description=description, picture=picture, market_manager=market_manager, date=date, capacity=capacity, status=status, rating=rating, google_location=google_location)
+        my_dict = {'inserted': True}
+    return render(response, "main/insert_market.html", context=my_dict)
+
+# def market_page(response, name):
+#     market = market.objects.get(name=name)
+#     return render(response, "main/market_page.html", {'market': market})
+def market_page(response, id):
+    cur_market = market.objects.get(id=id)
+    return render(response, "main/market_page.html", {'market': cur_market})

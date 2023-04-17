@@ -12,4 +12,7 @@ path("messagetouser/<username>", views.messagetouser, name="messagetouser"),
 path("sendmessage/<username>", views.sendmessage, name="sendmessage"),
 path("editabout/", views.editabout, name="editabout"),
 path("saveabout/", views.saveabout, name="saveabout"),
+path("search/", views.search, name="search"),
+path("search_page/", views.search_page, name="search"),
+path("market_page/<id>/", views.market_page, name="market"),
 ]
