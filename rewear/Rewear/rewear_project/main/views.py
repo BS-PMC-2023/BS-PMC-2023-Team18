@@ -130,9 +130,27 @@ def insert_market(response):
         my_dict = {'inserted': True}
     return render(response, "main/insert_market.html", context=my_dict)
 
-# def market_page(response, name):
-#     market = market.objects.get(name=name)
-#     return render(response, "main/market_page.html", {'market': market})
 def market_page(response, id):
     cur_market = market.objects.get(id=id)
     return render(response, "main/market_page.html", {'market': cur_market})
+def update_market(response, id):
+    if response.method == 'POST':
+        shirt = int(response.POST['shirt'])
+        pants = int(response.POST['pants'])
+        shoes = int(response.POST['shoes'])
+        hat = int(response.POST['hat'])
+        gloves = int(response.POST['gloves'])
+        scarf = int(response.POST['scarf'])
+        jacket = int(response.POST['jacket'])
+        # add to the data base
+        cur_market = market.objects.get(id=id)
+        cur_market.shirt += shirt
+        cur_market.pants += pants
+        cur_market.shoes += shoes
+        cur_market.hat += hat
+        cur_market.gloves += gloves
+        cur_market.scarf += scarf
+        cur_market.jacket += jacket
+        cur_market.save()
+        return market_page(response, id)
+    return render(response, "main/edit_market.html", {'market': cur_market})
