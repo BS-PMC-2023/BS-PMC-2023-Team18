@@ -18,7 +18,12 @@ def getUserProfileInfo(usr):
 
 def home(response):
     markets = market.objects.all()
-    return render(response, "main/home.html", {'markets': markets, 'search': markets})
+    # return render(response, "main/home.html", {'markets': markets, 'search': markets})
+    return render(response, "main/home.html", {})
+
+def search_page(response):
+    markets = market.objects.all()
+    return render(response, "main/search.html", {'markets': markets, 'search': markets})
 
 def myprofile(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
@@ -101,9 +106,9 @@ def search(response):
             markets = market.objects.filter(address=address)
         else:
             markets = market.objects.filter(city=city, address=address)
-        return render(response, "main/home.html", {'markets': market.objects.all(), 'search': markets})
+        return render(response, "main/search.html", {'markets': market.objects.all(), 'search': markets})
     else:
-        return render(response, "main/home.html", {})
+        return render(response, "main/search.html", {})
 
 def insert_market(response):
     my_dict = {'inserted': False}
