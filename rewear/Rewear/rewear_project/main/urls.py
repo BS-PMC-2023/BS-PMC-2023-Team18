@@ -15,4 +15,5 @@ path("saveabout/", views.saveabout, name="saveabout"),
 path("search/", views.search, name="search"),
 path("search_page/", views.search_page, name="search"),
 path("market_page/<id>/", views.market_page, name="market"),
+path("update_market/<id>/", views.update_market, name="update_market"),
 ]

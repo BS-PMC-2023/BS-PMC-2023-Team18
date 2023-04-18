@@ -20,9 +20,68 @@
 	</div>
 </div>
 
+	<table class="table table-striped">
+	  <thead>
+		<tr>
+			<th>Name</th>
+			<th>City</th>
+			<th>Address</th>
+			<th>Facebook</th>
+			<th>Description</th>
+			<th>Google Location</th>
+			<th>Market Manager</th>
+			<th>Date</th>
+			<th>Status</th>
+			<th>Rating</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr>
+			<td>{{market.name}}</td>
+			<td>{{market.city}}</td>
+			<td>{{market.address}}</td>
+			<td><a href="1">Facebook Link</a></td>
+			<td>{{market.description}}</td>
+			<td><a href="1">Google Maps Link</a></td>
+			<td>{{market.market_manager}}</td>
+			<td>{{market.date}}</td>
+			<td>{{market.status}}</td>
+			<td>{{market.rating}}</td>
+		</tr>
+		<tr>
+			<br/>
+			<td>{{market.shirt}} shirts</td>
+			<td>{{market.pants}} pants</td>
+			<td>{{market.shoes}} shoes</td>
+			<td>{{market.hat}} hats</td>
+			<td>{{market.gloves}} gloves</td>
+			<td>{{market.scarf}} scarfs</td>
+			<td>{{market.jacket}} jackets</td>
+		</tr>
+	  </tbody>
+	</table>
+
+<!--insert cloth to market form-->
+	<br>
+	<form method="post" action='/update_market/{{market.id}}/'class="form-group">
+        {% csrf_token %}
+		<input type="hidden" name="" value="">
+		<a>Shirt </a><input type="number" name="shirt" min="0" max="50" step="1" value="0" >
+		<a>Pants </a><input type="number" name="pants" min="0" max="50" step="1" value="0" >
+		<a>Shoes </a><input type="number" name="shoes" min="0" max="50" step="1" value="0">
+		<a>Hat </a><input type="number" name="hat" min="0" max="50" step="1" value="0" >
+		<a>Gloves </a><input type="number" name="gloves" min="0" max="50" step="1" value="0">
+		<a>Scarf </a><input type="number" name="scarf" min="0" max="50" step="1" value="0">
+		<a>Jacket </a><input type="number" name="jacket" min="0" max="50" step="1" value="0">
+		<br> <br>
+		<input type="submit" class="btn btn-success">
+
+	</form>
+
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br><br> <br> <br> <br> <br> <br>
+
 {% else %}
 
-<br />
 
 <p>Please sign <a href="/login/">login</a> in order to view this content.</p>
 <p>Not registered yet? <a href="/signup/">Sign up</a></p>
