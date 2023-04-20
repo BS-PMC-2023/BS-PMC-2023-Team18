@@ -157,7 +157,19 @@ def update_market(response, id):
 
 def submissions(response):
     submissions = submission.objects.all()
-    return render(response, "main/submissions.html", {'submissions': submissions})
+    users = User.objects.all()
+    res = []
+    for sub in submissions:
+        flag = 0
+        cur = []
+        cur.append(sub.market_id)
+        try:
+            cur.append(users.get(id=sub.user_id))
+            flag = 1
+        except:
+            pass
+        if flag: res.append(cur)
+    return render(response, "main/submissions.html", {'subs': res})
 
 def submit_request(response, uid, mid):
     subs = submission.objects.all()

@@ -6,11 +6,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if user.is_authenticated and user.is_superuser %}
 <center>
     <h1>Submissions</h1>
-    {% for sub in submissions %}
-        <p>SUBMISSION ID: {{ sub.id }}</p>
+    {% for sub in subs %}
+        <p>USERNAME: <a href="/profile/{{sub.1}}">{{ sub.1 }}</a>
+            MARKET ID: <a href="/market_page/{{sub.0}}/">{{ sub.0 }}</a></p>
     {% endfor %}
 </center>
-
+{% endif %}
 {% endblock %}
