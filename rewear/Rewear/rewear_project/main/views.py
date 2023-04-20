@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from .models import market, submission
 # Create your views here.
-
+# gfdgd
 def getUserProfileInfo(usr):
         upi = UserProfileInfo.objects.get(user=usr)
         return upi
