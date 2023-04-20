@@ -167,3 +167,14 @@ def submit_request(response, uid, mid):
     else:
         print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
     return render(response, "main/submissions.html", {'submissions': submissions})
+
+def feedback(response,id):
+    if response.method == 'POST':
+        message = response.POST['message']
+        send_mail('Contact Form',
+         message,
+         settings.EMAIL_HOST_USER,
+         ['Rewear100@gmail.com'],
+         fail_silently=True)
+    cur_market = market.objects.get(id=id)
+    return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True})

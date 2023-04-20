@@ -91,6 +91,15 @@
 <p>Not registered yet? <a href="/signup/">Sign up</a></p>
 
 {% endif %}
-
-
+	{% if not feedback%}
+        <h3>Feedback Form</h3>
+        <form method="post" action='/feedback/{{market.id}}/' class="form-group">
+            {% csrf_token %}
+            <textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
+            <input type="submit" class="btn btn-success">
+        </form>
+    {% else %}
+        <center><h4>Your message was delivered</h4>
+                <br><p>Thank you for your feedback, <br>
+    {% endif %}
 {% endblock %}
