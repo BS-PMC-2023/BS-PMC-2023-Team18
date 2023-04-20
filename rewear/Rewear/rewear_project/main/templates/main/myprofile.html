@@ -26,6 +26,13 @@
 		<br>
 		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px>
 	</center>
+	{% else %}
+	<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
+		{% csrf_token %}
+		<label for="picture">Profile Picture:</label>
+		<input type="file" name="picture" id="picture" required>
+		<button type="submit">Update Profile Picture</button>
+	</form>
 	{% endif %}
 	<table>
 		<tr>
