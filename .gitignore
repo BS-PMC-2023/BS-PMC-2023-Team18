@@ -4,3 +4,4 @@ rewear/Rewear/rewear_project/db.sqlite3
 *.sqlite3
 rewear/Rewear/rewear_project/db.sqlite3
 rewear/Rewear/rewear_project/db.sqlite3
+*.pyc
