@@ -167,7 +167,7 @@ def submit_request(response, uid, mid):
     else:
         print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
     return render(response, "main/submissions.html", {'submissions': submissions})
-
+# user story 14 - Market FeedBack
 def feedback(response,id):
     if response.method == 'POST':
         message = response.POST['message']
