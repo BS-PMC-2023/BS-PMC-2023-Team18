@@ -9,7 +9,7 @@ from registry.models import UserProfileInfo
 import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from .models import market
+from .models import market, submission
 # Create your views here.
 
 def getUserProfileInfo(usr):
@@ -17,7 +17,7 @@ def getUserProfileInfo(usr):
         return upi
 
 def home(response):
-    markets = market.objects.all()
+    # markets = market.objects.all()
     # return render(response, "main/home.html", {'markets': markets, 'search': markets})
     return render(response, "main/home.html", {})
 
@@ -154,3 +154,16 @@ def update_market(response, id):
         cur_market.save()
         return market_page(response, id)
     return render(response, "main/edit_market.html", {'market': cur_market})
+
+def submissions(response):
+    submissions = submission.objects.all()
+    return render(response, "main/submissions.html", {'submissions': submissions})
+
+def submit_request(response, uid, mid):
+    subs = submission.objects.all()
+    if not subs.filter(user_id=uid, market_id=mid).exists():
+        submission.objects.create(user_id=uid, market_id=mid)
+        print("Created submission with uid: " + str(uid) + ", mid: " + str(mid))  # create submission
+    else:
+        print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
+    return render(response, "main/submissions.html", {'submissions': submissions})

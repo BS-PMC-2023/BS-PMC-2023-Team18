@@ -16,4 +16,6 @@ path("search/", views.search, name="search"),
 path("search_page/", views.search_page, name="search"),
 path("market_page/<id>/", views.market_page, name="market"),
 path("update_market/<id>/", views.update_market, name="update_market"),
+path("submissions/", views.submissions, name="submissions"),
+path("submit_request/<uid>/<mid>/", views.submit_request, name="submit_request"),
 ]

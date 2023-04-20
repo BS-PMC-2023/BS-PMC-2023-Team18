@@ -30,7 +30,14 @@
 								<li><a href="/about/">About</a></li>
 
 								{% if user.is_authenticated and user.is_superuser %}
-								<li><a href="/admin/">Administration</a></li>
+
+									<li><a href="/submissions/">Submissions
+									<div style="display: inline-block;">
+										<div style="border-radius: 50%; width: 10px; height: 10px; padding: 2px; border: solid; border-color: red;"></div>
+									</div>
+									</a></li>
+
+									<li><a href="/admin/">Administration</a></li>
 
 								{% elif user.is_authenticated and user.is_active%}
 								<li><a href="/profile/">My Profile</a></li>
