@@ -27,3 +27,10 @@ class market(models.Model):
     other = models.IntegerField(default=0)
     def __str__(self):
         return self.name
+class submission(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.CharField(max_length=10, default='')
+    market_id = models.CharField(max_length=10, default='')
+
+    def __str__(self):
+        return str(self.id)

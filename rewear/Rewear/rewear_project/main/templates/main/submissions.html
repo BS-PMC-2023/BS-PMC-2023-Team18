@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Submissions{% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<center>
+    <h1>Submissions</h1>
+    {% for sub in submissions %}
+        <p>SUBMISSION ID: {{ sub.id }}</p>
+    {% endfor %}
+</center>
+
+{% endblock %}
