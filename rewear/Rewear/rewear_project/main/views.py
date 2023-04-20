@@ -162,6 +162,7 @@ def submissions(response):
     for sub in submissions:
         flag = 0
         cur = []
+        cur.append(sub.id)
         cur.append(sub.market_id)
         try:
             cur.append(users.get(id=sub.user_id))
@@ -179,6 +180,7 @@ def submit_request(response, uid, mid):
     else:
         print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
     return render(response, "main/submissions.html", {'submissions': submissions})
+
 # user story 14 - Market FeedBack
 def feedback(response,id):
     if response.method == 'POST':
@@ -190,3 +192,14 @@ def feedback(response,id):
          fail_silently=True)
     cur_market = market.objects.get(id=id)
     return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True})
+
+def update_market(response, sid, mid, username):
+    print("username", str(username), "mid", str(mid))
+    m = market.objects.all().filter(id=mid)
+    m.update(market_manager=username)
+    return delete_sub(response, sid)
+
+def delete_sub(response, id):
+    sub = submission.objects.all().filter(id=id)
+    sub.delete()
+    return submissions(response)

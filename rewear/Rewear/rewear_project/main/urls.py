@@ -19,4 +19,6 @@ path("update_market/<id>/", views.update_market, name="update_market"),
 path("submissions/", views.submissions, name="submissions"),
 path("submit_request/<uid>/<mid>/", views.submit_request, name="submit_request"),
 path("feedback/<id>/", views.feedback, name="feedback"),
+path("update_market/<sid>/<mid>/<username>/", views.update_market, name="update_market"),
+path("delete_sub/<id>/", views.delete_sub, name="delete_sub"),
 ]
