@@ -17,9 +17,9 @@ def getUserProfileInfo(usr):
         return upi
 
 def home(response):
-    # markets = market.objects.all()
+    subs = len(submission.objects.all())
     # return render(response, "main/home.html", {'markets': markets, 'search': markets})
-    return render(response, "main/home.html", {})
+    return render(response, "main/home.html", {'subs': subs})
 
 def search_page(response):
     markets = market.objects.all()
