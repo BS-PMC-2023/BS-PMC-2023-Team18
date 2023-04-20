@@ -22,6 +22,14 @@
 {% block content %}
 <center><h1>Home</h1></center>
 
+{% if user.is_authenticated and user.is_superuser and subs %}
+	{% if subs > 1 %}
+		<center><b><font color = "red">There are {{subs}} unhandled submissions!</font></b></center>
+		{% else %}
+		<center><b><font color = "red">There is {{subs}} unhandled submission!</font></b></center>
+	{% endif %}
+{% endif %}
+
 {% if not user.is_authenticated %}
 	<a href="/login/"><p>Login</p></a>
 	<p>Not registered yet? <a href="/signup/">Sign up</a></p>

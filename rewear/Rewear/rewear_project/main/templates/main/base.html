@@ -32,9 +32,9 @@
 								{% if user.is_authenticated and user.is_superuser %}
 
 									<li><a href="/submissions/">Submissions
-									<div style="display: inline-block;">
+									<!--<div style="display: inline-block;">
 										<div style="border-radius: 50%; width: 10px; height: 10px; padding: 2px; border: solid; border-color: red;"></div>
-									</div>
+									</div>-->
 									</a></li>
 
 									<li><a href="/admin/">Administration</a></li>
@@ -55,7 +55,7 @@
 				</span>
 			</p>
 			{% endif %}
-				
+
 				{% block content %}
 				{% endblock %}
 				
