@@ -210,7 +210,6 @@ def update_profilepic(response):
         profileinfo = UserProfileInfo.objects.get(user=user)
         profileinfo.picture = picture
         profileinfo.save()
-        print(profileinfo.picture)
         return render(response, "main/myprofile.html", {'profile_pic': picture})
     else:
         return render(response, 'main/myprofile.html')
