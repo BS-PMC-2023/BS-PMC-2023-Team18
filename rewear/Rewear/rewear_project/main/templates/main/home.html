@@ -107,6 +107,20 @@
 		</tr>
 	</table>
 
+<!--	show my event list -->
+	{% if user.is_authenticated %}
+	{% if events %}
+		{% for event in events %}
+			{% if event.user == user %}
+				<p><a href="/events/{{event.id}}/">{{event.title}}</a></p>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<p><b><font color = "red">You have no events!</font></b></p>
+	{% endif %}
+	{% endif %}
+
+
 <br />
 </center>
 

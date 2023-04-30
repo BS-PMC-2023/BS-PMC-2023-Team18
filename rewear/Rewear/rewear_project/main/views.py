@@ -10,6 +10,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from .models import market, submission
+from registry.forms import UserForm, UserProfileInfoForm
+
 # Create your views here.
 
 def getUserProfileInfo(usr):
@@ -162,7 +164,6 @@ def submissions(response):
     for sub in submissions:
         flag = 0
         cur = []
-        cur.append(sub.id)
         cur.append(sub.market_id)
         try:
             cur.append(users.get(id=sub.user_id))
@@ -180,7 +181,6 @@ def submit_request(response, uid, mid):
     else:
         print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
     return render(response, "main/submissions.html", {'submissions': submissions})
-
 # user story 14 - Market FeedBack
 def feedback(response,id):
     if response.method == 'POST':
@@ -193,13 +193,23 @@ def feedback(response,id):
     cur_market = market.objects.get(id=id)
     return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True})
 
-def update_market(response, sid, mid, username):
-    print("username", str(username), "mid", str(mid))
-    m = market.objects.all().filter(id=mid)
-    m.update(market_manager=username)
-    return delete_sub(response, sid)
+# def update_profilepic(response):
+#     if response.method == 'POST':
+#         form = UserProfileInfo(response.POST, response.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return render(response, 'main/profile.html', {})
+#     else:
+#         form = UserProfileInfoForm()
+#     return render(response, 'main/update_profilepic.html', {'form': form})
 
-def delete_sub(response, id):
-    sub = submission.objects.all().filter(id=id)
-    sub.delete()
-    return submissions(response)
+def update_profilepic(response):
+    if response.method == 'POST':
+        picture = response.FILES['picture']
+        user = User.objects.get(username=response.user.username)
+        profileinfo = UserProfileInfo.objects.get(user=user)
+        profileinfo.picture = picture
+        profileinfo.save()
+        return render(response, "main/myprofile.html", {'profile_pic': picture})
+    else:
+        return render(response, 'main/myprofile.html')
