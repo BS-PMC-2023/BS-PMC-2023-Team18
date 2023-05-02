@@ -25,6 +25,9 @@ class market(models.Model):
     scarf = models.IntegerField(default=0)
     jacket = models.IntegerField(default=0)
     other = models.IntegerField(default=0)
+    class Meta:
+        app_label = 'main'
+
     def __str__(self):
         return self.name
         
