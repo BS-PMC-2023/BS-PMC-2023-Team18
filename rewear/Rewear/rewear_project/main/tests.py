@@ -5,7 +5,6 @@ from registry.models import UserProfileInfo
 from .models import market, submission
 from .views import *
 
-
 class Test(TestCase):
 
     # this one is okay
@@ -73,7 +72,6 @@ class Test(TestCase):
         self.assertContains(response, 'Submit Request')
         self.user.delete()
         self.market.delete()
-
 
     def test_feedback(self):
         response = self.client.get('/feedback/')
