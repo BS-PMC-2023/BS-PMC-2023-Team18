@@ -20,4 +20,6 @@ path("submissions/", views.submissions, name="submissions"),
 path("submit_request/<uid>/<mid>/", views.submit_request, name="submit_request"),
 path("feedback/<id>/", views.feedback, name="feedback"),
 path("update_profilepic/", views.update_profilepic, name="update_profilepic"),
+path("sign_event/<uid>/<mid>/", views.sign_event, name="sign_event"),
+path("my_events/<uid>/", views.my_events, name="my_events"),
 ]

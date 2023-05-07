@@ -9,7 +9,7 @@ from registry.models import UserProfileInfo
 import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from .models import market, submission
+from .models import market, submission, myEvent
 from registry.forms import UserForm, UserProfileInfoForm
 
 # Create your views here.
@@ -134,7 +134,14 @@ def insert_market(response):
 
 def market_page(response, id):
     cur_market = market.objects.get(id=id)
-    return render(response, "main/market_page.html", {'market': cur_market})
+    # get all market with specific id
+    myevents = myEvent.objects.filter(user_id=response.user.id, market_id=id)
+    # serch in the database if the user is in the event
+    if myevents:
+        return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True})
+    else:
+        return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': False})
+
 def update_market(response, id):
     if response.method == 'POST':
         shirt = int(response.POST['shirt'])
@@ -155,7 +162,7 @@ def update_market(response, id):
         cur_market.jacket += jacket
         cur_market.save()
         return market_page(response, id)
-    return render(response, "main/edit_market.html", {'market': cur_market})
+    return render(response, "main/market_page.html", {'market': cur_market})
 
 def submissions(response):
     submissions = submission.objects.all()
@@ -213,3 +220,18 @@ def update_profilepic(response):
         return render(response, "main/myprofile.html", {'profile_pic': picture})
     else:
         return render(response, 'main/myprofile.html')
+
+def sign_event(response, uid, mid):
+    if response.method == 'POST':
+        print("Signing up for event with uid: " + str(uid) + ", mid: " + str(mid))
+        cur_market = market.objects.get(id=mid)
+        currevent = myEvent.objects.create(user_id=uid, market_id=mid)
+        currevent.save()
+    return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True})
+
+def my_events(response, uid):
+    myevents = myEvent.objects.filter(user_id=uid)
+    markets = []
+    for event in myevents:
+        markets.append(market.objects.get(id=event.market_id))
+    return render(response, "main/my_events.html", {'markets': markets})

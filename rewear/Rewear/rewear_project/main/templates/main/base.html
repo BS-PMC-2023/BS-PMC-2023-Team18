@@ -27,6 +27,8 @@
 								
 								<li><a href="/search_page/">Search</a></li>
 
+								<li><a href="/my_events/{{request.user.id}}">My Events</a></li>
+
 								<li><a href="/about/">About</a></li>
 
 								{% if user.is_authenticated and user.is_superuser %}
