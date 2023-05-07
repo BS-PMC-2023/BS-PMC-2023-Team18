@@ -9,7 +9,7 @@ from registry.models import UserProfileInfo
 import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from .models import market, submission
+from .models import market, submission, myEvent
 from registry.forms import UserForm, UserProfileInfoForm
 
 # Create your views here.
@@ -155,7 +155,7 @@ def update_market(response, id):
         cur_market.jacket += jacket
         cur_market.save()
         return market_page(response, id)
-    return render(response, "main/edit_market.html", {'market': cur_market})
+    return render(response, "main/market_page.html", {'market': cur_market})
 
 def submissions(response):
     submissions = submission.objects.all()
@@ -213,3 +213,11 @@ def update_profilepic(response):
         return render(response, "main/myprofile.html", {'profile_pic': picture})
     else:
         return render(response, 'main/myprofile.html')
+
+def sign_event(response, uid, mid):
+    if response.method == 'POST':
+        print("Signing up for event with uid: " + str(uid) + ", mid: " + str(mid))
+        cur_market = market.objects.get(id=mid)
+        currevent = myEvent.objects.create(user_id=uid, market_id=mid)
+        currevent.save()
+    return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True})
