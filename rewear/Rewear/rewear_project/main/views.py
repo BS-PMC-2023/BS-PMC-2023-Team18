@@ -251,9 +251,9 @@ def my_events(response, uid):
 from django.contrib.auth.decorators import login_required
 from .models import Message
 from .forms import MessageForm
-
+# user can contact with the event manager through our message system
 @login_required
-def send_message(request, username=''):
+def send_message(request, username=None):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
