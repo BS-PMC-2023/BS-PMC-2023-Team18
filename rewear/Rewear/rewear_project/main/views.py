@@ -10,6 +10,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from .models import market, submission, myEvent
+from django import forms
 from registry.forms import UserForm, UserProfileInfoForm
 
 # Create your views here.
@@ -253,7 +254,7 @@ from .models import Message
 from .forms import MessageForm
 
 @login_required
-def send_message(request, username=''):
+def send_message(request, username=None):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -263,8 +264,10 @@ def send_message(request, username=''):
             message = Message.objects.create(sender=request.user, recipient=recipient, subject=subject, body=body)
             return inbox(request)
     else:
-        # form = MessageForm()
-        form = MessageForm(username)
+        form = MessageForm()
+        if username:
+            user = User.objects.filter(username=username)[0]
+            form.fields['recipient'] = forms.ModelChoiceField(queryset=User.objects.all(), initial=user)
     return render(request, 'main/send_message.html', {'form': form})
 
 @login_required
