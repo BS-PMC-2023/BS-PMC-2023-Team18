@@ -164,6 +164,20 @@ def update_market(response, id):
         return market_page(response, id)
     return render(response, "main/market_page.html", {'market': cur_market})
 
+def assign_manager(response, mid, username):
+    cur_market = market.objects.get(id=mid)
+    print(cur_market.market_manager)
+    cur_market.market_manager = username
+    print(cur_market.market_manager)
+    market.save(cur_market)
+    return delete_sub(response, mid, username)
+
+def delete_sub(response, mid, username):
+    cur_user = User.objects.get(username=username)
+    cur_sub = submission.objects.get(user_id=cur_user.id, market_id=mid)
+    cur_sub.delete()
+    return submissions(response)
+
 def submissions(response):
     submissions = submission.objects.all()
     users = User.objects.all()
