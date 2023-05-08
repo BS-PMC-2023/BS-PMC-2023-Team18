@@ -72,9 +72,6 @@ def sendmessage(response, username):
          fail_silently=False)
     return render(response, 'main/thankyou2.html')
 
-def messagetouser(response, username):
-    return render(response, 'main/messagetouser.html', {'username': username})
-
 def about(response):
     return render(response, "main/about.html", {})
 
@@ -256,7 +253,7 @@ from .models import Message
 from .forms import MessageForm
 
 @login_required
-def send_message(request):
+def send_message(request, username=''):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -264,17 +261,15 @@ def send_message(request):
             subject = form.cleaned_data['subject']
             body = form.cleaned_data['body']
             message = Message.objects.create(sender=request.user, recipient=recipient, subject=subject, body=body)
-            # return redirect('inbox')
             return inbox(request)
-            # return render(request, 'main/inbox.html', {'messages': message})
     else:
-        form = MessageForm()
+        # form = MessageForm()
+        form = MessageForm(username)
     return render(request, 'main/send_message.html', {'form': form})
 
 @login_required
 def inbox(request):
     messages = Message.objects.filter(recipient=request.user)
-    # messages = Message.objects.all()
     return render(request, 'main/inbox.html', {'messages': messages})
 
 @login_required
