@@ -19,20 +19,20 @@
     {% for sub in subs %}
         <tr>
             <td>
-                USERNAME: <a href="/profile/{{sub.2}}/">{{ sub.2 }}</a>
+                USERNAME: <a href="/profile/{{sub.1}}/">{{ sub.1 }}</a>
             </td>
             <td>
-                MARKET ID: <a href="/market_page/{{sub.1}}/">{{ sub.1 }}</a>
+                MARKET ID: <a href="/market_page/{{sub.0}}/">{{ sub.0 }}</a>
             </td>
             <td>
-                <form method="POST" action="/update_market/{{sub.0}}/{{sub.1}}/{{sub.2}}/" class="form-group">
+                <form method="POST" action="/assign_manager/{{sub.0}}/{{sub.1}}/" class="form-group">
                     {% csrf_token %}
                     {{form|crispy}}
                     <button class="btn btn-success btn-sm">✓</button>
                 </form>
             </td>
             <td>
-                <form method="POST" action="/delete_sub/{{sub.0}}/" class="form-group">
+                <form method="POST" action="/delete_sub/{{sub.0}}/{{sub.1}}/" class="form-group">
                     {% csrf_token %}
                     {{form|crispy}}
                     <button class="btn btn-danger btn-sm">✗</button>

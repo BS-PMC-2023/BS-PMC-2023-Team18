@@ -134,7 +134,14 @@ def insert_market(response):
 
 def market_page(response, id):
     cur_market = market.objects.get(id=id)
-    return render(response, "main/market_page.html", {'market': cur_market})
+    # get all market with specific id
+    myevents = myEvent.objects.filter(user_id=response.user.id, market_id=id)
+    # serch in the database if the user is in the event
+    if myevents:
+        return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True})
+    else:
+        return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': False})
+
 def update_market(response, id):
     if response.method == 'POST':
         shirt = int(response.POST['shirt'])
@@ -156,6 +163,20 @@ def update_market(response, id):
         cur_market.save()
         return market_page(response, id)
     return render(response, "main/market_page.html", {'market': cur_market})
+
+def assign_manager(response, mid, username):
+    cur_market = market.objects.get(id=mid)
+    print(cur_market.market_manager)
+    cur_market.market_manager = username
+    print(cur_market.market_manager)
+    market.save(cur_market)
+    return delete_sub(response, mid, username)
+
+def delete_sub(response, mid, username):
+    cur_user = User.objects.get(username=username)
+    cur_sub = submission.objects.get(user_id=cur_user.id, market_id=mid)
+    cur_sub.delete()
+    return submissions(response)
 
 def submissions(response):
     submissions = submission.objects.all()
@@ -221,3 +242,10 @@ def sign_event(response, uid, mid):
         currevent = myEvent.objects.create(user_id=uid, market_id=mid)
         currevent.save()
     return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True})
+
+def my_events(response, uid):
+    myevents = myEvent.objects.filter(user_id=uid)
+    markets = []
+    for event in myevents:
+        markets.append(market.objects.get(id=event.market_id))
+    return render(response, "main/my_events.html", {'markets': markets})
