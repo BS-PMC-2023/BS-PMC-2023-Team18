@@ -84,7 +84,21 @@
 
 	</form>
 
-<br> <br> <br> <br> <br> <br> <br> <br> <br> <br><br> <br> <br> <br> <br> <br>
+<br> <br>
+
+	{% if user.is_authenticated and not sign_event %}
+		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
+		{% csrf_token %}
+
+		<input type="submit" value="sign up event">
+		</form>
+
+	{% else %}
+        <center><h4>Thank you for signing for our event</h4>
+                <br><p>we will see you there !! <br>
+	{% endif %}
+
+<br> <br> <br> <br> <br> <br><br> <br> <br> <br> <br> <br> <br> <br>
 
 {% else %}
 
@@ -104,4 +118,6 @@
         <center><h4>Your message was delivered</h4>
                 <br><p>Thank you for your feedback, <br>
     {% endif %}
+
+
 {% endblock %}

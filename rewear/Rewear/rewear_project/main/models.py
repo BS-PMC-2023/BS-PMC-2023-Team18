@@ -25,10 +25,20 @@ class market(models.Model):
     scarf = models.IntegerField(default=0)
     jacket = models.IntegerField(default=0)
     other = models.IntegerField(default=0)
+    class Meta:
+        app_label = 'main'
+
     def __str__(self):
         return self.name
         
 class submission(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.CharField(max_length=10, default='')
+    market_id = models.CharField(max_length=10, default='')
+    def __str__(self):
+        return str(self.id)
+
+class myEvent(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=10, default='')
     market_id = models.CharField(max_length=10, default='')
