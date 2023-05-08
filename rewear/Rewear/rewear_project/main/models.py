@@ -11,7 +11,7 @@ class market(models.Model):
     address = models.CharField(max_length=200)
     facebook = models.CharField(max_length=200, default='')
     description = models.CharField(max_length=200, default='')
-    google_location = models.CharField(max_length=200, default='')
+    google_location = models.CharField(max_length=1000, default='')
     market_manager = models.CharField(max_length=200, default='')
     date = models.CharField(max_length=200, default='')
     status = models.CharField(max_length=200, default='')
