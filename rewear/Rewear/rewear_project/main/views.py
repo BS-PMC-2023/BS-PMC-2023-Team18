@@ -89,7 +89,7 @@ def profile(response, username):
 
     return render(response, "main/profile.html", {
         'profileinfo': profileinfo,
-        'user': user,
+        'cur_user': user,
         'profile_pic': picture,
         })
 

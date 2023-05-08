@@ -6,19 +6,15 @@
 
 {% if user.is_authenticated %}
 
-<center><h1>Market Page</h1></center>
-<div class="container">
-	<div class="row">
-		<div class="col-md-6">
-			<img src="{{market.picture.url}}" width="100%" height="auto">
-		</div>
-		<div class="col-md-6">
-			<h3>{{market.name}}</h3>
-			<p>{{market.location}}</p>
-			<p>{{market.description}}</p>
-		</div>
-	</div>
-</div>
+<center>
+	<h1>Market Page</h1>
+	<h3>{{market.name}}</h3>
+	{% if market.market_manager %}
+		<b>
+			Market manager: <a href="/profile/{{market.market_manager}}">{{market.market_manager}}</a>
+		</b>
+	{% endif %}
+</center>
 
 {% if user.is_authenticated and not user.is_superuser %}
 	<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
