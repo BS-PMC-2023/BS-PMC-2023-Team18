@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+  <h2>Inbox</h2>
+  <center>
+    <a href="/send_message/"><h5><b>Send a message</b></h5></a>
+  </center>
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li{% if not message.is_read %} style="font-weight:bold"{% endif %}>
+          <a href="/message_detail/{{message.id}}">{{ message.subject }}</a>
+          <small>from {{ message.sender.username }} on {{ message.created_at }}</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No messages.</p>
+  {% endif %}
+{% endblock %}
