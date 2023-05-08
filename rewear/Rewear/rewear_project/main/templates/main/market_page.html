@@ -23,15 +23,27 @@
 	</form>
 {% endif %}
 
+{% if user.is_authenticated and not sign_event %}
+		<br>
+		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
+		{% csrf_token %}
+		<center>
+		<input type="submit" value="Register to event" class="btn btn-primary">
+		</center>
+		</form>
+
+	{% else %}
+        <p><h4>Thank you for signing for our event</h4>
+                <br><p>we will see you there !! <br>
+{% endif %}
+
 	<table class="table table-striped">
 	  <thead>
 		<tr>
-			<th>Name</th>
 			<th>City</th>
 			<th>Address</th>
 			<th>Facebook</th>
 			<th>Description</th>
-			<th>Market Manager</th>
 			<th>Date</th>
 			<th>Status</th>
 			<th>Rating</th>
@@ -39,12 +51,10 @@
 	  </thead>
 	  <tbody>
 		<tr>
-			<td>{{market.name}}</td>
 			<td>{{market.city}}</td>
 			<td>{{market.address}}</td>
 			<td><a href="1">Facebook Link</a></td>
 			<td>{{market.description}}</td>
-			<td>{{market.market_manager}}</td>
 			<td>{{market.date}}</td>
 			<td>{{market.status}}</td>
 			<td>{{market.rating}}</td>
@@ -63,6 +73,7 @@
 	</table>
 
 	<br>
+	<center>
 	<form method="post" action='/update_market/{{market.id}}/'class="form-group">
         {% csrf_token %}
 		<input type="hidden" name="" value="">
@@ -74,9 +85,10 @@
 		<a>Scarf </a><input type="number" name="scarf" min="0" max="50" step="1" value="0">
 		<a>Jacket </a><input type="number" name="jacket" min="0" max="50" step="1" value="0">
 		<br> <br>
-		<input type="submit" class="btn btn-success">
+		<input value="Submit items of clothing" type="submit" class="btn btn-success">
 
 	</form>
+	</center>
 
 <br> <br>
 
@@ -88,19 +100,6 @@
 <br><br>
 {% endif %}
 
-
-
-	{% if user.is_authenticated and not sign_event %}
-		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
-		{% csrf_token %}
-
-		<input type="submit" value="sign up event">
-		</form>
-
-	{% else %}
-        <p><h4>Thank you for signing for our event</h4>
-                <br><p>we will see you there !! <br>
-	{% endif %}
 
 <br> <br> <br> <br> <br> <br><br> <br> <br> <br> <br> <br> <br> <br>
 

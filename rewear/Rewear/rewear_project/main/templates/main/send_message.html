@@ -2,9 +2,14 @@
 
 {% block content %}
   <h2>Send Message</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send</button>
+  <form method="post"}>
+    Recipient: <br />
+    {{ form.recipient }} <br />
+     Subject: <br />
+    {{ form.subject }} <br />
+    Body: <br />
+    {{ form.body }} <br />
+    <button type="submit" class="btn btn-success">Send</button>
   </form>
+
 {% endblock %}
