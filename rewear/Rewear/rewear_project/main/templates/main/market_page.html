@@ -35,7 +35,6 @@
 			<th>Address</th>
 			<th>Facebook</th>
 			<th>Description</th>
-			<th>Google Location</th>
 			<th>Market Manager</th>
 			<th>Date</th>
 			<th>Status</th>
@@ -49,7 +48,6 @@
 			<td>{{market.address}}</td>
 			<td><a href="1">Facebook Link</a></td>
 			<td>{{market.description}}</td>
-			<td><a href="1">Google Maps Link</a></td>
 			<td>{{market.market_manager}}</td>
 			<td>{{market.date}}</td>
 			<td>{{market.status}}</td>
@@ -86,6 +84,16 @@
 
 <br> <br>
 
+
+{% if market.google_location != '' and market.google_location != "null" %}
+<center>
+	<iframe src="{{market.google_location}}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</center>
+<br><br>
+{% endif %}
+
+
+
 	{% if user.is_authenticated and not sign_event %}
 		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
 		{% csrf_token %}
@@ -94,7 +102,7 @@
 		</form>
 
 	{% else %}
-        <center><h4>Thank you for signing for our event</h4>
+        <p><h4>Thank you for signing for our event</h4>
                 <br><p>we will see you there !! <br>
 	{% endif %}
 
@@ -107,17 +115,17 @@
 <p>Not registered yet? <a href="/signup/">Sign up</a></p>
 
 {% endif %}
-	{% if not feedback%}
-        <h3>Feedback Form</h3>
-        <form method="post" action='/feedback/{{market.id}}/' class="form-group">
-            {% csrf_token %}
-            <textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
-            <input type="submit" class="btn btn-success">
-        </form>
-    {% else %}
-        <center><h4>Your message was delivered</h4>
-                <br><p>Thank you for your feedback, <br>
-    {% endif %}
-
+{% if not feedback%}
+	<h3>Feedback Form</h3>
+	<form method="post" action='/feedback/{{market.id}}/' class="form-group">
+		{% csrf_token %}
+		<textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
+		<input type="submit" class="btn btn-success">
+	</form>
+{% else %}
+	<center><h4>Your message was delivered</h4>
+			<br>Thank you for your feedback, <br>
+	</center>
+{% endif %}
 
 {% endblock %}

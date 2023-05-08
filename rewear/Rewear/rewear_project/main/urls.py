@@ -24,4 +24,7 @@ path("feedback/<id>/", views.feedback, name="feedback"),
 path("update_profilepic/", views.update_profilepic, name="update_profilepic"),
 path("sign_event/<uid>/<mid>/", views.sign_event, name="sign_event"),
 path("my_events/<uid>/", views.my_events, name="my_events"),
+path("send_message/", views.send_message, name="send_message"),
+path("inbox/", views.inbox, name="inbox"),
+path("message_detail/<message_id>", views.message_detail, name="message_detail"),
 ]

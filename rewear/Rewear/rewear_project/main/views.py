@@ -249,3 +249,38 @@ def my_events(response, uid):
     for event in myevents:
         markets.append(market.objects.get(id=event.market_id))
     return render(response, "main/my_events.html", {'markets': markets})
+
+
+from django.contrib.auth.decorators import login_required
+from .models import Message
+from .forms import MessageForm
+
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            recipient = form.cleaned_data['recipient']
+            subject = form.cleaned_data['subject']
+            body = form.cleaned_data['body']
+            message = Message.objects.create(sender=request.user, recipient=recipient, subject=subject, body=body)
+            # return redirect('inbox')
+            return inbox(request)
+            # return render(request, 'main/inbox.html', {'messages': message})
+    else:
+        form = MessageForm()
+    return render(request, 'main/send_message.html', {'form': form})
+
+@login_required
+def inbox(request):
+    messages = Message.objects.filter(recipient=request.user)
+    # messages = Message.objects.all()
+    return render(request, 'main/inbox.html', {'messages': messages})
+
+@login_required
+def message_detail(request, message_id):
+    message = Message.objects.get(id=message_id)
+    if request.user == message.recipient:
+        message.is_read = True
+        message.save()
+    return render(request, 'main/message_detail.html', {'message': message})
