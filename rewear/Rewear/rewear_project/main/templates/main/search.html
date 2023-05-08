@@ -82,15 +82,19 @@ function updateCityOptions() {
 					Address
 				</th>
 				<th>
-					Zip
+					Market Manager
 				</th>
 				<th>
-					Link
+					Date
 				</th>
+<!--				<th>-->
+<!--					Link-->
+<!--				</th>-->
 			{% for market in search %}
 			<tr>
 				<td>
-					{{market.name}}
+					<a href="/market_page/{{market.id}}/">{{market.name}}</a>
+<!--					{{market.name}}-->
 				</td>
 				<td>
 					{{market.city}}
@@ -99,11 +103,14 @@ function updateCityOptions() {
 					{{market.address}}
 				</td>
 				<td>
-					{{market.zip}}
+					{{market.market_manager}}
 				</td>
 				<td>
-					<a href="/market_page/{{market.id}}/">{{market.name}}</a>
+					{{market.date}}
 				</td>
+<!--				<td>-->
+<!--					<a href="/market_page/{{market.id}}/">{{market.name}}</a>-->
+<!--				</td>-->
 
 			</tr>
 			{% endfor %}
