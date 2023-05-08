@@ -1,9 +1,9 @@
 {% extends 'main/base.html' %}
 
-{% block title %}{{user}}'s Profile{% endblock %}
+{% block title %}{{cur_user}}'s Profile{% endblock %}
 
 {% block style %}
-	img {
+	.profimg {
 		border-radius: 50%;
 		border: 2px solid #3880fa;
 		object-fit: cover;
@@ -24,7 +24,7 @@
 	{% if profile_pic %}
 	<center>
 		<br>
-		<img src='{% static profile_pic %}' alt="Avatar" height=180px width=180px>
+		<img src='{% static profile_pic %}' alt="Avatar" height=180px width=180px class="profimg">
 	</center>
 	{% endif %}
 	<table>
@@ -34,18 +34,18 @@
 		</tr>
 		<tr>
 			<td>Email address:&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>{{user.email}} &nbsp; <a href="/messagetouser/{{user.username}}">send message</a></td>
+			<td>{{cur_user.email}} &nbsp; <a href="/messagetouser/{{user.username}}">send message</a></td>
 		</tr>
-		{% if user.first_name %}
+		{% if cur_user.first_name %}
 		<tr>
 			<td>First Name:&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>{{user.first_name.capitalize}}</td>
+			<td>{{cur_user.first_name.capitalize}}</td>
 		</tr>
 		{% endif %}
-		{% if user.last_name %}
+		{% if cur_user.last_name %}
 		<tr>
 			<td>Last Name:&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>{{user.last_name.capitalize}}</td>
+			<td>{{cur_user.last_name.capitalize}}</td>
 		</tr>
 		{% endif %}
 		{% if profileinfo.phone %}
@@ -57,10 +57,10 @@
 		<tr>
 			<td>User type:&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>
-				{% if user.groups.get.name.capitalize == 'Eventmanager' %}
+				{% if cur_user.groups.get.name.capitalize == 'Eventmanager' %}
 				Event Manager
 				{% else %}
-				{{user.groups.get.name.capitalize}}
+				{{cur_user.groups.get.name.capitalize}}
 				{% endif %}
 			</td>
 		</tr>

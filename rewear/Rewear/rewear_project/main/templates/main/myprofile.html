@@ -3,7 +3,7 @@
 {% block title %}My Profile{% endblock %}
 
 {% block style %}
-	img {
+	.profimg {
 		border-radius: 50%;
 		border: 2px solid #3880fa;
 		object-fit: cover;
@@ -24,7 +24,7 @@
 	{% if profile_pic %}
 	<center>
 		<br>
-		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px>
+		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">
 	</center>
 	{% else %}
 	<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
