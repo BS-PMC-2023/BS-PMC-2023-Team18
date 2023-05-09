@@ -69,22 +69,46 @@
 		<tr>
 			<td>{{market.city}}</td>
 			<td>{{market.address}}</td>
-			<td><a href="1">Facebook Link</a></td>
+			<td><a href="http://www.facebook.com/">Facebook Link</a></td>
 			<td>{{market.description}}</td>
 			<td>{{market.date}}</td>
 			<td>{{market.status}}</td>
 			<td>{{market.rating}}</td>
 		</tr>
-		<tr>
-			<br/>
-			<td>{{market.shirt}} shirts</td>
-			<td>{{market.pants}} pants</td>
-			<td>{{market.shoes}} shoes</td>
-			<td>{{market.hat}} hats</td>
-			<td>{{market.gloves}} gloves</td>
-			<td>{{market.scarf}} scarfs</td>
-			<td>{{market.jacket}} jackets</td>
-		</tr>
+		{% if market.market_manager == user.username %}
+			<tr>
+				<br/>
+				<form method="post" action='/set_market_value/{{market.id}}/'class="form-group">
+					{% csrf_token %}
+					<input type="hidden" name="" value="">
+					<td><a>Shirt </a><input type="number" name="shirt" min="0" max="50" step="1" value="{{market.shirt}}" ></td>
+					<td><a>Pants </a><input type="number" name="pants" min="0" max="50" step="1" value="{{market.pants}}" ></td>
+					<td><a>Shoes </a><input type="number" name="shoes" min="0" max="50" step="1" value="{{market.shoes}}"></td>
+					<td><a>Hat </a><input type="number" name="hat" min="0" max="50" step="1" value="{{market.hat}}" ></td>
+					<td><a>Gloves </a><input type="number" name="gloves" min="0" max="50" step="1" value="{{market.gloves}}"></td>
+					<td><a>Scarf </a><input type="number" name="scarf" min="0" max="50" step="1" value="{{market.scarf}}"></td>
+					<td><a>Jacket </a><input type="number" name="jacket" min="0" max="50" step="1" value="{{market.jacket}}"></td>
+					<br> <br>
+					<tr style="background: transparent;"><td></td><td></td><td></td>
+						<td>
+								<input value="Set custom items amount" type="submit" class="btn btn-warning">
+						</td><td></td><td></td><td></td>
+					</tr>
+
+				</form>
+			</tr>
+		{% else %}
+			<tr>
+				<br/>
+				<td>{{market.shirt}} shirts</td>
+				<td>{{market.pants}} pants</td>
+				<td>{{market.shoes}} shoes</td>
+				<td>{{market.hat}} hats</td>
+				<td>{{market.gloves}} gloves</td>
+				<td>{{market.scarf}} scarfs</td>
+				<td>{{market.jacket}} jackets</td>
+			</tr>
+	  	{% endif %}
 	  </tbody>
 	</table>
 
