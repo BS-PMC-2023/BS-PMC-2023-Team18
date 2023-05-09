@@ -16,11 +16,13 @@ from django.contrib.auth.decorators import login_required
 from .models import Message
 from .forms import MessageForm
 
+
 # Create your views here.
 
 def getUserProfileInfo(usr):
-        upi = UserProfileInfo.objects.get(user=usr)
-        return upi
+    upi = UserProfileInfo.objects.get(user=usr)
+    return upi
+
 
 def home(response):
     subs = len(submission.objects.all())
@@ -28,10 +30,12 @@ def home(response):
     new_mail = new_messages(response.user.username)
     return render(response, "main/home.html", {'subs': subs, 'new_mail': new_mail})
 
+
 def search_page(response):
     markets = market.objects.all()
     new_mail = new_messages(response.user.username)
     return render(response, "main/search.html", {'markets': markets, 'search': markets, 'new_mail': new_mail})
+
 
 def myprofile(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
@@ -48,13 +52,15 @@ def myprofile(response):
         'profileinfo': profileinfo,
         'profile_pic': picture,
         'new_mail': new_mail,
-        })
+    })
+
 
 def editabout(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
     about = profileinfo.about
     new_mail = new_messages(response.user.username)
     return render(response, "main/editabout.html", {'about': about, 'new_mail': new_mail})
+
 
 def saveabout(response):
     if response.method == 'POST':
@@ -76,11 +82,11 @@ def sendmessage(response, username):
     if response.method == 'POST':
         message = response.POST['message']
         message = message + "\n\nMy email: " + User.objects.get(username=response.user.username).email
-        send_mail('Rewear: A new message from '+str(response.user.username),
-         message,
-         settings.EMAIL_HOST_USER,
-         [str(User.objects.get(username = username).email)],
-         fail_silently=False)
+        send_mail('Rewear: A new message from ' + str(response.user.username),
+                  message,
+                  settings.EMAIL_HOST_USER,
+                  [str(User.objects.get(username=username).email)],
+                  fail_silently=False)
     new_mail = new_messages(response.user.username)
     return render(response, 'main/thankyou2.html', {'new_mail': new_mail})
 
@@ -96,8 +102,8 @@ def contact(response):
 
 
 def profile(response, username):
-    user = User.objects.get(username = username)
-    profileinfo = (UserProfileInfo.objects.filter(user = user))[0]
+    user = User.objects.get(username=username)
+    profileinfo = (UserProfileInfo.objects.filter(user=user))[0]
     picture = profileinfo.picture
     if picture: picture = picture.path
 
@@ -107,7 +113,7 @@ def profile(response, username):
         'cur_user': user,
         'profile_pic': picture,
         'new_mail': new_mail,
-        })
+    })
 
 
 def areyousure(response):
@@ -128,10 +134,12 @@ def search(response):
         else:
             markets = market.objects.filter(city=city, address=address)
         new_mail = new_messages(response.user.username)
-        return render(response, "main/search.html", {'markets': market.objects.all(), 'search': markets, 'new_mail': new_mail})
+        return render(response, "main/search.html",
+                      {'markets': market.objects.all(), 'search': markets, 'new_mail': new_mail})
     else:
         new_mail = new_messages(response.user.username)
         return render(response, "main/search.html", {'new_mail': new_mail})
+
 
 def insert_market(response):
     new_mail = new_messages(response.user.username)
@@ -150,9 +158,12 @@ def insert_market(response):
         rating = response.POST['rating']
         google_location = response.POST['google_location']
 
-        market.objects.create(name=name, city=city, address=address, facebook=facebook, description=description, picture=picture, market_manager=market_manager, date=date, capacity=capacity, status=status, rating=rating, google_location=google_location)
+        market.objects.create(name=name, city=city, address=address, facebook=facebook, description=description,
+                              picture=picture, market_manager=market_manager, date=date, capacity=capacity,
+                              status=status, rating=rating, google_location=google_location)
         my_dict = {'inserted': True}
     return render(response, "main/insert_market.html", context=my_dict)
+
 
 def market_page(response, id):
     cur_market = market.objects.get(id=id)
@@ -161,9 +172,12 @@ def market_page(response, id):
     # serch in the database if the user is in the event
     new_mail = new_messages(response.user.username)
     if myevents:
-        return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True, 'new_mail': new_mail})
+        return render(response, "main/market_page.html",
+                      {'market': cur_market, 'sign_event': True, 'new_mail': new_mail})
     else:
-        return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': False, 'new_mail': new_mail})
+        return render(response, "main/market_page.html",
+                      {'market': cur_market, 'sign_event': False, 'new_mail': new_mail})
+
 
 def update_market(response, id):
     cur_market = market.objects.get(id=id)
@@ -185,7 +199,9 @@ def update_market(response, id):
         cur_market.jacket += jacket
         cur_market.save()
         return market_page(response, id)
-    return render(response, "main/market_page.html", {'market': cur_market, 'new_mail': new_messages(response.user.username)})
+    return render(response, "main/market_page.html",
+                  {'market': cur_market, 'new_mail': new_messages(response.user.username)})
+
 
 def assign_manager(response, mid, username):
     cur_market = market.objects.get(id=mid)
@@ -195,11 +211,13 @@ def assign_manager(response, mid, username):
     market.save(cur_market)
     return delete_sub(response, mid, username)
 
+
 def delete_sub(response, mid, username):
     cur_user = User.objects.get(username=username)
     cur_sub = submission.objects.get(user_id=cur_user.id, market_id=mid)
     cur_sub.delete()
     return submissions(response)
+
 
 def submissions(response):
     submissions = submission.objects.all()
@@ -231,14 +249,14 @@ def submit_request(response, uid, mid):
 
 
 # user story 14 - Market FeedBack
-def feedback(response,id):
+def feedback(response, id):
     if response.method == 'POST':
         message = response.POST['message']
         send_mail('Contact Form',
-         message,
-         settings.EMAIL_HOST_USER,
-         ['Rewear100@gmail.com'],
-         fail_silently=True)
+                  message,
+                  settings.EMAIL_HOST_USER,
+                  ['Rewear100@gmail.com'],
+                  fail_silently=True)
     cur_market = market.objects.get(id=id)
     new_mail = new_messages(response.user.username)
     return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
@@ -277,6 +295,7 @@ def sign_event(response, uid, mid):
         currevent.save()
     new_mail = new_messages(response.user.username)
     return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True, 'new_mail': new_mail})
+
 
 def my_events(response, uid):
     myevents = myEvent.objects.filter(user_id=uid)
@@ -334,3 +353,7 @@ def new_messages(username):
         return False
 
 
+# NEW MESSAGES:
+# Add the following to every render request:
+# 'new_mail': new_messages(response.user.username)
+# so that "base.html" will be able to get whether user has new mail
