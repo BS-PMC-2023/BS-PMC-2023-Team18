@@ -21,10 +21,12 @@
 {% endif %}
 
 {% if user.is_authenticated and not user.is_superuser and market.market_manager == "" %}
-	<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
-	{% csrf_token %}
-	<input type="submit" value="submit_request">
-	</form>
+	<span style="float: left;">
+		<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
+		{% csrf_token %}
+		<input type="submit" value="Submit a request to become event manager" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">
+		</form>
+	</span>
 {% endif %}
 
 {% if user.is_authenticated and not sign_event %}
@@ -32,7 +34,9 @@
 		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
 		{% csrf_token %}
 		<center>
-		<input type="submit" value="Register to event" class="btn btn-primary">
+			<br>
+			<input type="submit" value="Register to event" class="btn btn-primary" style="float: left;">
+			<br>
 		</center>
 		</form>
 
