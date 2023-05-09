@@ -103,8 +103,12 @@ def contact(response):
 
 def profile(response, username):
     user = User.objects.get(username=username)
-    profileinfo = (UserProfileInfo.objects.filter(user=user))[0]
-    picture = profileinfo.picture
+    try:
+        profileinfo = (UserProfileInfo.objects.filter(user=user))[0]
+        picture = profileinfo.picture
+    except:
+        profileinfo = None
+        picture = None
     if picture: picture = picture.path
 
     new_mail = new_messages(response.user.username)

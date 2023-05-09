@@ -17,9 +17,9 @@
             {% endif %}
           </a>
           {% if not message.is_read %}
-            from {{ message.sender.username }} on {{ message.created_at }}
+            from <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a> on {{ message.created_at }}
           {% else %}
-            <small>from {{ message.sender.username }} on {{ message.created_at }}</small>
+            <small>from <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a> on {{ message.created_at }}</small>
           {% endif %}
 <!--      {% if not message.is_read %}<small> &emsp; - unread </small>{% endif %}-->
         </li>
