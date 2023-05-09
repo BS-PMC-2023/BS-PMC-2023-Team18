@@ -16,7 +16,11 @@
 	{% endif %}
 </center>
 
-{% if user.is_authenticated and not user.is_superuser %}
+{% if market.market_manager == user.username %}
+		YOU ARE MANAGER
+{% endif %}
+
+{% if user.is_authenticated and not user.is_superuser and market.market_manager == "" %}
 	<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
 	{% csrf_token %}
 	<input type="submit" value="submit_request">
@@ -33,8 +37,8 @@
 		</form>
 
 	{% else %}
-        <p><h4>Thank you for signing for our event</h4>
-                <br><p>we will see you there !! <br>
+	<h4>Thank you for signing to our event.</h4>
+	<p>We will see you there!</p>
 {% endif %}
 
 	<table class="table table-striped">
