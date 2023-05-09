@@ -22,29 +22,27 @@
 	  <div class="col-sm-3">
 		<form method="post" action='/delete_market/{{market.id}}/' class="form-group">
 		  {% csrf_token %}
-		  <input type="hidden" name="" value="">
-		  <input type="submit" value="Delete Market" class="btn btn-danger">
+		  <input type="submit" value="Delete Market" class="btn btn-danger" style="float: left;">
 		</form>
 	  </div>
 	</div>
-
 {% endif %}
 
 {% if user.is_authenticated and not user.is_superuser and market.market_manager == "" %}
-	<span style="float: left;">
+	<span style="float: center;">
 		<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
-		{% csrf_token %}
-		<input type="submit" value="Submit a request to become event manager" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">
+			{% csrf_token %}
+<!--			<input type="submit" value="Submit a request to become event manager" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">-->
+			To submit a request to become event manager click
+			<input type="submit" value="HERE" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">
 		</form>
 	</span>
 {% endif %}
 
 {% if user.is_authenticated and not sign_event %}
-		<br>
 		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
 		{% csrf_token %}
 		<center>
-			<br>
 			<input type="submit" value="Register to event" class="btn btn-primary" style="float: left;">
 			<br>
 		</center>
