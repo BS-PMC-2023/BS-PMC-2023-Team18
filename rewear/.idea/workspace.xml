@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7061578a-f43e-42e1-b330-a50865c68906" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Rewear/rewear_project/main/templates/main/my_events.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/main/templates/main/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/main/templates/main/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/main/templates/main/market_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/main/templates/main/market_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rewear/rewear_project/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rewear/rewear_project/main/views.py" afterDir="false" />
     </list>
@@ -25,6 +23,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Rewear/rewear_project/main/tests.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -36,11 +37,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Tomer\OneDrive\מסמכים\GitHub\BS-PMC-2023-Team18\rewear\Rewear\rewear_project\templates\reware_app" />

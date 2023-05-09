@@ -361,3 +361,17 @@ def new_messages(username):
 # Add the following to every render request:
 # 'new_mail': new_messages(response.user.username)
 # so that "base.html" will be able to get whether user has new mail
+
+def delete_market(response, id):
+
+    if response.method == 'POST':
+        if response.user.username == market.objects.get(id=id).market_manager:
+
+            cur_market = market.objects.get(id=id)
+            cur_market.delete()
+            for sub in submission.objects.filter(market_id=id):
+                sub.delete()
+
+            for event in myEvent.objects.filter(market_id=id):
+                event.delete()
+    return search_page(response)

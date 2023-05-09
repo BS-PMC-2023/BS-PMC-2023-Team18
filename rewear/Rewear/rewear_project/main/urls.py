@@ -27,4 +27,5 @@ path("send_message/<username>/", views.send_message, name="send_message"),
 path("send_message/", views.send_message, name="send_message"),
 path("inbox/", views.inbox, name="inbox"),
 path("message_detail/<message_id>", views.message_detail, name="message_detail"),
+path("delete_market/<id>/", views.delete_market, name="delete_market"),
 ]
