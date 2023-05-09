@@ -5,4 +5,7 @@
   <p>From: {{ message.sender.username }}</p>
   <p>To: {{ message.recipient.username }}</p>
   <p>{{ message.body }}</p>
+
+  <br /><br />
+  <a href="/send_message/{{message.sender.username}}/">Reply</a>
 {% endblock %}
