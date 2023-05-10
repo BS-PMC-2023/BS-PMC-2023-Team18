@@ -1,9 +1,10 @@
 from django.test import TestCase, Client
 # from django.urls import reverse
-# from django.contrib.auth.models import User
-# from registry.models import UserProfileInfo
+from django.contrib.auth.models import User, Group
+from registry.models import UserProfileInfo
 # from .models import market, submission
 # from .views import *
+from main import views
 
 class Test(TestCase):
 
@@ -47,3 +48,31 @@ class Test(TestCase):
     def test_message_detail(self):
         response = self.client.get('/message_detail/0/')
         self.assertEqual(response.status_code, 404)
+
+    def test_market_page(self):
+        response = self.client.get('/market_page/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_update_market(self):
+        response = self.client.get('/update_market/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_getUserProfileInfo(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        self.assertEqual(temp.user.username, users[0].username)
+
+    def test_myprofile(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+        response = self.client.get('/profile/')
+        self.assertEqual(response.status_code, 200)
+
+        
+
