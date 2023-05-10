@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/BS-PMC-2023/BS-PMC-2023-Team18.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/BS-PMC-2023/BS-PMC-2023-Team20.git']]])
             }
         }
         stage('Install Dependencies') {
