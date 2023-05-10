@@ -96,9 +96,9 @@ def about(response):
     return render(response, "main/about.html", {'new_mail': new_mail})
 
 
-def contact(response):
-    new_mail = new_messages(response.user.username)
-    return render(response, "main/contact.html", {'new_mail': new_mail})
+# def contact(response):
+#     new_mail = new_messages(response.user.username)
+#     return render(response, "main/contact.html", {'new_mail': new_mail})
 
 
 def profile(response, username):
