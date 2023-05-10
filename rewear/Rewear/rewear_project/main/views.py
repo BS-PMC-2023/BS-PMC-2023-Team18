@@ -290,16 +290,16 @@ def feedback(response, id):
     return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
 
 
-# def update_profilepic(response):
-#     if response.method == 'POST':
-#         form = UserProfileInfo(response.POST, response.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return render(response, 'main/profile.html', {})
-#     else:
-#         form = UserProfileInfoForm()
-#     new_mail = new_messages(response.user.username)
-#     return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
+def update_profilepic(response):
+    if response.method == 'POST':
+        form = UserProfileInfo(response.POST, response.FILES)
+        if form.is_valid():
+            form.save()
+            return render(response, 'main/profile.html', {})
+    else:
+        form = UserProfileInfoForm()
+    new_mail = new_messages(response.user.username)
+    return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
 
 
 def update_profilepic(response):
