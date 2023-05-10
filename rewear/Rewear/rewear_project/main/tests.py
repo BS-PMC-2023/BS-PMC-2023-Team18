@@ -199,7 +199,7 @@ class Test(TestCase):
 
         self.assertEqual(m.is_read, False)
         response = self.client.get('message_detail/' + str(m.id))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(m.is_read, True)
 
 
     def test_new_messages(self):
