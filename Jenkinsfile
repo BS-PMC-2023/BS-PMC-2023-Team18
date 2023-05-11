@@ -4,7 +4,7 @@ pipeline {
             image 'python:3.9'
             args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
-        dir '/var/jenkins_home/workspace/Team-18/rewear_project'
+        dir '/var/jenkins_home/workspace/BS-PMC-2023-Team18/main/rewear/Rewear/rewear_project'
     }
 
 
