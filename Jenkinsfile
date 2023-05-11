@@ -1,3 +1,4 @@
+pipeline {
     agent {
         docker {
             image 'python:3.9' // Docker image to use
@@ -66,4 +67,4 @@
             echo 'Build failed!' // Display failure message
         }
     }
-}```
+}
