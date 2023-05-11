@@ -31,11 +31,12 @@ pipeline {
         stage('Test') {
             steps {
                 dir('main/rewear/Rewear/rewear_project') { // Change to the rewear_project directory
-//                     sh 'pipenv run python ./manage.py test' // Specify the path to manage.py
-                    sh 'python manage.py test'
+                    sh 'pwd' // Print the current working directory
+                    sh 'python manage.py test' // Run tests
                 }
             }
         }
+
 
 
 
