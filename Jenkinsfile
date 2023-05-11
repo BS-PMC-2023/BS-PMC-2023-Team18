@@ -30,7 +30,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'pipenv run python manage.py test'  
+                sh 'pipenv run python rewear_project/manage.py test' 
             }
         }
 
