@@ -30,9 +30,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'pipenv run python manage.py test'  
+                dir('main/rewear/Rewear/rewear_project') { // Change to the rewear_project directory
+                    sh 'pipenv run python ./manage.py test' // Specify the path to manage.py
+                }
             }
         }
+
+
 
         stage('Deploy') {
             steps {
