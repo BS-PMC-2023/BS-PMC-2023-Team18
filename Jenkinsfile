@@ -1,11 +1,10 @@
 pipeline {
-agent {
-    docker {
-        image 'python:3.9'
-        args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
+    agent {
+        docker {
+            image 'python:3.9' // Docker image to use
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root' // Add -u root option for elevated permissions
+        }
     }
-    dir '/var/jenkins_home/workspace/team18_pipeline'
-}
 
 
     stages {
