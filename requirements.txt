@@ -1,0 +1,16 @@
+﻿asgiref==3.6.0
+certifi==2023.5.7
+charset-normalizer==3.1.0
+coverage==7.2.5
+Django==3.2.18
+django-crispy-forms==1.14.0
+django-filter==23.1
+googlemaps==4.10.0
+idna==3.4
+pi==0.1.2
+Pillow==9.5.0
+pytz==2023.3
+requests==2.30.0
+sqlparse==0.4.3
+typing_extensions==4.5.0
+urllib3==1.26.4
