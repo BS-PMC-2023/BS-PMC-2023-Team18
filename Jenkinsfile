@@ -1,10 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.9' // Docker image to use
-            args '-v /var/run/docker.sock:/var/run/docker.sock -u root' // Add -u root option for elevated permissions
-        }
+agent {
+    docker {
+        image 'python:3.9'
+        args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
     }
+    dir '/var/jenkins_home/workspace/team18_pipeline'
+}
+
 
     stages {
         stage('Checkout') {
@@ -30,7 +32,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'pipenv run python rewear_project/manage.py test' 
+                sh 'pipenv run python manage.py test'  
             }
         }
 
