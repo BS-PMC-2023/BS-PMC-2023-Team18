@@ -13,8 +13,11 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'python manage.py test dashboard.tests'
+                dir('main/rewear/Rewear/rewear_project') { // change to the rewear_project directory
+                    sh 'pipenv run python manage.py test'
+                }
             }
+        }
  //           post {
  //               always {
  //                   junit 'dashboard/tests.xml'
