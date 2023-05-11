@@ -30,16 +30,9 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('main/rewear/Rewear/rewear_project') { // Change to the rewear_project directory
-                    sh 'pwd' // Print the current working directory
-                    sh 'python manage.py test dashboard.tests'
-                    sh 'python manage.py test' // Run tests
-                }
+                sh 'pipenv run python manage.py test'  
             }
         }
-
-
-
 
         stage('Deploy') {
             steps {
@@ -72,4 +65,3 @@ pipeline {
         }
     }
 }
-
