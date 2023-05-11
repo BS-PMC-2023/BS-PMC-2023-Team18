@@ -1,10 +1,12 @@
 pipeline {
     agent {
         docker {
-            image 'python:3.9' // Docker image to use
-            args '-v /var/run/docker.sock:/var/run/docker.sock -u root' // Add -u root option for elevated permissions
+            image 'python:3.9'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
+        dir '/var/jenkins_home/workspace/Team-18/rewear_project'
     }
+
 
 
     stages {
