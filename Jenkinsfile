@@ -17,33 +17,23 @@ pipeline {
             steps {
                 sh 'apt-get update' // Update package lists
                 sh 'apt-get install -y python3-dev python3-pip' // Install Python and pip
-                sh 'pip install --no-cache-dir pipenv' // Install pipenv
+                sh 'pip install pipenv' // Install pipenv
             }
         }
 
         stage('Build') {
             steps {
-                    sh 'pipenv install --skip-lock' // Install dependencies (skip lock)
-                    sh 'pipenv install -r requirements.txt' // Install dependencies from requirements.txt
-                }
-                post {
-                    always {
-                        // Set PIPENV_VENV_IN_PROJECT environment variable
-                        withEnv(["PIPENV_VENV_IN_PROJECT=true"]) {
-                            sh 'pipenv run python manage.py test' // Specify the path to manage.py
-                        }
-                    }
-                    }
+                sh 'pipenv install --skip-lock' // Create and activate virtual environment, install dependencies (skip lock)
+                sh 'pipenv install -r requirements.txt' // Install dependencies from requirements.txt
+            }
         }
 
         stage('Test') {
             steps {
-                dir('rewear//Rewear//rewear_project'){
+                dir('rewear//Rewear//rewear_project//main'){
                  // Change to the rewear_project directory
-                     sh 'pipenv shell'
-                     sh 'pip install django'
-                     sh 'pipenv run python manage.py test' // Specify the path to manage.py
-//                     sh 'python tests.py'
+//                     sh 'pipenv run python manage.py test' // Specify the path to manage.py
+                    sh 'python tests.py'
                 }
             }
         }
