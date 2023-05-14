@@ -23,8 +23,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pipenv install --skip-lock' // Create and activate virtual environment, install dependencies (skip lock)
-                sh 'pipenv install -r requirements.txt' // Install dependencies from requirements.txt
+                sh 'pip install --skip-lock' // Create and activate virtual environment, install dependencies (skip lock)
+                sh 'pip install -r requirements.txt' // Install dependencies from requirements.txt
             }
         }
 
@@ -42,9 +42,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'pipenv run python manage.py migrate' 
+                sh 'pip run python manage.py migrate' 
                 sh 'nohup pipenv run python manage.py runserver & sleep 5' 
-                sh 'pipenv run python manage.py test' 
+                sh 'pip run python manage.py test' 
                 script {
                     def processIds = sh(script: "ps aux | grep 'python manage.py runserver' | grep -v grep | awk '{print \$2}'", returnStdout: true).trim()
                     if (processIds) {
