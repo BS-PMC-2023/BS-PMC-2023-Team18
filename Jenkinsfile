@@ -13,18 +13,10 @@ pipeline {
             }
         }
 
-        stage('Install pipenv') {
-            steps {
-                sh 'apt-get update' // Update package lists
-                sh 'apt-get install -y python3-dev python3-pip' // Install Python and pip
-                sh 'pip install pipenv' // Install pipenv
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'pip install --skip-lock' // Create and activate virtual environment, install dependencies (skip lock)
-                sh 'pip install -r requirements.txt' // Install dependencies from requirements.txt
+                sh 'pipenv install --skip-lock' // Create and activate virtual environment, install dependencies (skip lock)
+                sh 'pipenv install -r requirements.txt' // Install dependencies from requirements.txt
             }
         }
 
