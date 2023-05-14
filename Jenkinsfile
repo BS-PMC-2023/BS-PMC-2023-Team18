@@ -42,9 +42,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'pip run python manage.py migrate' 
+                sh 'pipenv run python manage.py migrate' 
                 sh 'nohup pipenv run python manage.py runserver & sleep 5' 
-                sh 'pip run python manage.py test' 
+                sh 'pipenv run python manage.py test' 
                 script {
                     def processIds = sh(script: "ps aux | grep 'python manage.py runserver' | grep -v grep | awk '{print \$2}'", returnStdout: true).trim()
                     if (processIds) {
