@@ -15,7 +15,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pipenv install -r requirements.txt' // Install dependencies from requirements.txt
+                sh 'pip install -r requirements.txt' // Install dependencies from requirements.txt
             }
         }
 
