@@ -23,8 +23,8 @@
 {% else %}
 	{% if profile_pic %}
 	<center>
-		<br>
-		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">
+		<img src="{% static pic_path %}" alt="Avatar" height=180px width=180px class="profimg">
+<!--		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">-->
 	</center>
 	{% else %}
 	<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
@@ -64,10 +64,10 @@
 		<tr>
 			<td>User type:&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>
-				{% if user.groups.get.name.capitalize == 'Eventmanager' %}
+				{% if cur_user.groups.all.0.name == "eventManager" %}
 				Event Manager
 				{% else %}
-				{{user.groups.get.name.capitalize}}
+				Buyer
 				{% endif %}
 			</td>
 		</tr>

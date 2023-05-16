@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Search{% endblock %}
+{% block title %}Managed Events{% endblock %}
 
 {% block style %}
 	table {
@@ -15,7 +15,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<center><h1>Search</h1>
+<center><h1>Managed Events</h1>
 
 <form method="post" action='/search/'>
 	{% csrf_token %}
@@ -90,11 +90,11 @@ function updateCityOptions() {
 <!--				<th>-->
 <!--					Link-->
 <!--				</th>-->
-			{% for market in search %}
+			{% for market in markets %}
 			<tr>
 				<td>
-					<a href="/market_page/{{market.id}}/">{{market.name}}</a>
 <!--					{{market.name}}-->
+					<a href="/market_page/{{market.id}}/">{{market.name}}</a>
 				</td>
 				<td>
 					{{market.city}}
@@ -103,7 +103,7 @@ function updateCityOptions() {
 					{{market.address}}
 				</td>
 				<td>
-					<a href="/profile/{{market.market_manager}}/">{{market.market_manager}}</a>
+					{{market.market_manager}}
 				</td>
 				<td>
 					{{market.date}}
