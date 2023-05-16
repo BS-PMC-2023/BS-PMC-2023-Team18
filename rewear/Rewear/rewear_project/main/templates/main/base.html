@@ -31,6 +31,10 @@
 									<li><a href="/my_events/{{request.user.id}}">My Events</a></li>
 								{% endif %}
 
+								{% if user.groups.all.0.name == 'eventManager' %}
+									<li><a href="/managed_events/{{request.user.id}}">Managed Events</a></li>
+								{% endif %}
+
 								<li><a href="/about/">About</a></li>
 
 								{% if user.is_authenticated and user.is_superuser %}
