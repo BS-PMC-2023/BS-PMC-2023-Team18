@@ -1,30 +1,52 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.9' // Docker image to use
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root' // Add -u root option for elevated permissions
+        }
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/BS-PMC-2023/BS-PMC-2023-Team18.git']]])
+                checkout scm
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'python manage.py test'
-            }
-        }
+
         stage('Build') {
             steps {
-                sh 'python manage.py collectstatic --noinput'
+                sh 'pip install -r requirements.txt' // Install dependencies from requirements.txt
             }
         }
-        stage('Deploy') {
+
+        stage('Test') {
             steps {
-                // Add your deployment steps here
+                dir('rewear/Rewear/rewear_project'){
+                 // Change to the rewear_project directory
+//                     sh 'pipenv run python manage.py test' // Specify the path to manage.py
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        python manage.py test
+                        """
+                }
             }
+        }
+
+    }
+
+    post {
+        always {
+            sh 'find . -name "*.pyc" -delete' // Remove compiled Python files
+            junit allowEmptyResults: true, testResults: '**/test-results/*.xml'
+            cleanWs(cleanWhenNotBuilt: false, deleteDirs: true, disableDeferredWipeout: true, notFailBuild: true, patterns: [[pattern: '.gitignore', type: 'INCLUDE'],  [pattern: '.propsfile', type: 'EXCLUDE']])
+        }
+
+        success {
+            echo 'Build successful!' // Display success message
+        }
+
+        failure {
+            echo 'Build failed!' // Display failure message
         }
     }
 }
