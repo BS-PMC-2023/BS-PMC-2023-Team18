@@ -21,10 +21,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('rewear//Rewear//rewear_project//main'){
+                dir('rewear/Rewear/rewear_project'){
                  // Change to the rewear_project directory
 //                     sh 'pipenv run python manage.py test' // Specify the path to manage.py
-                    sh 'python tests.py'
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        python manage.py test
+                        """
                 }
             }
         }
