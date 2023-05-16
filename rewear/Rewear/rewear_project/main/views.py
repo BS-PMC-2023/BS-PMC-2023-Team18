@@ -306,13 +306,25 @@ def feedback(response, market_name):
     if response.method == 'POST':
         form = MessageForm(response.POST)
         body = response.POST['message']
-        cur_market = market.objects.get(name=market_name)
-        recipient = User.objects.get(username=cur_market.market_manager)
-        subject = "Market {0} Feedback".format(market_name)
-        new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+        if market_name != '"':
+            cur_market = market.objects.get(name=market_name)
+            recipient = User.objects.get(username=cur_market.market_manager)
+            subject = "Market {0} Feedback".format(market_name)
+            new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+            new_mail = new_messages(response.user.username)
+            return render(response, "main/market_page.html",
+                          {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
+        else:
+            subject = "Feedback from {0}".format(response.user.username)
+            for user in User.objects.all():
+                if user.is_superuser:
+                    recipient = User.objects.get(username=user.username)
+                    new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+        # new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+    return home(response)
 
-    new_mail = new_messages(response.user.username)
-    return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
+    # new_mail = new_messages(response.user.username)
+    # return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
 
 
 def update_profilepic(response):
