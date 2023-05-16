@@ -80,19 +80,6 @@ def toggle_active(response):
     return home(response)
 
 
-def sendmessage(response, username):
-    if response.method == 'POST':
-        message = response.POST['message']
-        message = message + "\n\nMy email: " + User.objects.get(username=response.user.username).email
-        send_mail('Rewear: A new message from ' + str(response.user.username),
-                  message,
-                  settings.EMAIL_HOST_USER,
-                  [str(User.objects.get(username=username).email)],
-                  fail_silently=False)
-    new_mail = new_messages(response.user.username)
-    return render(response, 'main/thankyou2.html', {'new_mail': new_mail})
-
-
 def about(response):
     new_mail = new_messages(response.user.username)
     return render(response, "main/about.html", {'new_mail': new_mail})
@@ -287,18 +274,31 @@ def submit_request(response, uid, mid):
     return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
 
-# user story 14 - Market FeedBack
-def feedback(response, id):
+# user story 19, 20 - Market FeedBack, also general feedback
+def feedback(response, market_name):
+    cur_market = None
     if response.method == 'POST':
-        message = response.POST['message']
-        send_mail('Contact Form',
-                  message,
-                  settings.EMAIL_HOST_USER,
-                  ['Rewear100@gmail.com'],
-                  fail_silently=True)
-    cur_market = market.objects.get(id=id)
-    new_mail = new_messages(response.user.username)
-    return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
+        form = MessageForm(response.POST)
+        body = response.POST['message']
+        if market_name != '"':
+            cur_market = market.objects.get(name=market_name)
+            recipient = User.objects.get(username=cur_market.market_manager)
+            subject = "Market {0} Feedback".format(market_name)
+            new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+            new_mail = new_messages(response.user.username)
+            return render(response, "main/market_page.html",
+                          {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
+        else:
+            subject = "Feedback from {0}".format(response.user.username)
+            for user in User.objects.all():
+                if user.is_superuser:
+                    recipient = User.objects.get(username=user.username)
+                    new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+        # new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+    return home(response)
+
+    # new_mail = new_messages(response.user.username)
+    # return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
 
 
 def update_profilepic(response):
@@ -354,6 +354,7 @@ def managed_events(response, uid):
     return render(response, "main/managed_events.html", {'markets': markets, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 @login_required
 def send_message(request, username=None):
     if request.method == 'POST':
@@ -373,6 +374,7 @@ def send_message(request, username=None):
     return render(request, 'main/send_message.html', {'form': form, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 @login_required
 def inbox(request):
     messages = Message.objects.filter(recipient=request.user)
@@ -380,6 +382,7 @@ def inbox(request):
     return render(request, 'main/inbox.html', {'messages': messages, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 @login_required
 def message_detail(request, message_id):
     message = Message.objects.get(id=message_id)
@@ -390,6 +393,7 @@ def message_detail(request, message_id):
     return render(request, 'main/message_detail.html', {'message': message, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 def new_messages(username):
     try:
         messages = Message.objects.filter(recipient=User.objects.filter(username=username)[0])

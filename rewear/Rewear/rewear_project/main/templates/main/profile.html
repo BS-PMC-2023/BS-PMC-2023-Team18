@@ -23,8 +23,8 @@
 {% else %}
 	{% if profile_pic %}
 	<center>
-		<img src="{% static pic_path %}" alt="Avatar" height=180px width=180px class="profimg">
-<!--		<img src='{% static profile_pic %}' alt="Avatar" height=180px width=180px class="profimg">-->
+		<br>
+		<img src='{% static profile_pic %}' alt="Avatar" height=180px width=180px class="profimg">
 	</center>
 	{% endif %}
 	<table>
@@ -57,10 +57,10 @@
 		<tr>
 			<td>User type:&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>
-				{% if cur_user.groups.all.0.name == "eventManager" %}
+				{% if cur_user.groups.get.name.capitalize == 'Eventmanager' %}
 				Event Manager
 				{% else %}
-				Buyer
+				{{cur_user.groups.get.name.capitalize}}
 				{% endif %}
 			</td>
 		</tr>

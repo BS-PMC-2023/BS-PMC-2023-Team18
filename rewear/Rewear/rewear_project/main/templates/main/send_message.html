@@ -2,8 +2,7 @@
 
 {% block content %}
   <h2>Send Message</h2>
-  <form method="post">
-    {% csrf_token %}
+  <form method="post"}>
     Recipient: <br />
     {{ form.recipient }} <br />
      Subject: <br />

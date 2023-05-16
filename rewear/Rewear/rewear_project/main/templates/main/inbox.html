@@ -7,21 +7,10 @@
   </center>
   {% if messages %}
     <ul>
-      {% for message in messages reversed %}
-        <li{% if not message.is_read %} style="font-weight: bold;"{% endif %}>
-          <a href="/message_detail/{{message.id}}">
-            {% if not message.is_read %}
-              <big><b>{{ message.subject }}</b></big>
-            {% else %}
-              {{ message.subject }}
-            {% endif %}
-          </a>
-          {% if not message.is_read %}
-            from <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a> on {{ message.created_at }}
-          {% else %}
-            <small>from <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a> on {{ message.created_at }}</small>
-          {% endif %}
-<!--      {% if not message.is_read %}<small> &emsp; - unread </small>{% endif %}-->
+      {% for message in messages %}
+        <li{% if not message.is_read %} style="font-weight:bold"{% endif %}>
+          <a href="/message_detail/{{message.id}}">{{ message.subject }}</a>
+          <small>from {{ message.sender.username }} on {{ message.created_at }}</small>
         </li>
       {% endfor %}
     </ul>

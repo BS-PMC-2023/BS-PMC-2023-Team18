@@ -31,8 +31,7 @@ class UserForm(forms.ModelForm):
 class UserProfileInfoForm(forms.ModelForm):
 
     USER_TYPES = [('buyer', 'Buyer'),
-    #('eventManager', 'Event Manager'),
-                  ]
+    ('eventManager', 'Event Manager'),]
     userType = forms.CharField(label='User type', widget=forms.Select(choices=USER_TYPES))
     phone = models.CharField(max_length=10, default=None,)
     picture = models.ImageField(upload_to='picture', blank=True)

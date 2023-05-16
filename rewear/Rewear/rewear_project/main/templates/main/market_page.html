@@ -16,41 +16,25 @@
 	{% endif %}
 </center>
 
-{% if market.market_manager == user.username %}
-
-	<div class="row justify-content-end">
-	  <div class="col-sm-3">
-		<form method="post" action='/delete_market/{{market.id}}/' class="form-group">
-		  {% csrf_token %}
-		  <input type="submit" value="Delete Market" class="btn btn-danger" style="float: left;">
-		</form>
-	  </div>
-	</div>
-{% endif %}
-
-{% if user.is_authenticated and not user.is_superuser and market.market_manager == "" %}
-	<span style="float: center;">
-		<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
-			{% csrf_token %}
-<!--			<input type="submit" value="Submit a request to become event manager" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">-->
-			To submit a request to become event manager click
-			<input type="submit" value="HERE" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">
-		</form>
-	</span>
+{% if user.is_authenticated and not user.is_superuser %}
+	<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
+	{% csrf_token %}
+	<input type="submit" value="submit_request">
+	</form>
 {% endif %}
 
 {% if user.is_authenticated and not sign_event %}
+		<br>
 		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
 		{% csrf_token %}
 		<center>
-			<input type="submit" value="Register to event" class="btn btn-primary" style="float: left;">
-			<br>
+		<input type="submit" value="Register to event" class="btn btn-primary">
 		</center>
 		</form>
 
 	{% else %}
-	<h4>Thank you for signing to our event.</h4>
-	<p>We will see you there!</p>
+        <p><h4>Thank you for signing for our event</h4>
+                <br><p>we will see you there !! <br>
 {% endif %}
 
 	<table class="table table-striped">
@@ -69,46 +53,22 @@
 		<tr>
 			<td>{{market.city}}</td>
 			<td>{{market.address}}</td>
-			<td><a href="http://www.facebook.com/">Facebook Link</a></td>
+			<td><a href="1">Facebook Link</a></td>
 			<td>{{market.description}}</td>
 			<td>{{market.date}}</td>
 			<td>{{market.status}}</td>
 			<td>{{market.rating}}</td>
 		</tr>
-		{% if market.market_manager == user.username %}
-			<tr>
-				<br/>
-				<form method="post" action='/set_market_value/{{market.id}}/'class="form-group">
-					{% csrf_token %}
-					<input type="hidden" name="" value="">
-					<td><a>Shirt </a><input type="number" name="shirt" min="0" max="50" step="1" value="{{market.shirt}}" ></td>
-					<td><a>Pants </a><input type="number" name="pants" min="0" max="50" step="1" value="{{market.pants}}" ></td>
-					<td><a>Shoes </a><input type="number" name="shoes" min="0" max="50" step="1" value="{{market.shoes}}"></td>
-					<td><a>Hat </a><input type="number" name="hat" min="0" max="50" step="1" value="{{market.hat}}" ></td>
-					<td><a>Gloves </a><input type="number" name="gloves" min="0" max="50" step="1" value="{{market.gloves}}"></td>
-					<td><a>Scarf </a><input type="number" name="scarf" min="0" max="50" step="1" value="{{market.scarf}}"></td>
-					<td><a>Jacket </a><input type="number" name="jacket" min="0" max="50" step="1" value="{{market.jacket}}"></td>
-					<br> <br>
-					<tr style="background: transparent;"><td></td><td></td><td></td>
-						<td>
-								<input value="Set custom items amount" type="submit" class="btn btn-warning">
-						</td><td></td><td></td><td></td>
-					</tr>
-
-				</form>
-			</tr>
-		{% else %}
-			<tr>
-				<br/>
-				<td>{{market.shirt}} shirts</td>
-				<td>{{market.pants}} pants</td>
-				<td>{{market.shoes}} shoes</td>
-				<td>{{market.hat}} hats</td>
-				<td>{{market.gloves}} gloves</td>
-				<td>{{market.scarf}} scarfs</td>
-				<td>{{market.jacket}} jackets</td>
-			</tr>
-	  	{% endif %}
+		<tr>
+			<br/>
+			<td>{{market.shirt}} shirts</td>
+			<td>{{market.pants}} pants</td>
+			<td>{{market.shoes}} shoes</td>
+			<td>{{market.hat}} hats</td>
+			<td>{{market.gloves}} gloves</td>
+			<td>{{market.scarf}} scarfs</td>
+			<td>{{market.jacket}} jackets</td>
+		</tr>
 	  </tbody>
 	</table>
 
