@@ -25,4 +25,18 @@ We believe that everyone can make a difference when it comes to sustainability. 
 Thank you for visiting our website! We hope you’ll join us in our mission to create a more sustainable future.
 </p>
 
+
+{% if not feedback and user.is_authenticated %}
+	<center><h3>Leave a Feedback:</h3>
+	<form method="post" action='/feedback/"/' class="form-group">
+		{% csrf_token %}
+		<textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
+		<br><input type="submit" class="btn btn-success">
+	</form></center>
+{% else %}
+	<center><h4>Your message was delivered</h4>
+			Thank you for your feedback!<br><br>
+	</center>
+{% endif %}
+
 {% endblock %}
