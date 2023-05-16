@@ -354,6 +354,7 @@ def managed_events(response, uid):
     return render(response, "main/managed_events.html", {'markets': markets, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 @login_required
 def send_message(request, username=None):
     if request.method == 'POST':
@@ -373,6 +374,7 @@ def send_message(request, username=None):
     return render(request, 'main/send_message.html', {'form': form, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 @login_required
 def inbox(request):
     messages = Message.objects.filter(recipient=request.user)
@@ -380,6 +382,7 @@ def inbox(request):
     return render(request, 'main/inbox.html', {'messages': messages, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 @login_required
 def message_detail(request, message_id):
     message = Message.objects.get(id=message_id)
@@ -390,6 +393,7 @@ def message_detail(request, message_id):
     return render(request, 'main/message_detail.html', {'message': message, 'new_mail': new_mail})
 
 
+# User story 27 - send message to user
 def new_messages(username):
     try:
         messages = Message.objects.filter(recipient=User.objects.filter(username=username)[0])
