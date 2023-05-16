@@ -39,18 +39,20 @@ def search_page(response):
 
 def myprofile(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
-    picture = UserProfileInfo.objects.get(user=response.user).picture
-    group = response.user.groups.get(user=response.user)
-    if group.name == 'buyer':
-        pass
-
-    if group.name == 'eventManager':
-        pass
-
+    try:
+        picture = UserProfileInfo.objects.get(user=response.user).picture
+    except:
+        picture = None
+    try:
+        pic_path = picture.path.split("static")[-1]
+    except:
+        pic_path = None
     new_mail = new_messages(response.user.username)
     return render(response, "main/myprofile.html", {
         'profileinfo': profileinfo,
         'profile_pic': picture,
+        'pic_path': pic_path,
+        'cur_user': response.user,
         'new_mail': new_mail,
     })
 
@@ -111,11 +113,17 @@ def profile(response, username):
         picture = None
     if picture: picture = picture.path
 
+    pic_path = None
+    try:
+        pic_path = picture.split("static")[-1]
+    except:
+        pic_path = None
     new_mail = new_messages(response.user.username)
     return render(response, "main/profile.html", {
         'profileinfo': profileinfo,
         'cur_user': user,
         'profile_pic': picture,
+        'pic_path': pic_path,
         'new_mail': new_mail,
     })
 
@@ -232,6 +240,9 @@ def set_market_value(response, id):
 
 
 def assign_manager(response, mid, username):
+    user = User.objects.get(username=username)
+    managerGroup = Group.objects.get(name="eventManager")
+    user.groups.add(managerGroup)
     cur_market = market.objects.get(id=mid)
     print(cur_market.market_manager)
     cur_market.market_manager = username
@@ -291,15 +302,17 @@ def feedback(response, id):
 
 
 def update_profilepic(response):
+    new_mail = new_messages(response.user.username)
     if response.method == 'POST':
         form = UserProfileInfo(response.POST, response.FILES)
         if form.is_valid():
             form.save()
-            return render(response, 'main/profile.html', {})
+            # return myprofile(response)
+            return render(response, "main/home.html", {'new_mail': new_mail})
     else:
         form = UserProfileInfoForm()
-    new_mail = new_messages(response.user.username)
-    return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
+    # return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
+    return render(response, "main/home.html", {'new_mail': new_mail})
 
 
 def update_profilepic(response):
@@ -332,6 +345,13 @@ def my_events(response, uid):
         markets.append(market.objects.get(id=event.market_id))
     new_mail = new_messages(response.user.username)
     return render(response, "main/my_events.html", {'markets': markets, 'new_mail': new_mail})
+
+
+def managed_events(response, uid):
+    curUser = User.objects.get(id=uid)
+    markets = market.objects.filter(market_manager=curUser.username)
+    new_mail = new_messages(response.user.username)
+    return render(response, "main/managed_events.html", {'markets': markets, 'new_mail': new_mail})
 
 
 @login_required
