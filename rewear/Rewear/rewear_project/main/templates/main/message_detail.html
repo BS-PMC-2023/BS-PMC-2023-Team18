@@ -2,7 +2,10 @@
 
 {% block content %}
   <h2>{{ message.subject }}</h2>
-  <p>From: {{ message.sender.username }}</p>
-  <p>To: {{ message.recipient.username }}</p>
+  <p>From: <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a></p>
+  <p>To: <a href="/profile/{{ message.recipient.username }}">{{ message.recipient.username }}</a></p>
   <p>{{ message.body }}</p>
+
+  <br /><br />
+  <a href="/send_message/{{message.sender.username}}/">Reply</a>
 {% endblock %}
