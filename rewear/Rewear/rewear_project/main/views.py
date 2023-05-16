@@ -56,7 +56,7 @@ def myprofile(response):
         'new_mail': new_mail,
     })
 
-
+# Here we edit the profile of the user and update the about him.
 def editabout(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
     about = profileinfo.about
@@ -287,20 +287,7 @@ def submit_request(response, uid, mid):
     return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
 
-# user story 14 - Market FeedBack
-"""def feedback(response, id):
-    if response.method == 'POST':
-        message = response.POST['message']
-        send_mail('Contact Form',
-                  message,
-                  settings.EMAIL_HOST_USER,
-                  ['Rewear100@gmail.com'],
-                  fail_silently=True)
-    cur_market = market.objects.get(id=id)
-    new_mail = new_messages(response.user.username)
-    return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})"""
-
-
+# User story 19,20 - market feedback and general feedback
 def feedback(response, market_name):
     cur_market = None
     if response.method == 'POST':
