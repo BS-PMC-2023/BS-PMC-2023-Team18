@@ -54,7 +54,7 @@ def myprofile(response):
         'new_mail': new_mail,
     })
 
-
+# Here we edit the profile of the user and update the about him.
 def editabout(response):
     profileinfo = UserProfileInfo.objects.get(user=response.user)
     about = profileinfo.about
