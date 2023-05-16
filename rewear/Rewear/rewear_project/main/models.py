@@ -51,5 +51,7 @@ class Message(models.Model):
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     subject = models.CharField(max_length=255)
     body = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    #created_at = models.DateTimeField(auto_now_add=True)
+    from django.utils import timezone
+    created_at = models.DateTimeField(default=timezone.now)
     is_read = models.BooleanField(default=False)
