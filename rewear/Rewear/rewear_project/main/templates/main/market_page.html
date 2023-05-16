@@ -140,9 +140,6 @@
 <br><br>
 {% endif %}
 
-
-<br> <br> <br> <br> <br> <br><br> <br> <br> <br> <br> <br> <br> <br>
-
 {% else %}
 
 
@@ -150,16 +147,16 @@
 <p>Not registered yet? <a href="/signup/">Sign up</a></p>
 
 {% endif %}
-{% if not feedback%}
-	<h3>Feedback Form</h3>
-	<form method="post" action='/feedback/{{market.id}}/' class="form-group">
+{% if not feedback and user.is_authenticated and market.market_manager != '' %}
+	<center><h3>Leave a Feedback:</h3>
+	<form method="post" action='/feedback/{{market.name}}/' class="form-group">
 		{% csrf_token %}
 		<textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
-		<input type="submit" class="btn btn-success">
-	</form>
-{% else %}
+		<br><input type="submit" class="btn btn-success">
+	</form></center>
+{% elif market.market_manager != '' %}
 	<center><h4>Your message was delivered</h4>
-			<br>Thank you for your feedback, <br>
+			Thank you for your feedback!<br><br>
 	</center>
 {% endif %}
 

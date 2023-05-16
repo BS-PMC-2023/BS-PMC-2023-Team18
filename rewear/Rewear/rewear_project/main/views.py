@@ -288,7 +288,7 @@ def submit_request(response, uid, mid):
 
 
 # user story 14 - Market FeedBack
-def feedback(response, id):
+"""def feedback(response, id):
     if response.method == 'POST':
         message = response.POST['message']
         send_mail('Contact Form',
@@ -297,6 +297,20 @@ def feedback(response, id):
                   ['Rewear100@gmail.com'],
                   fail_silently=True)
     cur_market = market.objects.get(id=id)
+    new_mail = new_messages(response.user.username)
+    return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})"""
+
+
+def feedback(response, market_name):
+    cur_market = None
+    if response.method == 'POST':
+        form = MessageForm(response.POST)
+        body = response.POST['message']
+        cur_market = market.objects.get(name=market_name)
+        recipient = User.objects.get(username=cur_market.market_manager)
+        subject = "Market {0} Feedback".format(market_name)
+        new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=body)
+
     new_mail = new_messages(response.user.username)
     return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
 
