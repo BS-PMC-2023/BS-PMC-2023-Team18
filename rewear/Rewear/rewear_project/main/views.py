@@ -274,7 +274,7 @@ def submit_request(response, uid, mid):
     return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
 
-# user story 14 - Market FeedBack, also general feedback
+# user story 19, 20 - Market FeedBack, also general feedback
 def feedback(response, market_name):
     cur_market = None
     if response.method == 'POST':
