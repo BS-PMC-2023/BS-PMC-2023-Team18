@@ -49,6 +49,7 @@ pipeline {
                     sh """
                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
                         coverage run manage.py test
+                        coverage report 
                         """
                 }
             }
