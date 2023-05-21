@@ -43,17 +43,19 @@ pipeline {
             }
         }
         
-//         stage('Metrics 2 - Covrage ') {
-//             steps {
+        stage('Metrics 2 - Covrage ') {
+            steps {
 //                 dir('rewear/Rewear/rewear_project'){
 //                     sh """
 //                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
 //                         coverage report
 //                         """
 //                 }
-//             }
-//         }
-    }
+            }
+        }
+    
+    
+    } // closing stages
 
     post {
         always {
