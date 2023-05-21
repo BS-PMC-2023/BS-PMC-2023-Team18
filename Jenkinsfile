@@ -53,7 +53,7 @@ pipeline {
 //                 }
 //             }
 //         }
-}
+    }
 
     post {
         always {
@@ -70,4 +70,4 @@ pipeline {
             echo 'Build failed!' // Display failure message
         }
     }
-// }
+}
