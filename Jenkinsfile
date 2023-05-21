@@ -48,7 +48,7 @@ pipeline {
                 dir('rewear/Rewear/rewear_project'){
                     sh """
                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
-                        python defect_density.py
+                        coverage run manage.py test
                         """
                 }
             }
