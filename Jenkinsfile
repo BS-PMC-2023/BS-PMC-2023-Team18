@@ -32,11 +32,22 @@ pipeline {
             }
         }
        
+        stage('Metrix 1 - Defect Density ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        python defect_density.py
+                        """
+                }
+            }
+        }
        
         stage('Metrix 2 - Covrage ') {
             steps {
                 dir('rewear/Rewear/rewear_project'){
                     sh """
+                      # export DJANGO_SETTINGS_MODULE='Rewear.settings'
                         coverage report
                         """
                 }
