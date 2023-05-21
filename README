@@ -15,3 +15,12 @@ Navigate to http://localhost:8000/ in your web browser.
 Sign up for an account or log in with an existing account.
 List clothes that you are willing to share or browse clothes that other users have listed.
 Contributions are welcome! Please submit a pull request with your changes.
+
+run and use metrix Covrage 
+coverage run manage.py test
+coverage report
+coverage html
+
+pip install -r requirements.txt
+
+
