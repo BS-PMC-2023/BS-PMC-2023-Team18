@@ -45,13 +45,12 @@ pipeline {
         
         stage('Metrics 2 - Covrage ') {
             steps {
-                pass
-//                 dir('rewear/Rewear/rewear_project'){
-//                     sh """
-//                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
-//                         coverage report
-//                         """
-//                 }
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        python defect_density.py
+                        """
+                }
             }
         }
     
