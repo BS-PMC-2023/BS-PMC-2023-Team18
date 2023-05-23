@@ -61,7 +61,7 @@ pipeline {
                     sh """
                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
                         def radonCmd = "radon cc --show-complexity --total-average ."
-                        def radonOutput = bat(returnStdout: true, script: radonCmd).trim()
+                        def radonOutput = sh(returnStdout: true, script: radonCmd).trim()
                         echo radonOutput
                         """
                 }
