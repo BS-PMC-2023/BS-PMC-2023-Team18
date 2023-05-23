@@ -55,7 +55,7 @@ pipeline {
             }
         }
         
-        stage('Metrics 3 - Covrage ') {
+        stage('Metrics 3 - Code Complexity ') {
             steps {
                 dir('rewear/Rewear/rewear_project'){
                     sh """
