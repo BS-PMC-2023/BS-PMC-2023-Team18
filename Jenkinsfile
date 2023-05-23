@@ -60,9 +60,7 @@ pipeline {
                 dir('rewear/Rewear/rewear_project'){
                     sh """
                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
-                        def radonCmd = "radon cc --show-complexity --total-average ."
-                        def radonOutput = sh(returnStdout: true, script: radonCmd).trim()
-                        echo radonOutput
+                        sh 'radon cc --show-complexity --total-average .'
                         """
                 }
             }
