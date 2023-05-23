@@ -107,6 +107,24 @@
 		</tr>
 	</table>
 
+
+	<form method="post" action="/post_to_facebook/">
+    {% csrf_token %}
+    <textarea name="message" rows="4" cols="50" placeholder="Enter your post message"></textarea>
+    <br>
+    <input type="submit" value="Post">
+	</form>
+
+	{% if success_message %}
+		<p>{{ success_message }}</p>
+	{% endif %}
+
+	{% if error_message %}
+		<p>{{ error_message }}</p>
+	{% endif %}
+
+
+
 </center>
 
 {% endblock %}
