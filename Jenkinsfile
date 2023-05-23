@@ -60,6 +60,7 @@ pipeline {
                 dir('rewear/Rewear/rewear_project'){
                     sh """
                         # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        pip install radon
                         radon cc --show-complexity --total-average .
                         """
                 }
