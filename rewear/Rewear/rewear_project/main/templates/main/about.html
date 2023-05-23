@@ -33,7 +33,7 @@ Thank you for visiting our website! We hope you’ll join us in our mission to c
 		<textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
 		<br><input type="submit" class="btn btn-success">
 	</form></center>
-{% else %}
+{% elif user.is_authenticated %}
 	<center><h4>Your message was delivered</h4>
 			Thank you for your feedback!<br><br>
 	</center>
