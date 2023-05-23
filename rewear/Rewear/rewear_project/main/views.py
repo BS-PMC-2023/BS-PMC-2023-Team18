@@ -181,7 +181,7 @@ def market_page(response, id):
     cur_market = market.objects.get(id=id)
     # get all market with specific id
     myevents = myEvent.objects.filter(user_id=response.user.id, market_id=id)
-    # serch in the database if the user is in the event
+    # search in the database if the user is in the event
     new_mail = new_messages(response.user.username)
     if myevents:
         return render(response, "main/market_page.html",
