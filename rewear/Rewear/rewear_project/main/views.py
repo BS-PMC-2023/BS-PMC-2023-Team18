@@ -479,7 +479,7 @@ def edit_profile(response):
         'cur_user': response.user,
         'new_mail': new_mail,
     })
-
+# User story 23 - edit profile key BSPMC2318-23
 def update_profile_info(request):
     if request.method == 'POST':
         profileinfo = UserProfileInfo.objects.get(user=request.user)
