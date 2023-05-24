@@ -15,7 +15,7 @@ from registry.forms import UserForm, UserProfileInfoForm
 from django.contrib.auth.decorators import login_required
 from .models import Message
 from .forms import MessageForm
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -176,17 +176,21 @@ def insert_market(response):
         my_dict = {'inserted': True}
     return render(response, "main/insert_market.html", context=my_dict)
 
-
 def market_page(response, id):
     cur_market = market.objects.get(id=id)
-    # get all market with specific id
-    myevents = myEvent.objects.filter(user_id=response.user.id, market_id=id)
-    # search in the database if the user is in the event
     new_mail = new_messages(response.user.username)
-    if myevents:
-        return render(response, "main/market_page.html",
-                      {'market': cur_market, 'sign_event': True, 'new_mail': new_mail})
-    else:
+
+    try:
+        my_event = myEvent.objects.get(user_id=response.user.id, market_id=id)
+
+        if my_event:
+            return render(response, "main/market_page.html",
+                          {'market': cur_market, 'sign_event': True, 'new_mail': new_mail, 'my_event': my_event})
+        else:
+            return render(response, "main/market_page.html",
+                          {'market': cur_market, 'sign_event': False, 'new_mail': new_mail, 'my_event': my_event})
+    except ObjectDoesNotExist:
+        # Handle the case when the myEvent object does not exist
         return render(response, "main/market_page.html",
                       {'market': cur_market, 'sign_event': False, 'new_mail': new_mail})
 
@@ -194,13 +198,13 @@ def market_page(response, id):
 def update_market(response, id):
     cur_market = market.objects.get(id=id)
     if response.method == 'POST':
-        shirt = int(response.POST['shirt'])
-        pants = int(response.POST['pants'])
-        shoes = int(response.POST['shoes'])
-        hat = int(response.POST['hat'])
-        gloves = int(response.POST['gloves'])
-        scarf = int(response.POST['scarf'])
-        jacket = int(response.POST['jacket'])
+        shirt = int(response.POST.get('shirt', 0))  # Default value of 0 if empty
+        pants = int(response.POST.get('pants', 0))  # Default value of 0 if empty
+        shoes = int(response.POST.get('shoes', 0))  # Default value of 0 if empty
+        hat = int(response.POST.get('hat', 0))  # Default value of 0 if empty
+        gloves = int(response.POST.get('gloves', 0))  # Default value of 0 if empty
+        scarf = int(response.POST.get('scarf', 0))  # Default value of 0 if empty
+        jacket = int(response.POST.get('jacket', 0))  # Default value of 0 if empty
         # add to the database
         cur_market.shirt += shirt
         cur_market.pants += pants
@@ -210,6 +214,60 @@ def update_market(response, id):
         cur_market.scarf += scarf
         cur_market.jacket += jacket
         cur_market.save()
+        my_event = myEvent.objects.get(user_id=response.user.id, market_id=id)
+        if my_event:
+            my_event.shirt += shirt
+            my_event.pants += pants
+            my_event.shoes += shoes
+            my_event.hat += hat
+            my_event.gloves += gloves
+            my_event.scarf += scarf
+            my_event.jacket += jacket
+            my_event.save()
+
+        return market_page(response, id)
+    return render(response, "main/market_page.html",
+                  {'market': cur_market, 'new_mail': new_messages(response.user.username)})
+
+def edit_items_market(response, id):
+    cur_market = market.objects.get(id=id)
+    my_event = myEvent.objects.get(user_id=response.user.id, market_id=id)
+    if response.method == 'POST':
+        shirt = response.POST.get('shirt')
+        pants = response.POST.get('pants')
+        shoes = response.POST.get('shoes')
+        hat = response.POST.get('hat')
+        gloves = response.POST.get('gloves')
+        scarf = response.POST.get('scarf')
+        jacket = response.POST.get('jacket')
+
+        # Convert empty strings to 0
+        shirt = int(shirt) if shirt else 0
+        pants = int(pants) if pants else 0
+        shoes = int(shoes) if shoes else 0
+        hat = int(hat) if hat else 0
+        gloves = int(gloves) if gloves else 0
+        scarf = int(scarf) if scarf else 0
+        jacket = int(jacket) if jacket else 0
+        # add to the database
+        cur_market.shirt += shirt - my_event.shirt
+        cur_market.pants += pants - my_event.pants
+        cur_market.shoes += shoes - my_event.shoes
+        cur_market.hat += hat - my_event.hat
+        cur_market.gloves += gloves - my_event.gloves
+        cur_market.scarf += scarf - my_event.scarf
+        cur_market.jacket += jacket - my_event.jacket
+        cur_market.save()
+        if my_event:
+            my_event.shirt += shirt - my_event.shirt
+            my_event.pants += pants - my_event.pants
+            my_event.shoes += shoes - my_event.shoes
+            my_event.hat += hat - my_event.hat
+            my_event.gloves += gloves - my_event.gloves
+            my_event.scarf += scarf - my_event.scarf
+            my_event.jacket += jacket - my_event.jacket
+            my_event.save()
+
         return market_page(response, id)
     return render(response, "main/market_page.html",
                   {'market': cur_market, 'new_mail': new_messages(response.user.username)})

@@ -146,20 +146,24 @@ To submit a request to become event manager click
 
 	{% if user.is_authenticated and sign_event %}
 	<center>
-	<form method="post" action='/update_market/{{market.id}}/'class="form-group">
-        {% csrf_token %}
-		<input type="hidden" name="" value="">
-		<a>Shirt </a><input type="number" name="shirt" min="0" max="50" step="1" value="0" >
-		<a>Pants </a><input type="number" name="pants" min="0" max="50" step="1" value="0" >
-		<a>Shoes </a><input type="number" name="shoes" min="0" max="50" step="1" value="0">
-		<a>Hat </a><input type="number" name="hat" min="0" max="50" step="1" value="0" >
-		<a>Gloves </a><input type="number" name="gloves" min="0" max="50" step="1" value="0">
-		<a>Scarf </a><input type="number" name="scarf" min="0" max="50" step="1" value="0">
-		<a>Jacket </a><input type="number" name="jacket" min="0" max="50" step="1" value="0">
-		<br> <br>
-		<input value="Submit items of clothing" type="submit" class="btn btn-success">
 
-	</form>
+		{% if sign_event %}
+		<h3>Items you bring to the market</h3>
+		<form method="post" action='/edit_items_market/{{market.id}}/'class="form-group">
+		{% csrf_token %}
+		<input type="hidden" name="" value="">
+		<a>Shirt </a><input type="number" name="shirt" min="0" max="50" step="1" value="{{ my_event.shirt }}" >
+		<a>Pants </a><input type="number" name="pants" min="0" max="50" step="1" value="{{ my_event.pants }}" >
+		<a>Shoes </a><input type="number" name="shoes" min="0" max="50" step="1" value="{{ my_event.shoes }}">
+		<a>Hat </a><input type="number" name="hat" min="0" max="50" step="1" value="{{ my_event.hat }}" >
+		<a>Gloves </a><input type="number" name="gloves" min="0" max="50" step="1" value="{{ my_event.gloves }}">
+		<a>Scarf </a><input type="number" name="scarf" min="0" max="50" step="1" value="{{ my_event.scarf }}">
+		<a>Jacket </a><input type="number" name="jacket" min="0" max="50" step="1" value="{{ my_event.jacket }}">
+		<br> <br>
+		<input value="Save Change Items" type="submit" class="btn btn-success">
+		</form>
+		{% endif %}
+
 	</center>
 	{% endif %}
 
