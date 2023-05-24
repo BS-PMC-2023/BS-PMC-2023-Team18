@@ -459,3 +459,23 @@ def post_to_facebook(request):
         #     error_message = f"Failed to post on Facebook: {str(e)}"
 
     return home(request)
+
+
+def remove_manager(response, market_id):
+    if response.method == 'POST' and response.user.is_superuser:
+        cur_market = market.objects.get(id=market_id)
+        temp_manager = cur_market.market_manager
+        cur_market.market_manager = ''
+        cur_market.save()
+
+    cnt = 0
+    for m in market.objects.all():
+        if m.market_manager == temp_manager:
+            cnt += 1
+            break
+    if cnt == 0:
+        user = UserProfileInfo.objects.get(user = User.objects.get(username = temp_manager))
+        managerGroup = Group.objects.get(name="eventManager")
+        User.objects.get(username = temp_manager).groups.remove(managerGroup)
+
+    return market_page(response, market_id)
