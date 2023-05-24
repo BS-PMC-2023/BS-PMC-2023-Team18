@@ -16,20 +16,22 @@ table.admin {
 <center>
 	<h1>Market Page</h1>
 	<h3>{{market.name}}</h3>
-	<table class="admin"><tr>
-	{% if market.market_manager %}
+	<table class="admin">
+	<tr>
+		{% if market.market_manager %}
 		<td><b>
 			Market manager: <a href="/profile/{{market.market_manager}}">{{market.market_manager}}</a>
 		</b></td>
 	{% endif %}
+	</tr>
+
 	{% if market.market_manager and user.is_superuser %}
-		<td><form method="POST" action="/remove_manager/{{market.id}}/" class="form-group">
+		<tr><td><form method="POST" action="/remove_manager/{{market.id}}/" class="form-group">
             {% csrf_token %}
             {{form|crispy}}
             <button class="btn btn-danger btn-sm">✗</button>
-        </form></td>
+        </form></td></tr>
 	{% endif %}
-	</tr>
 
 	{% if market.market_manager == user.username %}
 		<tr>
@@ -40,41 +42,45 @@ table.admin {
 </table>
 </center>
 
-{% if market.market_manager == user.username %}
-
-	<div class="row justify-content-end">
-	  <div class="col-sm-3">
-		<form method="post" action='/delete_market/{{market.id}}/' class="form-group">
-		  {% csrf_token %}
-		  <input type="submit" value="Delete Market" class="btn btn-danger" style="float: left;">
-		</form>
-	  </div>
-	</div>
-{% endif %}
-
 {% if user.is_authenticated and not user.is_superuser and market.market_manager == "" %}
-	<span style="float: center;">
-		<form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
-			{% csrf_token %}
-<!--			<input type="submit" value="Submit a request to become event manager" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">-->
-			To submit a request to become event manager click
-			<input type="submit" value="HERE" class="btn btn-info" style="margin: 4px 2px;font-size: 12px;display: inline-block;padding: 5px 10px;">
-		</form>
-	</span>
+<br /><form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
+{% csrf_token %}
+To submit a request to become event manager click
+<input type="submit" value="HERE" class="btn btn-info btn-sm">
+</form>
 {% endif %}
 
-{% if user.is_authenticated and not sign_event %}
+<center><table>
+	{% if market.market_manager == user.username %}
+	<tr><td>
+		<form method="post" action='/delete_market/{{market.id}}/'>
+			{% csrf_token %}
+			<input type="submit" value="Delete Market" class="btn btn-danger">
+		</form></td>
+	{% endif %}
+	</td>
+
+	{% if user.is_authenticated and not sign_event %}
+	<td>
+		&nbsp; &nbsp; &nbsp; &nbsp;
+	</td>
+	<td>
 		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
-		{% csrf_token %}
-		<center>
-			<input type="submit" value="Register to event" class="btn btn-primary" style="float: left;">
-			<br>
-		</center>
+			{% csrf_token %}
+			<input type="submit" value="Register to event" class="btn btn-primary">
 		</form>
+	</tr></td>
+	{% if market.market_manager != user.username %}<br />{% endif %}
+
+</table></center>
+
 
 	{% else %}
+	</table>
+	<br />
 	<h4>Thank you for signing to our event.</h4>
-	<p>We will see you there!</p>
+	We will see you there!
+	</center>
 {% endif %}
 
 	<table class="table table-striped">
