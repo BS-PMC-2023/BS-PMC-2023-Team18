@@ -129,6 +129,8 @@ table.admin {
 	</table>
 
 	<br>
+
+	{% if user.is_authenticated and sign_event %}
 	<center>
 	<form method="post" action='/update_market/{{market.id}}/'class="form-group">
         {% csrf_token %}
@@ -145,6 +147,7 @@ table.admin {
 
 	</form>
 	</center>
+	{% endif %}
 
 <br> <br>
 
