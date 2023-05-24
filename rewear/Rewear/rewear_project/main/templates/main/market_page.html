@@ -2,6 +2,13 @@
 {% block title %}Market Page{% endblock %}
 {% load crispy_forms_tags %}
 
+{% block style %}
+table.admin {
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+{% endblock %}
+
 {% block content %}
 
 {% if user.is_authenticated %}
@@ -9,11 +16,20 @@
 <center>
 	<h1>Market Page</h1>
 	<h3>{{market.name}}</h3>
+	<table class="admin"><tr>
 	{% if market.market_manager %}
-		<b>
+		<td><b>
 			Market manager: <a href="/profile/{{market.market_manager}}">{{market.market_manager}}</a>
-		</b>
+		</b></td>
 	{% endif %}
+	{% if market.market_manager and user.is_superuser %}
+		<td><form method="POST" action="/remove_manager/{{market.id}}/" class="form-group">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-danger btn-sm">✗</button>
+        </form></td>
+	{% endif %}
+	</tr></table>
 </center>
 
 {% if market.market_manager == user.username %}

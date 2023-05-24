@@ -54,6 +54,30 @@ pipeline {
                 }
             }
         }
+        
+        stage('Metrics 3 - Code Complexity ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        pip install radon
+                        radon cc --show-complexity --total-average .
+                        """
+                }
+            }
+        }
+        
+        stage('Metrics 4 - Maintainability Index ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        pip install radon
+                        radon mi .
+                        """
+                }
+            }
+        }
     
     
     } // closing stages
