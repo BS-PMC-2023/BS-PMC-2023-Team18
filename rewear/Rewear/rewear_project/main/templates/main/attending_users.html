@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Attending Users{% endblock %}
+
+{% block style %}
+table {
+  border-collapse: separate;
+  border-spacing: 20px;
+}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<center><h1>Attending Users</h1>
+
+<a href="/market_page/{{market.id}}/"><h4>{{market.name}}</h4></a></center>
+
+<center><table>
+
+		<tr>
+			<th><center>Username</center></th>
+			<th><center>Report</center></th>
+		</tr>
+
+		{% for user in attending_users %}
+		<tr>
+			<td><center><a href="/profile/{{user}}/">{{user}}</a></center></td>
+			<td><center>Report {{user}}</center></td>
+		</tr>
+		{% endfor %}
+
+
+</table></center>
+
+
+{% endblock %}%}

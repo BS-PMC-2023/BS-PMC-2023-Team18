@@ -29,7 +29,15 @@ table.admin {
             <button class="btn btn-danger btn-sm">✗</button>
         </form></td>
 	{% endif %}
-	</tr></table>
+	</tr>
+
+	{% if market.market_manager == user.username %}
+		<tr>
+			<a href="/attending_users/{{market.id}}/">View Attending Users</a>
+		</tr>
+	{% endif %}
+
+</table>
 </center>
 
 {% if market.market_manager == user.username %}

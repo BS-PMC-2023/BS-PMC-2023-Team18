@@ -513,3 +513,23 @@ def remove_manager(response, market_id):
         User.objects.get(username = temp_manager).groups.remove(managerGroup)
 
     return market_page(response, market_id)
+
+
+def attending_users(response, market_id):
+    cur_market = market.objects.get(id=market_id)
+
+    events = myEvent.objects.filter(market_id = market_id)
+    attending_users = []
+    for event in events:
+        try:
+            attending_users.append(User.objects.get(id = event.user_id))
+        except:
+            continue
+
+    new_mail = new_messages(response.user.username)
+    return render(response, 'main/attending_users.html', {'new_mail': new_mail, 'market': cur_market, 'attending_users': attending_users})
+
+
+
+
+

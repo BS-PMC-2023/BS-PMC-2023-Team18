@@ -87,13 +87,13 @@ function updateCityOptions() {
 				<th>
 					Date
 				</th>
-<!--				<th>-->
-<!--					Link-->
-<!--				</th>-->
+				<th>
+					Attending Users
+				</th>
+			</tr>
 			{% for market in markets %}
 			<tr>
 				<td>
-<!--					{{market.name}}-->
 					<a href="/market_page/{{market.id}}/">{{market.name}}</a>
 				</td>
 				<td>
@@ -108,9 +108,9 @@ function updateCityOptions() {
 				<td>
 					{{market.date}}
 				</td>
-<!--				<td>-->
-<!--					<a href="/market_page/{{market.id}}/">{{market.name}}</a>-->
-<!--				</td>-->
+				<td>
+					<a href="/attending_users/{{market.id}}/">View</a>
+				</td>
 
 			</tr>
 			{% endfor %}
