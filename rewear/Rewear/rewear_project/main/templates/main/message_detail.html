@@ -4,7 +4,7 @@
   <h2>{{ message.subject }}</h2>
   <p>From: <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a></p>
   <p>To: <a href="/profile/{{ message.recipient.username }}">{{ message.recipient.username }}</a></p>
-  <p>{{ message.body }}</p>
+  <p>{{ message.body | linebreaks}}</p>
 
   <br /><br />
   <a href="/send_message/{{message.sender.username}}/">Reply</a>
