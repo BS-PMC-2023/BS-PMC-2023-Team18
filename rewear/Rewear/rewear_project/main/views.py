@@ -436,3 +436,24 @@ def delete_market(response, id):
             for event in myEvent.objects.filter(market_id=id):
                 event.delete()
     return search_page(response)
+
+
+def remove_manager(response, market_id):
+    if response.method == 'POST' and response.user.is_superuser:
+        cur_market = market.objects.get(id=market_id)
+        temp_manager = cur_market.market_manager
+        cur_market.market_manager = ''
+        cur_market.save()
+
+    cnt = 0
+    for m in market.objects.all():
+        if m.market_manager == temp_manager:
+            cnt += 1
+            break
+    if cnt == 0:
+        user = UserProfileInfo.objects.get(user = User.objects.get(username = temp_manager))
+        managerGroup = Group.objects.get(name="eventManager")
+        User.objects.get(username = temp_manager).groups.remove(managerGroup)
+
+    return market_page(response, market_id)
+
