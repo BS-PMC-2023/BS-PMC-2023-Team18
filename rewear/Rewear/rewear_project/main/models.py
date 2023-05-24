@@ -43,6 +43,15 @@ class myEvent(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=10, default='')
     market_id = models.CharField(max_length=10, default='')
+    # wear items
+    shirt = models.IntegerField(default=0, blank=True)
+    pants = models.IntegerField(default=0, blank=True)
+    shoes = models.IntegerField(default=0, blank=True)
+    hat = models.IntegerField(default=0, blank=True)
+    gloves = models.IntegerField(default=0, blank=True)
+    scarf = models.IntegerField(default=0, blank=True)
+    jacket = models.IntegerField(default=0, blank=True)
+    other = models.IntegerField(default=0, blank=True)
     def __str__(self):
         return str(self.id)
 
