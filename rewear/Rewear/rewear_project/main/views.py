@@ -530,6 +530,29 @@ def attending_users(response, market_id):
     return render(response, 'main/attending_users.html', {'new_mail': new_mail, 'market': cur_market, 'attending_users': attending_users})
 
 
+def report_user(response, username):
+    user = User.objects.get(username=username)
+
+    new_mail = new_messages(response.user.username)
+    return render(response, 'main/report_user.html', {'new_mail': new_mail, 'user': user})
+
+
+def send_report(response, username):
+    if response.method == 'POST':
+        form = MessageForm(response.POST)
+        body = response.POST['message']
+
+        start_body = "This is a report on: " + str(username) + ", from an event manager: " + str(response.user.username) + ".\n\n"
+
+        subject = "Reporting on {0}".format(username)
+        for user in User.objects.all():
+            if user.is_superuser:
+                recipient = User.objects.get(username=user.username)
+                new_message = Message.objects.create(sender=response.user, recipient=recipient, subject=subject, body=start_body+body)
+    # return home(response)
+
+    new_mail = new_messages(response.user.username)
+    return render(response, 'main/thankyou2.html', {'new_mail': new_mail})
 
 
 

@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Report {{user}}{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<center><h3>Report {{user}}:</h3>
+<form method="post" action='/send_report/{{user}}/' class="form-group">
+	{% csrf_token %}
+	<textarea name="message" rows="8" cols="50" const placeholder="Did {{user}} do something wrong? Tell us about it."></textarea>
+	<br><input type="submit" class="btn btn-success">
+</form></center>
+
+{% endblock %}

@@ -28,7 +28,7 @@ table {
 		{% for user in attending_users %}
 		<tr>
 			<td><center><a href="/profile/{{user}}/">{{user}}</a></center></td>
-			<td><center>Report {{user}}</center></td>
+			<td><center><a href="/report_user/{{user}}/">Report {{user}}</a></center></td>
 		</tr>
 		{% endfor %}
 

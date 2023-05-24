@@ -35,4 +35,6 @@ path("edit_profile/", views.edit_profile, name="edit_profile"),
 path("update_profile_info/", views.update_profile_info, name="update_profile_info"),
 path("remove_manager/<market_id>/", views.remove_manager, name="remove_manager"),
 path("attending_users/<market_id>/", views.attending_users, name="attending_users"),
+path("report_user/<username>/", views.report_user, name="report_user"),
+path("send_report/<username>/", views.send_report, name="send_report"),
 ]
