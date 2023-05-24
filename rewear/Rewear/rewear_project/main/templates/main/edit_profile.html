@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block style %}
+	.profimg {
+		border-radius: 50%;
+		border: 2px solid #3880fa;
+		object-fit: cover;
+	}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<center><h1>My Profile</h1></center>
+
+{% if not user.is_authenticated %}
+	<p>Not logged into any account.</p>
+	<a href="/login/"><p>Login</p></a>
+	
+{% else %}
+	{% if profile_pic %}
+	<center>
+		<img src="{% static pic_path %}" alt="Avatar" height=180px width=180px class="profimg">
+<!--		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">-->
+	</center>
+	{% else %}
+	<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
+		{% csrf_token %}
+		<label for="picture">Profile Picture:</label>
+		<input type="file" name="picture" id="picture" required>
+		<button type="submit">Update Profile Picture</button>
+	</form>
+	{% endif %}
+	<table>
+		<tr>
+			<td>Username:&nbsp;&nbsp;&nbsp;</td>
+			<td>{{user.username}}</td>
+		</tr>
+
+
+		<form action="/update_profile_info/" method="POST">
+			{% csrf_token %}
+			<tr>
+			  <td>Email address:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			  <td><input type="email" name="email" value="{{user.email}}"></td>
+			</tr>
+
+			<tr>
+			  <td>First Name:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			  <td><input type="text" name="first_name" value="{{user.first_name.capitalize}}"></td>
+			</tr>
+
+			<tr>
+			  <td>Last Name:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			  <td><input type="text" name="last_name" value="{{user.last_name.capitalize}}"></td>
+			</tr>
+
+			<tr>
+			  <td>Phone number:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			  <td><input type="text" name="phone" value="{{profileinfo.phone}}"></td>
+			</tr>
+
+
+			{% endif %}
+			<tr>
+				<td>User type:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>
+					{% if cur_user.groups.all.0.name == "eventManager" %}
+					Event Manager
+					{% else %}
+					Buyer
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td>About me:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><a href="/editabout/">edit</a><td>
+			<tr>
+				<td></td>
+				<td>{{profileinfo.about|linebreaks}}<td>
+			</tr>
+
+
+			<tr>
+				<td colspan="2">
+				  <input type="submit" value="Save" style="background-color: #007FFF; color: white;">
+				</td>
+			</tr>
+		</form>
+
+	</table>
+
+	
+	<br><br><br>
+<center>
+	{% if user.is_active %}
+	<p>Account is active</p>
+	
+	<form method="POST" action="/areyousure/" class="form-group">
+		{% csrf_token %}
+		{{form|crispy}}
+		<button class="btn btn-warning">Make my account inactive</button>
+	</form>
+	
+	{% else %}
+	<p>Account is inactive</p>
+	
+	<form method="POST" action="/active/" class="form-group">
+		{% csrf_token %}
+		{{form|crispy}}
+		<button type="submit" class="btn btn-warning">Make my account active</button>
+	</form>
+	
+	{% endif %}
+</center>
+	
+
+{% endblock %}%}

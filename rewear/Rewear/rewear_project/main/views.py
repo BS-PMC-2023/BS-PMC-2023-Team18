@@ -459,3 +459,38 @@ def post_to_facebook(request):
         #     error_message = f"Failed to post on Facebook: {str(e)}"
 
     return home(request)
+
+def edit_profile(response):
+    new_mail = new_messages(response.user.username)
+    profileinfo = UserProfileInfo.objects.get(user=response.user)
+    try:
+        picture = UserProfileInfo.objects.get(user=response.user).picture
+    except:
+        picture = None
+    try:
+        pic_path = picture.path.split("static")[-1]
+    except:
+        pic_path = None
+
+    return render(response, "main/edit_profile.html", {
+        'profileinfo': profileinfo,
+        'profile_pic': picture,
+        'pic_path': pic_path,
+        'cur_user': response.user,
+        'new_mail': new_mail,
+    })
+
+def update_profile_info(request):
+    if request.method == 'POST':
+        profileinfo = UserProfileInfo.objects.get(user=request.user)
+
+        profileinfo.user.email = request.POST.get('email')
+        profileinfo.user.first_name = request.POST.get('first_name')
+        profileinfo.user.last_name = request.POST.get('last_name')
+        profileinfo.phone = request.POST.get('phone')
+
+        profileinfo.user.save()
+        profileinfo.save()
+        return home(request)
+    else:
+        return myprofile(request)
