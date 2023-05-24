@@ -66,6 +66,18 @@ pipeline {
                 }
             }
         }
+        
+        stage('Metrics 4 - Maintainability Index ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        pip install radon
+                        radon mi .
+                        """
+                }
+            }
+        }
     
     
     } // closing stages
