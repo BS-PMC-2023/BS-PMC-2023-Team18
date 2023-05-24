@@ -299,8 +299,10 @@ def set_market_value(response, id):
 
 def assign_manager(response, mid, username):
     user = User.objects.get(username=username)
+    Group.objects.get_or_create(name="eventManager")
     managerGroup = Group.objects.get(name="eventManager")
     user.groups.add(managerGroup)
+    user.save()
     cur_market = market.objects.get(id=mid)
     print(cur_market.market_manager)
     cur_market.market_manager = username

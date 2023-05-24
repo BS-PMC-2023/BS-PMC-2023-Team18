@@ -31,7 +31,7 @@
 									<li><a href="/my_events/{{request.user.id}}">My Events</a></li>
 								{% endif %}
 
-								{% if user.groups.all.0.name == 'eventManager' %}
+								{% if user.groups.all.0.name == 'eventManager' or user.groups.all.1.name == 'eventManager' %}
 									<li><a href="/managed_events/{{request.user.id}}">Managed Events</a></li>
 								{% endif %}
 

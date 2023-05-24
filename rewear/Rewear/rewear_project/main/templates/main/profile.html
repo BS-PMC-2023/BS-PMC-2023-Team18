@@ -57,7 +57,7 @@
 		<tr>
 			<td>User type:&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>
-				{% if cur_user.groups.all.0.name == "eventManager" %}
+				{% if cur_user.groups.all.0.name == "eventManager" or cur_user.groups.all.1.name == "eventManager" %}
 				Event Manager
 				{% else %}
 				Buyer
