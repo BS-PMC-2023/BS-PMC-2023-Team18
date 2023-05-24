@@ -438,22 +438,24 @@ def delete_market(response, id):
     return search_page(response)
 
 
-def remove_manager(response, market_id):
-    if response.method == 'POST' and response.user.is_superuser:
-        cur_market = market.objects.get(id=market_id)
-        temp_manager = cur_market.market_manager
-        cur_market.market_manager = ''
-        cur_market.save()
+import facebook
+def post_to_facebook(request):
+    if request.method == 'POST':
+        message = request.POST.get('message')  # Get the message from the form
 
-    cnt = 0
-    for m in market.objects.all():
-        if m.market_manager == temp_manager:
-            cnt += 1
-            break
-    if cnt == 0:
-        user = UserProfileInfo.objects.get(user = User.objects.get(username = temp_manager))
-        managerGroup = Group.objects.get(name="eventManager")
-        User.objects.get(username = temp_manager).groups.remove(managerGroup)
+        # Create a Facebook Graph API instance
+        # graph = facebook.GraphAPI(access_token=settings.FACEBOOK_ACCESS_TOKEN)
+        access_token = 'EAAb6g8eihJsBAFMZAjXwFy7EEdVqrpEdlGXZAmGZALazYe1hIDlY46tMgwcwUY77OZAZBIKfKDaANl6wWyQZCsOHwGHoiSLLMkEThB4BNKYrXjMqZBYOzbT9ZAbr3UDjHJLDneziYPJOdNn1oaDSQ2FXSnVfStLZAhcevV5zQ6QqQZBrkwmT1eTV9001GHq7CCWp051MPUMZBoHO6VOHZAjiZBr2LMxVnuvOhhO0ZD'
+        graph = facebook.GraphAPI(access_token=access_token)
 
-    return market_page(response, market_id)
+        # try:
+        # Make the API call to post on Facebook
+        graph.put_object(parent_object='me', connection_name='feed', message='Hello, world')
+        # graph.put_wall_post(message=message)
+        success_message = "Post successfully posted on Facebook."
+        print(success_message)
+        # except facebook.GraphAPIError as e:
+        #     print("not success")
+        #     error_message = f"Failed to post on Facebook: {str(e)}"
 
+    return home(request)

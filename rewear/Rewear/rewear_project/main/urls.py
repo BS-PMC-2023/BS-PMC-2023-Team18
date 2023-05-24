@@ -30,5 +30,5 @@ path("send_message/", views.send_message, name="send_message"),
 path("inbox/", views.inbox, name="inbox"),
 path("message_detail/<message_id>", views.message_detail, name="message_detail"),
 path("delete_market/<id>/", views.delete_market, name="delete_market"),
-path("remove_manager/<market_id>/", views.remove_manager, name="delete_market"),
+path("post_to_facebook/", views.post_to_facebook, name="post_to_facebook"),
 ]

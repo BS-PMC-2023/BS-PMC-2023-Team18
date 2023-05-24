@@ -31,8 +31,56 @@ pipeline {
                 }
             }
         }
-
-    }
+       
+        stage('Metrics 1 - Defect Density ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        python defect_density.py
+                        """
+                }
+            }
+        }
+        
+        stage('Metrics 2 - Covrage ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        coverage run manage.py test
+                        coverage report 
+                        """
+                }
+            }
+        }
+        
+        stage('Metrics 3 - Code Complexity ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        pip install radon
+                        radon cc --show-complexity --total-average .
+                        """
+                }
+            }
+        }
+        
+        stage('Metrics 4 - Maintainability Index ') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        pip install radon
+                        radon mi .
+                        """
+                }
+            }
+        }
+    
+    
+    } // closing stages
 
     post {
         always {
