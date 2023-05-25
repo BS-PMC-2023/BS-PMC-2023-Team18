@@ -338,18 +338,6 @@ def submissions(response):
     new_mail = new_messages(response.user.username)
     return render(response, "main/submissions.html", {'subs': res, 'new_mail': new_mail})
 
-
-def submit_request(response, uid, mid):
-    subs = submission.objects.all()
-    if not subs.filter(user_id=uid, market_id=mid).exists():
-        submission.objects.create(user_id=uid, market_id=mid)
-        print("Created submission with uid: " + str(uid) + ", mid: " + str(mid))  # create submission
-    else:
-        print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
-    new_mail = new_messages(response.user.username)
-    return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
-
-
 # User story 19,20 - market feedback and general feedback
 def feedback(response, market_name):
     cur_market = None
@@ -376,6 +364,15 @@ def feedback(response, market_name):
     # new_mail = new_messages(response.user.username)
     # return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
 
+def submit_request(response, uid, mid):
+    new_mail = new_messages(response.user.username)
+    subs = submission.objects.all()
+    if not subs.filter(user_id=uid, market_id=mid).exists():
+        submission.objects.create(user_id=uid, market_id=mid)
+        print("Created submission with uid: " + str(uid) + ", mid: " + str(mid))  # create submission
+    else:
+        print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
+    return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
 def update_profilepic(response):
     new_mail = new_messages(response.user.username)
