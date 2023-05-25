@@ -196,6 +196,7 @@ def market_page(response, id):
 
 
 def update_market(response, id):
+    new_mail = new_messages(response.user.username)
     cur_market = market.objects.get(id=id)
     if response.method == 'POST':
         shirt = int(response.POST.get('shirt', 0))  # Default value of 0 if empty
