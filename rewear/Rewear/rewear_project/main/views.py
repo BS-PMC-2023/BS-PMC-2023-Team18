@@ -18,6 +18,8 @@ from .forms import MessageForm
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
+# facebook meta graph api import 
+import facebook
 
 def getUserProfileInfo(usr):
     upi = UserProfileInfo.objects.get(user=usr)
@@ -400,7 +402,6 @@ def update_profilepic(response):
     else:
         return render(response, 'main/myprofile.html', {'new_mail': new_mail})
 
-
 def sign_event(response, uid, mid):
     cur_market = market.objects.get(id=mid)
     if response.method == 'POST':
@@ -410,7 +411,6 @@ def sign_event(response, uid, mid):
     new_mail = new_messages(response.user.username)
     return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True, 'new_mail': new_mail})
 
-
 def my_events(response, uid):
     myevents = myEvent.objects.filter(user_id=uid)
     markets = []
@@ -419,13 +419,11 @@ def my_events(response, uid):
     new_mail = new_messages(response.user.username)
     return render(response, "main/my_events.html", {'markets': markets, 'new_mail': new_mail})
 
-
 def managed_events(response, uid):
     curUser = User.objects.get(id=uid)
     markets = market.objects.filter(market_manager=curUser.username)
     new_mail = new_messages(response.user.username)
     return render(response, "main/managed_events.html", {'markets': markets, 'new_mail': new_mail})
-
 
 # User story 27 - send message to user
 @login_required
@@ -498,7 +496,6 @@ def delete_market(response, id):
     return search_page(response)
 
 
-import facebook
 def post_to_facebook(request):
     if request.method == 'POST':
         message = request.POST.get('message')  # Get the message from the form
