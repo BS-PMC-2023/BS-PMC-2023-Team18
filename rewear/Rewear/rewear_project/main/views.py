@@ -229,6 +229,7 @@ def update_market(response, id):
     return render(response, "main/market_page.html",
                   {'market': cur_market, 'new_mail': new_messages(response.user.username)})
 
+# user story 33 key BSPMC2318-33 edit items in market
 def edit_items_market(response, id):
     cur_market = market.objects.get(id=id)
     my_event = myEvent.objects.get(user_id=response.user.id, market_id=id)
