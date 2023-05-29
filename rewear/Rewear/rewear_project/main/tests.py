@@ -355,7 +355,7 @@ class Test(TestCase):
         groups = Group.objects.filter(name='testgroup')
         users[0].groups.add(groups[0])
 
-        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address')
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address', market_manager=users[0].username)
 
         self.method = 'POST'
         self.POST = {}
@@ -365,7 +365,7 @@ class Test(TestCase):
         self.assertEqual(len(m), 1)
         views.delete_market(self, market.id)
         m = models.market.objects.filter(id=1)
-        # self.assertEqual(len(m), 0)  # bug
+        self.assertEqual(len(m), 0)
 
     # def test_post_to_facebook(self):
     #     self.assertEqual(True, True)
