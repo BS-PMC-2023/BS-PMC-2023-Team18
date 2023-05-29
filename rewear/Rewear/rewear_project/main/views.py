@@ -18,6 +18,8 @@ from .forms import MessageForm
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
+# facebook meta graph api import 
+import facebook
 
 def getUserProfileInfo(usr):
     upi = UserProfileInfo.objects.get(user=usr)
@@ -196,6 +198,7 @@ def market_page(response, id):
 
 
 def update_market(response, id):
+    new_mail = new_messages(response.user.username)
     cur_market = market.objects.get(id=id)
     if response.method == 'POST':
         shirt = int(response.POST.get('shirt', 0))  # Default value of 0 if empty
@@ -229,7 +232,9 @@ def update_market(response, id):
     return render(response, "main/market_page.html",
                   {'market': cur_market, 'new_mail': new_messages(response.user.username)})
 
+# user story 33 key BSPMC2318-33 edit items in market
 def edit_items_market(response, id):
+    new_mail = new_messages(response.user.username)
     cur_market = market.objects.get(id=id)
     my_event = myEvent.objects.get(user_id=response.user.id, market_id=id)
     if response.method == 'POST':
@@ -335,18 +340,6 @@ def submissions(response):
     new_mail = new_messages(response.user.username)
     return render(response, "main/submissions.html", {'subs': res, 'new_mail': new_mail})
 
-
-def submit_request(response, uid, mid):
-    subs = submission.objects.all()
-    if not subs.filter(user_id=uid, market_id=mid).exists():
-        submission.objects.create(user_id=uid, market_id=mid)
-        print("Created submission with uid: " + str(uid) + ", mid: " + str(mid))  # create submission
-    else:
-        print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
-    new_mail = new_messages(response.user.username)
-    return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
-
-
 # User story 19,20 - market feedback and general feedback
 def feedback(response, market_name):
     cur_market = None
@@ -373,6 +366,15 @@ def feedback(response, market_name):
     # new_mail = new_messages(response.user.username)
     # return render(response, "main/market_page.html", {'market': cur_market, 'feedback': True, 'new_mail': new_mail})
 
+def submit_request(response, uid, mid):
+    new_mail = new_messages(response.user.username)
+    subs = submission.objects.all()
+    if not subs.filter(user_id=uid, market_id=mid).exists():
+        submission.objects.create(user_id=uid, market_id=mid)
+        print("Created submission with uid: " + str(uid) + ", mid: " + str(mid))  # create submission
+    else:
+        print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
+    return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
 def update_profilepic(response):
     new_mail = new_messages(response.user.username)
@@ -400,7 +402,6 @@ def update_profilepic(response):
     else:
         return render(response, 'main/myprofile.html', {'new_mail': new_mail})
 
-
 def sign_event(response, uid, mid):
     cur_market = market.objects.get(id=mid)
     if response.method == 'POST':
@@ -410,7 +411,6 @@ def sign_event(response, uid, mid):
     new_mail = new_messages(response.user.username)
     return render(response, "main/market_page.html", {'market': cur_market, 'sign_event': True, 'new_mail': new_mail})
 
-
 def my_events(response, uid):
     myevents = myEvent.objects.filter(user_id=uid)
     markets = []
@@ -419,13 +419,11 @@ def my_events(response, uid):
     new_mail = new_messages(response.user.username)
     return render(response, "main/my_events.html", {'markets': markets, 'new_mail': new_mail})
 
-
 def managed_events(response, uid):
     curUser = User.objects.get(id=uid)
     markets = market.objects.filter(market_manager=curUser.username)
     new_mail = new_messages(response.user.username)
     return render(response, "main/managed_events.html", {'markets': markets, 'new_mail': new_mail})
-
 
 # User story 27 - send message to user
 @login_required
@@ -498,7 +496,6 @@ def delete_market(response, id):
     return search_page(response)
 
 
-import facebook
 def post_to_facebook(request):
     if request.method == 'POST':
         message = request.POST.get('message')  # Get the message from the form
