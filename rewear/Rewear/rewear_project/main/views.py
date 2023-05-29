@@ -352,19 +352,18 @@ def submit_request(response, uid, mid):
         print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
     return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
-def update_profilepic(response):
-    new_mail = new_messages(response.user.username)
-    if response.method == 'POST':
-        form = UserProfileInfo(response.POST, response.FILES)
-        if form.is_valid():
-            form.save()
-            # return myprofile(response)
-            return render(response, "main/home.html", {'new_mail': new_mail})
-    else:
-        form = UserProfileInfoForm()
-    # return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
-    return render(response, "main/home.html", {'new_mail': new_mail})
-
+# def update_profilepic(response):
+#     new_mail = new_messages(response.user.username)
+#     if response.method == 'POST':
+#         form = UserProfileInfo(response.POST, response.FILES)
+#         if form.is_valid():
+#             form.save()
+#             # return myprofile(response)
+#             return render(response, "main/home.html", {'new_mail': new_mail})
+#     else:
+#         form = UserProfileInfoForm()
+#     # return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
+#     return render(response, "main/home.html", {'new_mail': new_mail})
 
 def update_profilepic(response):
     new_mail = new_messages(response.user.username)
