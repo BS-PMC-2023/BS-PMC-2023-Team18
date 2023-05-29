@@ -197,9 +197,11 @@ class Test(TestCase):
             is_read=False,
         )
 
+        m = models.Message.objects.get(id=m.id)
         self.assertEqual(m.is_read, False)
         response = views.message_detail(self, m.id)
-        # self.assertEqual(m.is_read, True)  # bug
+        m = models.Message.objects.get(id=m.id)
+        self.assertEqual(m.is_read, True)
 
     def test_new_messages(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
@@ -232,26 +234,105 @@ class Test(TestCase):
         users[0].groups.add(groups[0])
 
         self.method = 'POST'
-        self.POST = {'recipient': 'testuser', 'subject': 'test subject', 'body': 'this is a test'}
+        self.POST = {'recipient': self.user, 'subject': 'test subject', 'body': 'this is a test'}
         self.META = dict()
 
-        self.assertEqual(views.new_messages(self.user.username), False)
-        self.assertEqual(len(models.Message.objects.filter(recipient=users[0])), 0)
-        views.send_message(self, self.user.username)
-        # self.assertEqual(len(models.Message.objects.filter(recipient=users[0])), 1)  # bug
-        # self.assertEqual(views.new_messages(self.user.username), True)  # bug
+        self.assertEqual(len(models.Message.objects.filter(sender=self.user)), 0)
+        views.send_message(self)
+        self.assertEqual(len(models.Message.objects.filter(sender=self.user)), 1)
 
-    # def test_edit_items_market(self):
-    #     self.assertEqual(True, True)
+    def test_edit_items_market(self):
+        
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
 
-    # def test_set_market_value(self):
-    #     self.assertEqual(True, True)
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address')
+        event = models.myEvent.objects.create(user_id=users[0].id, market_id=market.id)
 
-    # def test_feedback(self):
-    #     self.assertEqual(True, True)
+        self.method = 'POST'
+        self.POST = {'shirt': 0, 'pants': 1, 'shoes': 0, 'hat': 0, 'gloves': 0, 'scarf': 0, 'jacket': 0}
+        self.META = {}
 
-    # def test_update_profilepic(self):
-    #     self.assertEqual(True, True)
+        self.assertEqual(market.pants, 0)
+        views.edit_items_market(self, market.id)
+        market = models.market.objects.get(id=1)
+        self.assertEqual(market.pants, 1)
+
+
+    def test_set_market_value(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address')
+        event = models.myEvent.objects.create(user_id=users[0].id, market_id=market.id)
+
+        self.method = 'POST'
+        self.POST = {'shirt': 0, 'pants': 1, 'shoes': 0, 'hat': 0, 'gloves': 0, 'scarf': 0, 'jacket': 0}
+        self.META = {}
+
+        self.assertEqual(market.pants, 0)
+        views.set_market_value(self, market.id)
+        market = models.market.objects.get(id=1)
+        self.assertEqual(market.pants, 1)
+
+    def test_feedback(self):
+
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+
+        admin_password = '123'
+        my_admin = User.objects.create_superuser('adminuser', 'myemail@test.com', admin_password)
+        # c = Client()
+        # c.login(username=my_admin.username, password=admin_password)
+
+        self.method = 'POST'
+        self.POST = {'message': 'test message'}
+        
+        admin = User.objects.filter(username=my_admin.username)[0]
+
+        self.assertEqual(len(models.Message.objects.filter(recipient = admin)), 0)
+        views.feedback(self, '"')
+        self.assertEqual(len(models.Message.objects.filter(recipient = admin)), 1)
+
+    def test_update_profilepic(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+        
+        profile = UserProfileInfo.objects.filter(user=users[0])[0]
+
+        import tempfile
+        image = tempfile.NamedTemporaryFile(suffix=".jpg").name
+
+        self.assertEqual(profile.picture, "")
+
+        self.method = 'POST'
+        self.POST = {}
+        self.FILES = {'picture': image}
+        self.META = {}
+
+        views.update_profilepic(self)
+        profile = UserProfileInfo.objects.filter(user=users[0])[0]
+        self.assertEqual(profile.picture, image)
 
     # def test_managed_events(self):
     #     self.assertEqual(True, True)

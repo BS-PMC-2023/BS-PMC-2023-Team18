@@ -154,30 +154,6 @@ def search(response):
         new_mail = new_messages(response.user.username)
         return render(response, "main/search.html", {'new_mail': new_mail})
 
-
-def insert_market(response):
-    new_mail = new_messages(response.user.username)
-    my_dict = {'inserted': False, 'new_mail': new_mail}
-    if response.method == 'POST':
-        name = response.POST['name']
-        city = response.POST['city']
-        address = response.POST['address']
-        facebook = response.POST['facebook']
-        description = response.POST['description']
-        picture = response.POST['picture']
-        market_manager = response.POST['market_manager']
-        date = response.POST['date']
-        capacity = response.POST['capacity']
-        status = response.POST['status']
-        rating = response.POST['rating']
-        google_location = response.POST['google_location']
-
-        market.objects.create(name=name, city=city, address=address, facebook=facebook, description=description,
-                              picture=picture, market_manager=market_manager, date=date, capacity=capacity,
-                              status=status, rating=rating, google_location=google_location)
-        my_dict = {'inserted': True}
-    return render(response, "main/insert_market.html", context=my_dict)
-
 def market_page(response, id):
     cur_market = market.objects.get(id=id)
     new_mail = new_messages(response.user.username)
@@ -376,19 +352,18 @@ def submit_request(response, uid, mid):
         print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
     return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
-def update_profilepic(response):
-    new_mail = new_messages(response.user.username)
-    if response.method == 'POST':
-        form = UserProfileInfo(response.POST, response.FILES)
-        if form.is_valid():
-            form.save()
-            # return myprofile(response)
-            return render(response, "main/home.html", {'new_mail': new_mail})
-    else:
-        form = UserProfileInfoForm()
-    # return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
-    return render(response, "main/home.html", {'new_mail': new_mail})
-
+# def update_profilepic(response):
+#     new_mail = new_messages(response.user.username)
+#     if response.method == 'POST':
+#         form = UserProfileInfo(response.POST, response.FILES)
+#         if form.is_valid():
+#             form.save()
+#             # return myprofile(response)
+#             return render(response, "main/home.html", {'new_mail': new_mail})
+#     else:
+#         form = UserProfileInfoForm()
+#     # return render(response, 'main/update_profilepic.html', {'form': form, 'new_mail': new_mail})
+#     return render(response, "main/home.html", {'new_mail': new_mail})
 
 def update_profilepic(response):
     new_mail = new_messages(response.user.username)
