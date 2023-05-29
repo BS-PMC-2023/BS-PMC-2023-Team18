@@ -105,17 +105,17 @@ class Test(TestCase):
         response = self.client.get('/saveabout/')
         self.assertEqual(response.status_code, 200)
 
-    # def test_toggle_active(self):
-    #     self.user = User.objects.create_user(username='testuser', password='12345')
-    #     login = self.client.login(username='testuser', password='12345')
-    #     users = User.objects.filter(username='testuser')
-    #     temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
-    #     Group.objects.create(name='testgroup')
-    #     groups = Group.objects.filter(name='testgroup')
-    #     users[0].groups.add(groups[0])
-    #     self.assertEqual(users[0].is_active, True)
-    #     # views.toggle_active(self)
-    #     # self.assertEqual(users[0].is_active, False)
+    def test_toggle_active(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+        self.assertEqual(users[0].is_active, True)
+        # views.toggle_active(self)  # bug
+        # self.assertEqual(users[0].is_active, False)
 
     def test_areyousure(self):
         response = self.client.get('/areyousure/')
@@ -198,7 +198,7 @@ class Test(TestCase):
     
         self.assertEqual(m.is_read, False)
         response = views.message_detail(self, m.id)
-        # self.assertEqual(m.is_read, True)
+        # self.assertEqual(m.is_read, True)  # bug
 
     def test_new_messages(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
