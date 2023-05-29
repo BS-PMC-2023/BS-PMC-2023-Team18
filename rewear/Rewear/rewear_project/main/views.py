@@ -285,9 +285,7 @@ def assign_manager(response, mid, username):
     user.groups.add(managerGroup)
     user.save()
     cur_market = market.objects.get(id=mid)
-    print(cur_market.market_manager)
     cur_market.market_manager = username
-    print(cur_market.market_manager)
     market.save(cur_market)
     return delete_sub(response, mid, username)
 
@@ -347,9 +345,9 @@ def submit_request(response, uid, mid):
     subs = submission.objects.all()
     if not subs.filter(user_id=uid, market_id=mid).exists():
         submission.objects.create(user_id=uid, market_id=mid)
-        print("Created submission with uid: " + str(uid) + ", mid: " + str(mid))  # create submission
-    else:
-        print("Submission already exists with uid: " + str(uid) + ", mid: " + str(mid))
+    #     print("\nCreated submission with uid: " + str(uid) + ", mid: " + str(mid) + "\n")  # create submission
+    # else:
+    #     print("\nSubmission already exists with uid: " + str(uid) + ", mid: " + str(mid) + "\n")
     return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
 
 # def update_profilepic(response):
@@ -380,7 +378,7 @@ def update_profilepic(response):
 def sign_event(response, uid, mid):
     cur_market = market.objects.get(id=mid)
     if response.method == 'POST':
-        print("Signing up for event with uid: " + str(uid) + ", mid: " + str(mid))
+        print("\nSigning up for event with uid: " + str(uid) + ", mid: " + str(mid) + "\n")
         currevent = myEvent.objects.create(user_id=uid, market_id=mid)
         currevent.save()
     new_mail = new_messages(response.user.username)
@@ -518,6 +516,7 @@ def edit_profile(response):
         'cur_user': response.user,
         'new_mail': new_mail,
     })
+
 # User story 23 - edit profile key BSPMC2318-23
 def update_profile_info(request):
     if request.method == 'POST':
@@ -541,15 +540,15 @@ def remove_manager(response, market_id):
         cur_market.market_manager = ''
         cur_market.save()
 
-    cnt = 0
-    for m in market.objects.all():
-        if m.market_manager == temp_manager:
-            cnt += 1
-            break
-    if cnt == 0:
-        user = UserProfileInfo.objects.get(user = User.objects.get(username = temp_manager))
-        managerGroup = Group.objects.get(name="eventManager")
-        User.objects.get(username = temp_manager).groups.remove(managerGroup)
+        cnt = 0
+        for m in market.objects.all():
+            if m.market_manager == temp_manager:
+                cnt += 1
+                break
+        if cnt == 0:
+            user = UserProfileInfo.objects.get(user = User.objects.get(username = temp_manager))
+            managerGroup = Group.objects.get(name="eventManager")
+            User.objects.get(username = temp_manager).groups.remove(managerGroup)
 
     return market_page(response, market_id)
 
