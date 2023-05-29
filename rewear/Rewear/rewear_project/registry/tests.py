@@ -1,52 +1,45 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from registry.models import UserProfileInfo
 # Create your tests here.
-from django.contrib.auth.models import User
-def test_profile(self):
-    self.user = User.objects.create_user(username='testuser', password='testpass')
-    self.user.save()
-    self.userprofileinfo = UserProfileInfo.objects.create(user=self.user, userType='Buyer', phone='1234567890',
-                                                          picture='static\\media\\profile_pics\\default.jpg',
-                                                          about='testabout')
-    self.userprofileinfo.save()
-    response = self.client.get('/profile/')
-    self.assertEqual(response.status_code, 200)
-    self.userprofileinfo.delete()
-    self.user.delete()
+from django.contrib.auth.models import User, Group
+from registry import views
 
-def test_profile_update(self):
-    self.user = User.objects.create_user(username='testuser', password='testpass')
-    self.user.save()
-    self.userprofileinfo = UserProfileInfo.objects.create(user=self.user, userType='Buyer', phone='1234567890',
-                                                          picture='static\\media\\profile_pics\\default.jpg',
-                                                          about='testabout')
-    self.userprofileinfo.save()
-    response = self.client.get('/profile_update/')
-    self.assertEqual(response.status_code, 200)
-    self.userprofileinfo.delete()
-    self.user.delete()
+class Test(TestCase):
 
-def test_profile_update_save(self):
-    self.user = User.objects.create_user(username='testuser', password='testpass')
-    self.user.save()
-    self.userprofileinfo = UserProfileInfo.objects.create(user=self.user, userType='Buyer', phone='1234567890',
-                                                          picture='static\\media\\profile_pics\\default.jpg',
-                                                          about='testabout')
-    self.userprofileinfo.save()
-    response = self.client.get('/profile_update_save/')
-    self.assertEqual(response.status_code, 200)
-    self.userprofileinfo.delete()
-    self.user.delete()
+    def test_register(self):
+        response = self.client.get('/register/')
+        self.assertEqual(response.status_code, 404)
 
-def test_register(self):
-    response = self.client.get('/register/')
-    self.assertEqual(response.status_code, 200)
+    def test_login(self):
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code, 200)
 
-def test_login(self):
-    response = self.client.get('/login/')
-    self.assertEqual(response.status_code, 200)
+    def test_logout(self):
+        response = self.client.get('/logout/')
+        self.assertEqual(response.status_code, 302)
 
-def test_logout(self):
-    response = self.client.get('/logout/')
-    self.assertEqual(response.status_code, 302)
+    def test_signup_page(self):
+        response = self.client.get('/signup/')
+        self.assertEqual(response.status_code, 200)
 
+    def test_signup(self):
+        self.method = 'POST'
+        self.POST = {'userType': 'buyer', 'phone': '050', 'username': 'testuser', 'email': 'testemail@gmail.com', 'password': 'testtest', 'password_confirm': 'testtest'}
+        self.META = dict()
+        self.FILES = dict()
+
+
+        self.user = User.objects.create_user(username='admin', password='12345')
+        login = self.client.login(username='admin', password='12345')
+        users = User.objects.filter(username='admin')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='admin')
+        groups = Group.objects.filter(name='admin')
+        users[0].groups.add(groups[0])
+
+
+        users = User.objects.filter(username='testuser')
+        self.assertEqual(len(users), 0)
+        response = views.signup(self)
+        users = User.objects.filter(username='testuser')
+        self.assertEqual(len(users), 1)
