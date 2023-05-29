@@ -142,7 +142,23 @@ To submit a request to become event manager click
 	  	{% endif %}
 	  </tbody>
 	</table>
+    <br>
+    {% if market.market_manager == user.username %}
 
+    <form method="POST" action="/facebook_page/{{market.id}}/" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary resize-button" value="Facebook Post">Facebook Post</button>
+    </form>
+
+    <style>
+        .resize-button {
+            width: 175px; /* Set the desired width /
+            height: 65px; / Set the desired height /
+            / Add any additional styles as needed */
+        }
+    </style>
+
+    {% endif %}
 	<br>
 
 	{% if user.is_authenticated and sign_event %}

@@ -496,6 +496,13 @@ def delete_market(response, id):
     return search_page(response)
 
 
+def facebook_page(response, market_id):
+    new_mail = new_messages(response.user.username)
+    current_market = market.objects.get(id=market_id)
+    success_message = None
+    return render(response, "main/facebook_page.html", {'new_mail': new_mail, 'current_market': current_market,'success_message': success_message})
+
+
 def post_to_facebook(request):
     if request.method == 'POST':
         message = request.POST.get('message')  # Get the message from the form
