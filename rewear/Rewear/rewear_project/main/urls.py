@@ -38,4 +38,5 @@ path("edit_items_market/<id>/", views.edit_items_market, name="edit_items_market
 path("attending_users/<market_id>/", views.attending_users, name="attending_users"),
 path("report_user/<username>/", views.report_user, name="report_user"),
 path("send_report/<username>/", views.send_report, name="send_report"),
+path("facebook_page/<market_id>/", views.facebook_page, name="facebook_page"),
 ]

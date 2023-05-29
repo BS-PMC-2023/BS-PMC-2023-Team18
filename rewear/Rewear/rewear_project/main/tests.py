@@ -8,6 +8,7 @@ from main import views
 from main import models
 from django.db import models as djmodels
 
+
 class Test(TestCase):
 
     def test_home(self):
@@ -80,7 +81,7 @@ class Test(TestCase):
         Group.objects.create(name='testgroup')
         groups = Group.objects.filter(name='testgroup')
         users[0].groups.add(groups[0])
-        response = self.client.get('/profile/'+str(users[0].username))
+        response = self.client.get('/profile/' + str(users[0].username))
         self.assertEqual(response.status_code, 301)
 
     def test_editabout(self):
@@ -129,10 +130,10 @@ class Test(TestCase):
         Group.objects.create(name='testgroup')
         groups = Group.objects.filter(name='testgroup')
         users[0].groups.add(groups[0])
-    
+
         m = models.market.objects.create(id=1)
         self.client.get('/submit_request/' + str(users[0].id) + '/1/')
-    
+
         self.assertEqual(m.market_manager, '')
         response = views.assign_manager(self, m.id, users[0].username)
         self.assertEqual(response.status_code, 200)
@@ -187,7 +188,7 @@ class Test(TestCase):
         Group.objects.create(name='testgroup')
         groups = Group.objects.filter(name='testgroup')
         users[0].groups.add(groups[0])
-    
+
         m = models.Message.objects.create(
             sender=self.user,
             recipient=self.user,
@@ -195,7 +196,7 @@ class Test(TestCase):
             body='this is a test',
             is_read=False,
         )
-    
+
         self.assertEqual(m.is_read, False)
         response = views.message_detail(self, m.id)
         # self.assertEqual(m.is_read, True)  # bug
@@ -208,9 +209,9 @@ class Test(TestCase):
         Group.objects.create(name='testgroup')
         groups = Group.objects.filter(name='testgroup')
         users[0].groups.add(groups[0])
-    
+
         self.assertEqual(views.new_messages(self.user.username), False)
-    
+
         m = models.Message.objects.create(
             sender=self.user,
             recipient=self.user,
@@ -218,7 +219,7 @@ class Test(TestCase):
             body='this is a test',
             is_read=False
         )
-    
+
         self.assertEqual(views.new_messages(self.user.username), True)
 
     def test_sendmessage(self):
