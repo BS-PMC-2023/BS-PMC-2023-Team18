@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Unit testing') {
             steps {
                 dir('rewear/Rewear/rewear_project'){
                  // Change to the rewear_project directory
@@ -31,6 +31,20 @@ pipeline {
                 }
             }
         }
+        
+        stage('integration testing') {
+            steps {
+                dir('rewear/Rewear/rewear_project'){
+                 // Change to the rewear_project directory
+//                     sh 'pipenv run python manage.py test' // Specify the path to manage.py
+                    sh """
+                        # export DJANGO_SETTINGS_MODULE='Rewear.settings'
+                        python manage.py test
+                        """
+                }
+            }
+        }
+        
        
         stage('Metrics 1 - Defect Density ') {
             steps {
