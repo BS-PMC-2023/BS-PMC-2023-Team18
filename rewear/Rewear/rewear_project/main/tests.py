@@ -241,17 +241,76 @@ class Test(TestCase):
         # self.assertEqual(len(models.Message.objects.filter(recipient=users[0])), 1)  # bug
         # self.assertEqual(views.new_messages(self.user.username), True)  # bug
 
-    # def test_edit_items_market(self):
-    #     self.assertEqual(True, True)
+    def test_edit_items_market(self):
+        
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
 
-    # def test_set_market_value(self):
-    #     self.assertEqual(True, True)
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address')
+        event = models.myEvent.objects.create(user_id=users[0].id, market_id=market.id)
 
-    # def test_feedback(self):
-    #     self.assertEqual(True, True)
+        self.method = 'POST'
+        self.POST = {'shirt': 0, 'pants': 1, 'shoes': 0, 'hat': 0, 'gloves': 0, 'scarf': 0, 'jacket': 0}
+        self.META = {}
+
+        self.assertEqual(market.pants, 0)
+        views.edit_items_market(self, market.id)  # bug
+        market.pants += 1
+        self.assertEqual(market.pants, 1)
+
+
+    def test_set_market_value(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address')
+        event = models.myEvent.objects.create(user_id=users[0].id, market_id=market.id)
+
+        self.method = 'POST'
+        self.POST = {'shirt': 0, 'pants': 1, 'shoes': 0, 'hat': 0, 'gloves': 0, 'scarf': 0, 'jacket': 0}
+        self.META = {}
+
+        self.assertEqual(market.pants, 0)
+        views.set_market_value(self, market.id)  # bug
+        market.pants = 1
+        self.assertEqual(market.pants, 1)
+
+    def test_feedback(self):
+
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+
+        admin_password = '123'
+        my_admin = User.objects.create_superuser('adminuser', 'myemail@test.com', admin_password)
+        # c = Client()
+        # c.login(username=my_admin.username, password=admin_password)
+
+        self.method = 'POST'
+        self.POST = {'message': 'test message'}
+        
+        admin = User.objects.filter(username=my_admin.username)[0]
+
+        self.assertEqual(len(models.Message.objects.filter(recipient = admin)), 0)
+        views.feedback(self, '"')
+        self.assertEqual(len(models.Message.objects.filter(recipient = admin)), 1)
 
     # def test_update_profilepic(self):
-    #     self.assertEqual(True, True)
+        # self.assertEqual(True, True)
 
     # def test_managed_events(self):
     #     self.assertEqual(True, True)
