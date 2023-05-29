@@ -313,18 +313,6 @@ class Test(TestCase):
         m = models.market.objects.filter(id=1)
         self.assertEqual(len(m), 0)
 
-    def test_facebook_page(self):
-        self.user = self.getUser()
-
-        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address', market_manager=self.user.username)
-        self.META = {}
-
-        response = views.facebook_page(self, 1)
-        self.assertEqual(response.status_code, 200)
-
-    # def test_post_to_facebook(self):  # needs to be fixed
-        # self.assertEqual(True, True)
-
     def test_edit_profile(self):
         self.user = self.getUser()
         self.META = {}
@@ -374,11 +362,48 @@ class Test(TestCase):
         m = models.market.objects.filter(id=1)[0]
         self.assertEqual(m.market_manager, '')
 
-    # def test_attending_users(self):
-    #     self.assertEqual(True, True)
+    def test_attending_users(self):
+        
+        self.user = self.getUser()
 
-    # def test_report_user(self):
-    #     self.assertEqual(True, True)
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address', market_manager=self.user.username)
+        event = models.myEvent.objects.create(user_id=self.user.id, market_id=market.id)
+        self.META = {}
 
-    # def test_send_report(self):
-    #     self.assertEqual(True, True)
+        response = views.attending_users(self, 1)
+        self.assertEqual(response.status_code, 200)
+
+    def test_report_user(self):
+        self.user = self.getUser()
+        self.META = {}
+        response = views.report_user(self, self.user.username)
+        self.assertEqual(response.status_code, 200)
+
+    def test_send_report(self):
+        self.user = self.getUser()
+        self.META = {}
+        self.method = 'POST'
+        self.POST = {'message': 'test message'}
+        
+        admin_password = '123'
+        my_admin = User.objects.create_superuser('adminuser', 'myemail@test.com', admin_password)
+
+        m = models.Message.objects.all()
+        self.assertEqual(len(m), 0)
+        
+        views.send_report(self, self.user.username)
+        
+        m = models.Message.objects.all()
+        self.assertEqual(len(m), 1)
+
+    def test_facebook_page(self):
+        self.user = self.getUser()
+
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address', market_manager=self.user.username)
+        self.META = {}
+
+        response = views.facebook_page(self, 1)
+        self.assertEqual(response.status_code, 200)
+
+    # def test_post_to_facebook(self):  # needs to be fixed
+        # self.assertEqual(True, True)
