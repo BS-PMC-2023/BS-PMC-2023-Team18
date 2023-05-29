@@ -171,9 +171,12 @@ class Test(TestCase):
         self.user = self.getUser()
 
         m = models.market.objects.create(id=1)
+        self.method = 'POST'
+        self.META = {}
+        self.POST = {}
 
         self.assertEqual(len(models.myEvent.objects.filter(user_id=self.user.id, market_id=m.id)), 0)
-        e = models.myEvent.objects.create(user_id=self.user.id, market_id=m.id)
+        response = views.sign_event(self, self.user.id, m.id)
         self.assertEqual(len(models.myEvent.objects.filter(user_id=self.user.id, market_id=m.id)), 1)
 
     def test_my_events(self):
@@ -214,7 +217,7 @@ class Test(TestCase):
 
         self.assertEqual(views.new_messages(self.user.username), True)
 
-    def test_sendmessage(self):
+    def test_send_message(self):
         self.user = self.getUser()
 
         self.method = 'POST'
@@ -240,7 +243,6 @@ class Test(TestCase):
         market = models.market.objects.get(id=1)
         self.assertEqual(market.pants, 1)
 
-
     def test_set_market_value(self):
         self.user = self.getUser()
 
@@ -261,8 +263,6 @@ class Test(TestCase):
 
         admin_password = '123'
         my_admin = User.objects.create_superuser('adminuser', 'myemail@test.com', admin_password)
-        # c = Client()
-        # c.login(username=my_admin.username, password=admin_password)
 
         self.method = 'POST'
         self.POST = {'message': 'test message'}

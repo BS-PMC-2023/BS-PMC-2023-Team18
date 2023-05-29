@@ -82,17 +82,17 @@ def toggle_active(response):
     return home(response)
 
 
-def sendmessage(response, username):
-    if response.method == 'POST':
-        message = response.POST['message']
-        message = message + "\n\nMy email: " + User.objects.get(username=response.user.username).email
-        send_mail('Rewear: A new message from ' + str(response.user.username),
-                  message,
-                  settings.EMAIL_HOST_USER,
-                  [str(User.objects.get(username=username).email)],
-                  fail_silently=False)
-    new_mail = new_messages(response.user.username)
-    return render(response, 'main/thankyou2.html', {'new_mail': new_mail})
+# def sendmessage(response, username):
+#     if response.method == 'POST':
+#         message = response.POST['message']
+#         message = message + "\n\nMy email: " + User.objects.get(username=response.user.username).email
+#         send_mail('Rewear: A new message from ' + str(response.user.username),
+#                   message,
+#                   settings.EMAIL_HOST_USER,
+#                   [str(User.objects.get(username=username).email)],
+#                   fail_silently=False)
+#     new_mail = new_messages(response.user.username)
+#     return render(response, 'main/thankyou2.html', {'new_mail': new_mail})
 
 
 def about(response):
@@ -378,7 +378,7 @@ def update_profilepic(response):
 def sign_event(response, uid, mid):
     cur_market = market.objects.get(id=mid)
     if response.method == 'POST':
-        print("\nSigning up for event with uid: " + str(uid) + ", mid: " + str(mid) + "\n")
+        # print("\nSigning up for event with uid: " + str(uid) + ", mid: " + str(mid) + "\n")
         currevent = myEvent.objects.create(user_id=uid, market_id=mid)
         currevent.save()
     new_mail = new_messages(response.user.username)
