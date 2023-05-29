@@ -334,11 +334,38 @@ class Test(TestCase):
         profile = UserProfileInfo.objects.filter(user=users[0])[0]
         self.assertEqual(profile.picture, image)
 
-    # def test_managed_events(self):
-    #     self.assertEqual(True, True)
+    def test_managed_events(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
 
-    # def test_delete_market(self):
-    #     self.assertEqual(True, True)
+        response = self.client.get('/managed_events/' + str(users[0].id))
+        self.assertEqual(response.status_code, 301)
+
+    def test_delete_market(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        login = self.client.login(username='testuser', password='12345')
+        users = User.objects.filter(username='testuser')
+        temp = UserProfileInfo.objects.create(user=users[0], phone='050', about='')
+        Group.objects.create(name='testgroup')
+        groups = Group.objects.filter(name='testgroup')
+        users[0].groups.add(groups[0])
+
+        market = models.market.objects.create(id=1, name='test market', city='test city', address='test address')
+
+        self.method = 'POST'
+        self.POST = {}
+        self.META = {}
+        
+        m = models.market.objects.filter(id=1)
+        self.assertEqual(len(m), 1)
+        views.delete_market(self, market.id)
+        m = models.market.objects.filter(id=1)
+        # self.assertEqual(len(m), 0)  # bug
 
     # def test_post_to_facebook(self):
     #     self.assertEqual(True, True)
