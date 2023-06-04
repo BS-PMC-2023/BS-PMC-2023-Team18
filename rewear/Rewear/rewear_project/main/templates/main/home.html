@@ -1,10 +1,19 @@
 {% extends 'main/base.html' %}
 
 {% block style %}
+
 	.image-effect {
 		border-radius: 10%;
 		border: 2px solid #3880fa;
 		object-fit: cover;
+	}
+
+	@media (max-width: 800px) {
+		.image-effect {
+			width: 100%;
+			max-width: 180px;
+			height: auto;
+		}
 	}
 
 	table {
@@ -14,6 +23,14 @@
 	td {
 		vertical-align: top;
 	}
+	.top {
+		width: 30%;
+		text-align: left;
+	}
+	.table {
+		margin-left: auto;
+		margin-right: auto;
+	}
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -22,6 +39,7 @@
 {% block content %}
 <center><h1>Home</h1></center>
 
+<center><div class="top">
 {% if user.is_authenticated and user.is_superuser and subs %}
 	{% if subs > 1 %}
 		<center><b><font color = "red">There are {{subs}} unhandled submissions!</font></b></center>
@@ -34,24 +52,7 @@
 	<a href="/login/"><p>Login</p></a>
 	<p>Not registered yet? <a href="/signup/">Sign up</a></p>
 {% endif %}
-
-<center>
-
-	<p>
-		Become a part of a growing community!
-	</p>
-<style>
-  .table {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .image-effect {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-</style>
+</div></center>
 
 <div class="container">
     <table class="table">
@@ -120,11 +121,7 @@
 		</tr>
 	</table>
 
-<div/>
-
-
-
-
-</center>
+</div>
 
 {% endblock %}
+
