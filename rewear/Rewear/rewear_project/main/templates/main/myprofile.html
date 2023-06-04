@@ -24,9 +24,11 @@
 	{% if profile_pic %}
 	<center>
 		<img src="{% static pic_path %}" alt="Avatar" height=180px width=180px class="profimg">
-<!--		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">-->
 	</center>
 	{% else %}
+	<center>
+		<img src="{% static '\\media\\profile_placeholder.png' %}" alt="Avatar" height=180px width=180px class="profimg">
+	</center>
 
 <form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
   {% csrf_token %}
