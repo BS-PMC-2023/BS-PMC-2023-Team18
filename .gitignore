@@ -8,3 +8,6 @@ rewear/Rewear/rewear_project/db.sqlite3
 *.sqlite3
 *.pyc
 *.sqlite3
+*.xml
+rewear/.idea/workspace.xml
+rewear/.idea/misc.xml
