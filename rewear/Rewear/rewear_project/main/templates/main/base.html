@@ -43,9 +43,11 @@
 <!--							<img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50" style="position: absolute; top: 50%; transform: translateX(+350%);">-->
 <!--						</h1>-->
 						<h1 class="header-name header-name-large" style="text-align: center; position: relative;">Rewear
+							{% if user.is_authenticated %}
 							<span class="header-photo-wrapper">
 								<a href="/logout"><img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50"></a>
 							</span>
+							{% endif %}
 						</h1>
 
 						<nav class="nav main-nav">
