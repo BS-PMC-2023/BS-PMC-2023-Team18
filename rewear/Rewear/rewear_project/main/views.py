@@ -382,16 +382,13 @@ def submit_request(response, uid, mid):
 #     return render(response, "main/home.html", {'new_mail': new_mail})
 
 def update_profilepic(response):
-    new_mail = new_messages(response.user.username)
     if response.method == 'POST':
         picture = response.FILES['picture']
         user = User.objects.get(username=response.user.username)
         profileinfo = UserProfileInfo.objects.get(user=user)
         profileinfo.picture = picture
         profileinfo.save()
-        return render(response, "main/myprofile.html", {'profile_pic': picture, 'new_mail': new_mail})
-    else:
-        return render(response, 'main/myprofile.html', {'new_mail': new_mail})
+    return myprofile(response)
 
 def sign_event(response, uid, mid):
     cur_market = market.objects.get(id=mid)
