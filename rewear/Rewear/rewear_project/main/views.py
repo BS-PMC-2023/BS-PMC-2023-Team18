@@ -287,10 +287,28 @@ def assign_manager(response, mid, username):
     cur_market = market.objects.get(id=mid)
     cur_market.market_manager = username
     market.save(cur_market)
-    return delete_sub(response, mid, username)
 
+    current_market = market.objects.get(id=mid)
+    sign_user = User.objects.get(username=username)
+    try:
+        message_body = 'Your submission for "' + current_market.name + '" has been accepted by the admin you can now manage your market.'
+        Message.objects.create(sender=response.user, recipient=sign_user, subject='Submission Accepted',
+                               body=message_body)
+    except:
+        pass
 
-def delete_sub(response, mid, username):
+    return delete_sub(response, mid, username, False)
+
+def delete_sub(response, mid, username, msg=True):
+    current_market = market.objects.get(id=mid)
+    sign_user = User.objects.get(username=username)
+    if msg:
+        try:
+            message_body = 'Your submission for ' + current_market.name + ' has been declined by the Admin.'
+            Message.objects.create(sender=response.user, recipient=sign_user, subject='Submission Declined',
+                                   body=message_body)
+        except:
+            pass
     cur_user = User.objects.get(username=username)
     cur_sub = submission.objects.get(user_id=cur_user.id, market_id=mid)
     cur_sub.delete()
