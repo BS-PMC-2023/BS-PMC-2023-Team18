@@ -1,11 +1,23 @@
 {% extends 'main/base.html' %}
 
-{% block content %}
-  <h2>{{ message.subject }}</h2>
-  <p>From: <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a></p>
-  <p>To: <a href="/profile/{{ message.recipient.username }}">{{ message.recipient.username }}</a></p>
-  <p>{{ message.body | linebreaks}}</p>
+{% block style %}
 
-  <br /><br />
+.details {
+	margin: 0 0 10px;
+	width: 50%;
+	text-align: left;
+}
+
+{% endblock %}
+
+{% block content %}
+<center>
+  <h2 class="details">{{ message.subject }}</h2>
+  <p class="details">From: <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a></p>
+  <p class="details">To: <a href="/profile/{{ message.recipient.username }}">{{ message.recipient.username }}</a></p>
+  <div class="details"><p>{{ message.body | linebreaks}}</p></div>
+
+  <br />
   <a href="/send_message/{{message.sender.username}}/">Reply</a>
+</center>
 {% endblock %}

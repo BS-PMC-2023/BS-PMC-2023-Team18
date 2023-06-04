@@ -1,7 +1,19 @@
 {% extends 'main/base.html' %}
 
+{% block style %}
+
+.send {
+	margin: 0 0 10px;
+	width: 30%;
+	text-align: left;
+}
+
+{% endblock %}
+
 {% block content %}
+<center>
   <h2>Send Message</h2>
+  <div class="send">
   <form method="post">
     {% csrf_token %}
     Recipient: <br />
@@ -10,7 +22,9 @@
     {{ form.subject }} <br />
     Body: <br />
     {{ form.body }} <br />
-    <button type="submit" class="btn btn-success">Send</button>
+    <br />
+    <center><button type="submit" class="btn btn-success">Send</button></center>
   </form>
+</div></center>
 
 {% endblock %}

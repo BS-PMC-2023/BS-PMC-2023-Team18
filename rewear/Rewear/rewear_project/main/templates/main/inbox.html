@@ -1,12 +1,22 @@
 {% extends 'main/base.html' %}
 
+{% block style %}
+
+.mail {
+	margin: 0 0 10px;
+	width: 50%;
+	text-align: left;
+}
+
+{% endblock %}
+
 {% block content %}
-  <h2>Inbox</h2>
-  <center>
+  <center><h2>Inbox</h2>
+
     <a href="/send_message/"><h5><b>Send a message</b></h5></a>
-  </center>
+
   {% if messages %}
-    <ul>
+    <ul class="mail">
       {% for message in messages reversed %}
         <li{% if not message.is_read %} style="font-weight: bold;"{% endif %}>
           <a href="/message_detail/{{message.id}}">
@@ -21,11 +31,10 @@
           {% else %}
             <small>from <a href="/profile/{{ message.sender.username }}">{{ message.sender.username }}</a> on {{ message.created_at }}</small>
           {% endif %}
-<!--      {% if not message.is_read %}<small> &emsp; - unread </small>{% endif %}-->
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>No messages.</p>
+    <p>No messages.</p></center>
   {% endif %}
 {% endblock %}
