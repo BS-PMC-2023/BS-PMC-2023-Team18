@@ -2,28 +2,39 @@
 
 {% block title %}About{% endblock %}
 
-
 {% load crispy_forms_tags %}
 
+{% block style %}
+
+.about {
+	margin: 0 0 10px;
+	width: 50%;
+	text-align: left;
+}
+
+{% endblock %}
+
 {% block content %}
-<center><h1>About</h1></center>
+<center><h1>About</h1>
 
 
-<p>
+<p class="about">
 Welcome to our clothing exchange project! We are a group of students who are passionate about sustainability and reducing textile waste. Our goal is to create a community where people can exchange clothing items with one another, saving money and reducing waste at the same time.
 </p>
-<p>
+<p class="about">
 Our project was inspired by the growing problem of textile waste in the fashion industry. We wanted to create a solution that would help people reduce their environmental impact while also saving money. By exchanging clothes with others, we can give our clothes a second life and reduce the amount of waste that ends up in landfills.
 </p>
-<p>
+<p class="about">
 Our project has evolved over time as we’ve learned more about the fashion industry and the impact it has on the environment. We’ve worked hard to create a platform that is easy to use and accessible to everyone.
 </p>
-<p>
+<p class="about">
 We believe that everyone can make a difference when it comes to sustainability. By joining our community, you’ll be part of a movement that is making a positive impact on the environment. You’ll also have the opportunity to meet new people who share your values and discover new styles and trends.
 </p>
-<p>
+<p class="about">
 Thank you for visiting our website! We hope you’ll join us in our mission to create a more sustainable future.
 </p>
+
+</center>
 
 
 {% if not feedback and user.is_authenticated %}
