@@ -455,6 +455,15 @@ def new_messages(username):
 # so that "base.html" will be able to get whether user has new mail
 
 def delete_market(response, id):
+    user_events = myEvent.objects.filter(market_id=id)
+    current_market = market.objects.get(id=id)
+    try:
+        for event in user_events:
+            sign_user = User.objects.get(id=event.user_id)
+            message_body = 'The market' + current_market.name + 'which located in'+ current_market.city + ' you signed up for has been cancelled.'
+            Message.objects.create(sender=response.user, recipient=sign_user, subject='Market Canceled', body=message_body)
+    except:
+        pass
 
     if response.method == 'POST':
         if response.user.username == market.objects.get(id=id).market_manager:
