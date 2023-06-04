@@ -460,7 +460,7 @@ def delete_market(response, id):
     try:
         for event in user_events:
             sign_user = User.objects.get(id=event.user_id)
-            message_body = 'The market' + current_market.name + 'which located in'+ current_market.city + ' you signed up for has been cancelled.'
+            message_body = 'The market ' + current_market.name + ' which located in '+ current_market.city + ' you signed up for has been cancelled.'
             Message.objects.create(sender=response.user, recipient=sign_user, subject='Market Canceled', body=message_body)
     except:
         pass
