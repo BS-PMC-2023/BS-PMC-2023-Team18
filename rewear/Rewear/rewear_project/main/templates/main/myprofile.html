@@ -27,12 +27,19 @@
 <!--		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">-->
 	</center>
 	{% else %}
-	<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
-		{% csrf_token %}
-		<label for="picture">Profile Picture:</label>
-		<input type="file" name="picture" id="picture" required>
-		<button type="submit" class="btn btn-primary">Update Profile Picture</button>
-	</form>
+
+<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
+  {% csrf_token %}
+  <div class="input-group" style="width: 30%;">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="picture" name="picture" required>
+      <label class="custom-file-label" for="picture">Profile Picture</label>
+    </div>
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-primary">Update Profile Picture</button>
+    </div>
+  </div>
+</form>
 	{% endif %}
 <!--move it to right-->
 
