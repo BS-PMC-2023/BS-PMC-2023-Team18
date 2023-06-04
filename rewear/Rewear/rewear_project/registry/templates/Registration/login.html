@@ -5,12 +5,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<center><h1>Login</h1></center>
+<center><h1>Login</h1>
 
-	<form method="POST" class="form-group">
+	<form method="POST" class="form-group" style="width:30%;">
 		{% csrf_token %}
 		{{form|crispy}}
 		<p>Don't have an account yet? <a href="/signup/">Sign up</a></p>
 		<button type="submit" class="btn btn-success">Login</button>
-	</form>
+	</form></center>
 {% endblock %}

@@ -7,7 +7,7 @@
     <list default="true" id="0c36be73-af0e-4b3b-b735-bf883417c7ec" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rewear_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/rewear_project/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rewear_project/main/templates/main/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/rewear_project/main/templates/main/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rewear_project/registry/templates/Registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/rewear_project/registry/templates/Registration/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
