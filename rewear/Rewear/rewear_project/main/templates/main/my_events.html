@@ -10,6 +10,18 @@
 	td {
 		vertical-align: top;
 	}
+	.blue-row {
+		background-color: #9dd0ff;
+	}
+	.blue-row a {
+		color: #0053ae;
+	}
+	.light-blue-row {
+		background-color: #ddefff;
+	}
+	.light-blue-row a {
+		color: #0053ae;
+	}
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -91,7 +103,7 @@ function updateCityOptions() {
 <!--					Link-->
 <!--				</th>-->
 			{% for market in markets %}
-			<tr>
+			<tr class="{% cycle 'blue-row' 'light-blue-row' %}">
 				<td>
 <!--					{{market.name}}-->
 					<a href="/market_page/{{market.id}}/">{{market.name}}</a>
