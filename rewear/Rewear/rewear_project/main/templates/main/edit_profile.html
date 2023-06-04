@@ -21,25 +21,12 @@
 	<a href="/login/"><p>Login</p></a>
 	
 {% else %}
-	{% if profile_pic %}
-	<center>
-		<img src="{% static pic_path %}" alt="Avatar" height=180px width=180px class="profimg">
-<!--		<img src='{% static profile_pic.path %}' alt="Avatar" height=180px width=180px class="profimg">-->
-	</center>
-	{% else %}
-	<form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
-		{% csrf_token %}
-		<label for="picture">Profile Picture:</label>
-		<input type="file" name="picture" id="picture" required>
-		<button type="submit">Update Profile Picture</button>
-	</form>
-	{% endif %}
-	<table>
+	<br>
+	<center><table>
 		<tr>
 			<td>Username:&nbsp;&nbsp;&nbsp;</td>
 			<td>{{user.username}}</td>
 		</tr>
-
 
 		<form action="/update_profile_info/" method="POST">
 			{% csrf_token %}
@@ -79,12 +66,12 @@
 
 			<tr>
 				<td colspan="2">
-				  <input type="submit" value="Save" class="btn btn-primary btn-sm">
+				  <br><center><input type="submit" value="Save" class="btn btn-primary btn-sm"></center>
 				</td>
 			</tr>
 		</form>
 
-	</table>
+	</table></center>
 
 	
 	<br><br><br>

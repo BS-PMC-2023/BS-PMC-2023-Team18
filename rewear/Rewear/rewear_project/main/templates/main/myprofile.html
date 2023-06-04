@@ -25,14 +25,18 @@
 	<center>
 		<img src="{% static pic_path %}" alt="Avatar" height=180px width=180px class="profimg">
 	</center>
+	<br>
 	{% else %}
 	<center>
 		<img src="{% static '\\media\\profile_placeholder.png' %}" alt="Avatar" height=180px width=180px class="profimg">
 	</center>
 
+<center><div>
+	<br>
 <form method="POST" enctype="multipart/form-data" action="/update_profilepic/">
   {% csrf_token %}
-  <div class="input-group" style="width: 30%;">
+
+	<div class="input-group" style="width: 40%;">
     <div class="custom-file">
       <input type="file" class="custom-file-input" id="picture" name="picture" required>
       <label class="custom-file-label" for="picture">Profile Picture</label>
@@ -42,9 +46,10 @@
     </div>
   </div>
 </form>
+</div></center>
 	{% endif %}
-<!--move it to right-->
 
+<center><div>
 	<td align="right"><a href="/edit_profile/">edit profile</a></td>
 
 	<table>
@@ -93,7 +98,7 @@
 		</tr>
 
 	</table>
-
+</div></center>
 	
 	<br><br><br>
 <center>
