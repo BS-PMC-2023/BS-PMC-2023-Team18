@@ -2,36 +2,71 @@
 
 {% block style %}
 
-	.image-effect {
-		border-radius: 10%;
-		border: 2px solid #3880fa;
-		object-fit: cover;
-	}
+.image-effect {
+    border-radius: 10%;
+    border: 2px solid #3880fa;
+    object-fit: cover;
+    opacity: 0; /* Set initial opacity to 0 */
+    animation: move-fade-in 1s ease-in-out forwards; /* Add move-fade-in animation */
+}
 
-	@media (max-width: 800px) {
-		.image-effect {
-			width: 100%;
-			max-width: 180px;
-			height: auto;
-		}
-	}
+@keyframes move-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(20px); /* Initial movement to the right */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0); /* Move back to the original position */
+    }
+}
 
-	table {
-    	table-layout: fixed;
-    	width: 800px;
-	}
-	td {
-		vertical-align: top;
-	}
-	.top {
-		width: 30%;
-		text-align: left;
-	}
-	.table {
-		margin-left: auto;
-		margin-right: auto;
-	}
+@media (max-width: 800px) {
+    .image-effect {
+        width: 100%;
+        max-width: 180px;
+        height: auto;
+    }
+}
+
+.table-row {
+    opacity: 0; /* Set initial opacity to 0 */
+    transform: translateY(20px); /* Set initial translation */
+    animation: slide-up 0.5s ease-in-out forwards; /* Add slide-up animation */
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+table {
+    table-layout: fixed;
+    width: 800px;
+}
+
+td {
+    vertical-align: top;
+}
+
+.top {
+    width: 30%;
+    text-align: left;
+}
+
+.table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 {% endblock %}
+
 
 {% load crispy_forms_tags %}
 {% load static %}
@@ -75,53 +110,52 @@
 		</tr>
 
 		<tr>
-			<td>
-				<center><b>Recycle:</b></center>
-					<ul>
-						<li>Reduce textile waste by exchanging clothes with others.</li>
-						<li>Give your clothes a second life.</li>
-						<li>Help reduce the environmental impact of the fashion industry.</li>
-						<li>Contribute to a more sustainable future.</li>
-						<li>Make a positive impact on the environment.</li>
-					</ul>
-			</td>
+				<td>
+					<center><b>Recycle:</b></center>
+						<ul>
+							<li>Reduce textile waste by exchanging clothes with others.</li>
+							<li>Give your clothes a second life.</li>
+							<li>Help reduce the environmental impact of the fashion industry.</li>
+							<li>Contribute to a more sustainable future.</li>
+							<li>Make a positive impact on the environment.</li>
+						</ul>
+				</td>
 
-			<td>
-				<center><b>Save money:</b></center>
-					<ul>
-						<li>Get new clothes without spending money.</li>
-						<li>Save money by exchanging clothes instead of buying new ones.</li>
-						<li>Get rid of clothes you don’t wear and get new ones for free.</li>
-						<li>Save money and help the environment at the same time.</li>
-						<li>Be part of a community that values sustainability and saving money.</li>
-					</ul>
-			</td>
+				<td>
+					<center><b>Save money:</b></center>
+						<ul>
+							<li>Get new clothes without spending money.</li>
+							<li>Save money by exchanging clothes instead of buying new ones.</li>
+							<li>Get rid of clothes you don’t wear and get new ones for free.</li>
+							<li>Save money and help the environment at the same time.</li>
+							<li>Be part of a community that values sustainability and saving money.</li>
+						</ul>
+				</td>
 
-			<td>
-				<center><b>Join the community:</b></center>
-					<ul>
-						<li>Meet new people who share your values.</li>
-						<li>Join a community that cares about the environment.</li>
-						<li>Connect with people who are passionate about sustainability.</li>
-						<li>Be part of a movement that is making a difference.</li>
-						<li>Make new friends who share your interests.</li>
-					</ul>
-			</td>
+				<td>
+					<center><b>Join the community:</b></center>
+						<ul>
+							<li>Meet new people who share your values.</li>
+							<li>Join a community that cares about the environment.</li>
+							<li>Connect with people who are passionate about sustainability.</li>
+							<li>Be part of a movement that is making a difference.</li>
+							<li>Make new friends who share your interests.</li>
+						</ul>
+				</td>
 
-			<td>
-				<center><b>Get new clothing items:</b></center>
-					<ul>
-						<li>Get new clothes without spending money.</li>
-						<li>Find unique pieces that you won’t find in stores.</li>
-						<li>Discover new styles and trends.</li>
-						<li>Refresh your wardrobe without spending a dime.</li>
-						<li>Get rid of clothes you don’t wear and get new ones for free.</li>
-					</ul>
-			</td>
-		</tr>
-	</table>
+				<td>
+					<center><b>Get new clothing items:</b></center>
+						<ul>
+							<li>Get new clothes without spending money.</li>
+							<li>Find unique pieces that you won’t find in stores.</li>
+							<li>Discover new styles and trends.</li>
+							<li>Refresh your wardrobe without spending a dime.</li>
+							<li>Get rid of clothes you don’t wear and get new ones for free.</li>
+						</ul>
+				</td>
+			</tr>
+		</table>
 
-</div>
+	</div>
 
 {% endblock %}
-

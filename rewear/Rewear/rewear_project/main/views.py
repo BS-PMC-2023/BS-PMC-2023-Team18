@@ -158,19 +158,32 @@ def market_page(response, id):
     cur_market = market.objects.get(id=id)
     new_mail = new_messages(response.user.username)
 
+    is_event = False
+    manage_request = False
+
     try:
         my_event = myEvent.objects.get(user_id=response.user.id, market_id=id)
 
         if my_event:
-            return render(response, "main/market_page.html",
-                          {'market': cur_market, 'sign_event': True, 'new_mail': new_mail, 'my_event': my_event})
-        else:
-            return render(response, "main/market_page.html",
-                          {'market': cur_market, 'sign_event': False, 'new_mail': new_mail, 'my_event': my_event})
-    except ObjectDoesNotExist:
-        # Handle the case when the myEvent object does not exist
+            is_event = True
+    except:
+        pass
+
+    try:
+        if len(submission.objects.filter(market_id=id, user_id=response.user.id)) > 0:
+            manage_request = True
+
+    except:
+        pass
+
+    if is_event:
         return render(response, "main/market_page.html",
-                      {'market': cur_market, 'sign_event': False, 'new_mail': new_mail})
+                      {'market': cur_market, 'sign_event': is_event, 'manage_request': manage_request, 'new_mail': new_mail, 'my_event': my_event})
+    else:
+        return render(response, "main/market_page.html",
+                      {'market': cur_market, 'sign_event': is_event, 'manage_request': manage_request,
+                       'new_mail': new_mail})
+
 
 
 def update_market(response, id):
@@ -579,6 +592,14 @@ def remove_manager(response, market_id):
         temp_manager = cur_market.market_manager
         cur_market.market_manager = ''
         cur_market.save()
+
+        subject = "Change to your user privileges"
+        body = 'You have been removed as the manager of ' + cur_market.name + ' which located in ' + cur_market.city + '.'
+
+        try:
+            Message.objects.create(sender=response.user, recipient=User.objects.get(username=temp_manager), subject=subject, body=body)
+        except:
+            pass
 
         cnt = 0
         for m in market.objects.all():
