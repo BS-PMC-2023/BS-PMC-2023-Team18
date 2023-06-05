@@ -47,7 +47,11 @@ table.admin {
 <br /><form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
 {% csrf_token %}
 <!--To submit a request to become event manager click-->
+	{% if not manage_request %}
 	<center><input type="submit" value="REQUEST TO BECOME EVENT MANAGER" class="btn btn-info btn-sm"></center>
+	{% else %}
+	<center><h5>You have submitted a request to become manager.</h5></center>
+	{% endif %}
 </form>
 {% endif %}
 
@@ -137,13 +141,12 @@ table.admin {
 	  	{% endif %}
 	  </tbody>
 	</table>
-    <br>
     {% if market.market_manager == user.username %}
 
-    <form method="POST" action="/facebook_page/{{market.id}}/" class="form-group" enctype="multipart/form-data">
+    <center><form method="POST" action="/facebook_page/{{market.id}}/" class="form-group" enctype="multipart/form-data">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary resize-button" value="Facebook Post">Facebook Post</button>
-    </form>
+	</form></center>
 
     <style>
         .resize-button {
@@ -154,7 +157,6 @@ table.admin {
     </style>
 
     {% endif %}
-	<br>
 
 	{% if user.is_authenticated and sign_event %}
 	<center>
