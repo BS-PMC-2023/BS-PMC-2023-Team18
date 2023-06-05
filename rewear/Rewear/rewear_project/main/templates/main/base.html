@@ -38,20 +38,24 @@
 	  animation-duration: 1s;
 	  animation-timing-function: ease-in-out;
 	  animation-iteration-count: infinite;
-}
+	}
 
-@keyframes bounce {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
+	@keyframes bounce {
+		0% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-10px);
+		}
+		100% {
+			transform: translateY(0);
+		}
+	}
+	@media screen and (max-width: 768px) {
+		#header-title {
+			font-size: 50px;
+		}
+	}
 </style>
 
 <!doctype html>
@@ -72,18 +76,47 @@
 		<div class="row justify-content-center">
 			<div class="col-12">
 					<header class="main-header">
-<!--						<h1 class="header-name header-name-large">Rewear</h1>-->
 
 <!--						<h1 class="header-name header-name-large" style="text-align: center; position: relative;">Rewear-->
-<!--							<img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50" style="position: absolute; top: 50%; transform: translateX(+350%);">-->
+<!--							{% if user.is_authenticated %}-->
+<!--							<span class="header-photo-wrapper">-->
+<!--								<a href="/logout"><img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50"></a>-->
+<!--							</span>-->
+<!--							{% endif %}-->
 <!--						</h1>-->
-						<h1 class="header-name header-name-large" style="text-align: center; position: relative;">Rewear
+
+						<h1 id="header-title" class="header-name header-name-large" style="text-align: center; position: relative;">Rewear
 							{% if user.is_authenticated %}
-							<span class="header-photo-wrapper">
-								<a href="/logout"><img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50"></a>
-							</span>
+								<span class="header-photo-wrapper">
+									<a href="/logout">
+										<img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50">
+									</a>
+								</span>
 							{% endif %}
 						</h1>
+
+						<script>
+							document.addEventListener("DOMContentLoaded", function() {
+							  var header = document.getElementById("header-title");
+							  var image = document.querySelector(".header-photo-wrapper");
+
+							  function adjustFontSize() {
+								var headerRect = header.getBoundingClientRect();
+								var imageRect = image.getBoundingClientRect();
+
+								if (headerRect.right < imageRect.left+285) {
+								  var fontSize = Math.max(20 - (headerRect.right - imageRect.left), 60);
+								  header.style.fontSize = fontSize + "px";
+								} else {
+									header.style.fontSize = 8 + "em";
+								}
+							  }
+
+							  window.addEventListener("resize", adjustFontSize);
+							  image.addEventListener("mousemove", adjustFontSize);
+							  adjustFontSize();
+							});
+						</script>
 
 						<nav class="nav main-nav">
 							<ul>

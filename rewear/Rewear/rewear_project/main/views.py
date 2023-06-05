@@ -366,7 +366,7 @@ def submit_request(response, uid, mid):
     #     print("\nCreated submission with uid: " + str(uid) + ", mid: " + str(mid) + "\n")  # create submission
     # else:
     #     print("\nSubmission already exists with uid: " + str(uid) + ", mid: " + str(mid) + "\n")
-    return render(response, "main/submissions.html", {'submissions': submissions, 'new_mail': new_mail})
+    return market_page(response, mid)
 
 # def update_profilepic(response):
 #     new_mail = new_messages(response.user.username)
@@ -483,6 +483,8 @@ def delete_market(response, id):
     if response.method == 'POST':
         if response.user.username == market.objects.get(id=id).market_manager:
 
+            temp_manager = market.objects.get(id=id).market_manager
+
             cur_market = market.objects.get(id=id)
             cur_market.delete()
             for sub in submission.objects.filter(market_id=id):
@@ -490,6 +492,17 @@ def delete_market(response, id):
 
             for event in myEvent.objects.filter(market_id=id):
                 event.delete()
+
+            cnt = 0
+            for m in market.objects.all():
+                if m.market_manager == temp_manager:
+                    cnt += 1
+                    break
+            if cnt == 0:
+                user = UserProfileInfo.objects.get(user=User.objects.get(username=temp_manager))
+                managerGroup = Group.objects.get(name="eventManager")
+                User.objects.get(username=temp_manager).groups.remove(managerGroup)
+
     return search_page(response)
 
 
