@@ -593,6 +593,14 @@ def remove_manager(response, market_id):
         cur_market.market_manager = ''
         cur_market.save()
 
+        subject = "Change to your user privileges"
+        body = 'You have been removed as the manager of ' + cur_market.name + ' which located in ' + cur_market.city + '.'
+
+        try:
+            Message.objects.create(sender=response.user, recipient=User.objects.get(username=temp_manager), subject=subject, body=body)
+        except:
+            pass
+
         cnt = 0
         for m in market.objects.all():
             if m.market_manager == temp_manager:
