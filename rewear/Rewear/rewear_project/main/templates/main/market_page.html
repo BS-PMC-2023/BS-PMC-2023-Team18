@@ -46,8 +46,8 @@ table.admin {
 {% if user.is_authenticated and not user.is_superuser and market.market_manager == "" %}
 <br /><form method="post" action='/submit_request/{{request.user.id}}/{{market.id}}/'>
 {% csrf_token %}
-To submit a request to become event manager click
-<input type="submit" value="HERE" class="btn btn-info btn-sm">
+<!--To submit a request to become event manager click-->
+	<center><input type="submit" value="REQUEST TO BECOME EVENT MANAGER" class="btn btn-info btn-sm"></center>
 </form>
 {% endif %}
 
@@ -63,22 +63,17 @@ To submit a request to become event manager click
 
 	{% if user.is_authenticated and not sign_event %}
 	<td>
-		&nbsp; &nbsp; &nbsp; &nbsp;
-	</td>
-	<td>
 		<form method="post" action='/sign_event/{{request.user.id}}/{{market.id}}/'>
 			{% csrf_token %}
 			<input type="submit" value="Register to event" class="btn btn-primary">
 		</form>
 	</tr></td>
-	{% if market.market_manager != user.username %}<br />{% endif %}
 
 </table></center>
 
 
 	{% else %}
 	</table>
-	<br />
 	<h4>Thank you for signing to our event.</h4>
 	We will see you there!
 	</center>
