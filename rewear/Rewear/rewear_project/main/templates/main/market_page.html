@@ -205,7 +205,7 @@ To submit a request to become event manager click
 	<center><h3>Leave a Feedback:</h3>
 	<form method="post" action='/feedback/{{market.name}}/' class="form-group">
 		{% csrf_token %}
-		<textarea name="message" rows="8" cols="50" const placeholder="Preservation and improvement: Click to edit"></textarea>
+		<textarea name="message" rows="8" cols="50" maxlength="1000" const placeholder="Preservation and improvement: Click to edit"></textarea>
 		<br><input type="submit" class="btn btn-success">
 	</form></center>
 {% elif market.market_manager != '' %}
