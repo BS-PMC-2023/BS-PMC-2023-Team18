@@ -29,6 +29,11 @@
     }
 }
 
+.tr-effect {
+    opacity: 0; /* Set initial opacity to 0 */
+    animation: move-fade-in 1s ease-in-out forwards; /* Add move-fade-in animation */
+}
+
 .table-row {
     opacity: 0; /* Set initial opacity to 0 */
     transform: translateY(20px); /* Set initial translation */
@@ -109,7 +114,7 @@ td {
 			</center></td>
 		</tr>
 
-		<tr>
+		<tr class="tr-effect">
 				<td>
 					<center><b>Recycle:</b></center>
 						<ul>
