@@ -480,28 +480,31 @@ def delete_market(response, id):
     except:
         pass
 
-    if response.method == 'POST':
-        if response.user.username == market.objects.get(id=id).market_manager:
+    try:
+        if response.method == 'POST':
+            if response.user.username == market.objects.get(id=id).market_manager:
 
-            temp_manager = market.objects.get(id=id).market_manager
+                temp_manager = market.objects.get(id=id).market_manager
 
-            cur_market = market.objects.get(id=id)
-            cur_market.delete()
-            for sub in submission.objects.filter(market_id=id):
-                sub.delete()
+                cur_market = market.objects.get(id=id)
+                cur_market.delete()
+                for sub in submission.objects.filter(market_id=id):
+                    sub.delete()
 
-            for event in myEvent.objects.filter(market_id=id):
-                event.delete()
+                for event in myEvent.objects.filter(market_id=id):
+                    event.delete()
 
-            cnt = 0
-            for m in market.objects.all():
-                if m.market_manager == temp_manager:
-                    cnt += 1
-                    break
-            if cnt == 0:
-                user = UserProfileInfo.objects.get(user=User.objects.get(username=temp_manager))
-                managerGroup = Group.objects.get(name="eventManager")
-                User.objects.get(username=temp_manager).groups.remove(managerGroup)
+                cnt = 0
+                for m in market.objects.all():
+                    if m.market_manager == temp_manager:
+                        cnt += 1
+                        break
+                if cnt == 0:
+                    user = UserProfileInfo.objects.get(user=User.objects.get(username=temp_manager))
+                    managerGroup = Group.objects.get(name="eventManager")
+                    User.objects.get(username=temp_manager).groups.remove(managerGroup)
+    except:
+        pass
 
     return search_page(response)
 
