@@ -308,7 +308,6 @@ class Test(TestCase):
         self.user = self.getUser()
 
         market = models.market.objects.create(id=1, name='test market', city='test city', address='test address', market_manager=self.user.username)
-
         event = models.myEvent.objects.create(user_id=self.user.id, market_id=market.id)
 
         self.method = 'POST'
