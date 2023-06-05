@@ -27,6 +27,31 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .mail_icon {
+    	transition: transform 0.2s ease;
+    }
+    .mail_icon:hover {
+    	transform: scale(1.2);
+    }
+    .animation {
+	  animation-name: bounce;
+	  animation-duration: 1s;
+	  animation-timing-function: ease-in-out;
+	  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 </style>
 
 <!doctype html>
@@ -102,11 +127,12 @@
 				<span style="float:right;">
 					{% if new_mail %}
 						<a href="/inbox" style="text-decoration:none">
-							<img src='{% static "media/new_mail.png" %}' alt="inbox" height=40px width=40px>&nbsp;
+							<img src='{% static "media/new_mail.png" %}' alt="inbox" height=40px width=40px class="animation">&nbsp;
 						</a>
 					{% else %}
+
 						<a href="/inbox" style="text-decoration:none">
-							<img src='{% static "media/mail_icon.png" %}' alt="inbox" height=40px width=40px>&nbsp;
+							<img src='{% static "media/mail_icon.png" %}' alt="inbox" height=40px width=40px class="mail_icon">&nbsp;
 						</a>
 					{% endif %}
 				</span>
