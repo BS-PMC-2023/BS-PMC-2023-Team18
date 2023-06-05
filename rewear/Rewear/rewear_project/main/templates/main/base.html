@@ -12,11 +12,32 @@
         top: 50%;
         left: 75%;
         transition: transform 0.2s ease;
+        opacity: 1;
+        transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .header-photo-wrapper:hover {
         top: 50%;
         left: 75%;
         transform: scale(1.2);
+        opacity: 0.8;
+    }
+    .header-photo-wrapper:hover::after {
+        content: "Logout";
+        position: absolute;
+        top: 105%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 1;
+    }
+    .header-photo-wrapper::after {
+        /* ... Your existing styles ... */
+        content: "Logout";
+        position: absolute;
+        top: 105%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
     }
     .header-name {
         text-align: center;
@@ -76,14 +97,6 @@
 		<div class="row justify-content-center">
 			<div class="col-12">
 					<header class="main-header">
-
-<!--						<h1 class="header-name header-name-large" style="text-align: center; position: relative;">Rewear-->
-<!--							{% if user.is_authenticated %}-->
-<!--							<span class="header-photo-wrapper">-->
-<!--								<a href="/logout"><img src="{% static 'media/logout.png' %}" alt="logout" class="header-photo" width="50" height="50"></a>-->
-<!--							</span>-->
-<!--							{% endif %}-->
-<!--						</h1>-->
 
 						<h1 id="header-title" class="header-name header-name-large" style="text-align: center; position: relative;">Rewear
 							{% if user.is_authenticated %}
