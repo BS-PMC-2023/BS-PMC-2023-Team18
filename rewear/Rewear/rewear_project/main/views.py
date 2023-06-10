@@ -538,15 +538,13 @@ def post_to_facebook(request):
         access_token = 'EAAb6g8eihJsBAFMZAjXwFy7EEdVqrpEdlGXZAmGZALazYe1hIDlY46tMgwcwUY77OZAZBIKfKDaANl6wWyQZCsOHwGHoiSLLMkEThB4BNKYrXjMqZBYOzbT9ZAbr3UDjHJLDneziYPJOdNn1oaDSQ2FXSnVfStLZAhcevV5zQ6QqQZBrkwmT1eTV9001GHq7CCWp051MPUMZBoHO6VOHZAjiZBr2LMxVnuvOhhO0ZD'
         graph = facebook.GraphAPI(access_token=access_token)
 
-        # try:
-        # Make the API call to post on Facebook
-        graph.put_object(parent_object='me', connection_name='feed', message='Hello, world')
-        # graph.put_wall_post(message=message)
-        success_message = "Post successfully posted on Facebook."
-        print(success_message)
-        # except facebook.GraphAPIError as e:
-        #     print("not success")
-        #     error_message = f"Failed to post on Facebook: {str(e)}"
+        try:
+            # Make the API call to post on Facebook
+            graph.put_object(parent_object='me', connection_name='feed', message='Hello, world')
+            graph.put_wall_post(message=message)
+            success_message = "Post successfully posted on Facebook."
+        except facebook.GraphAPIError as e:
+            error_message = f"Failed to post on Facebook: {str(e)}"
 
     return home(request)
 
