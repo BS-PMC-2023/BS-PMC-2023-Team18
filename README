@@ -1,26 +1,49 @@
 Cloth Sharing Website
 This is a Django web app for a cloth sharing website.
-Users can create accounts, list their clothes, and borrow clothes from other users.
+Users can create accounts, list their clothes in the local market and even become a market manager and run there own markets.
 
 Installation
-Clone the repository: git clone https://github.com/BS-PMC-2023/BS-PMC-2023-Team18
-Create a virtual environment: python3 -m venv venv
-Activate the virtual environment: source venv/bin/activate
-Install dependencies: pip install -r requirements.txt
-Create a local database: python manage.py migrate
-Create a superuser: python manage.py createsuperuser
-Run the server: python manage.py runserver
+1. Clone the repository: git clone https://github.com/BS-PMC-2023/BS-PMC-2023-Team18
+2. cd BS-PMC-2023-Team18
+3. Create a virtual environment: python3 -m venv venv
+   Activate the virtual environment: source venv/bin/activate
+4. Install dependencies: pip install -r requirements.txt
+5. Create a local database: python manage.py migrate
+6. Create a superuser: python manage.py createsuperuser
+7. Run the server: python manage.py runserver
 Usage
-Navigate to http://localhost:8000/ in your web browser.
-Sign up for an account or log in with an existing account.
-List clothes that you are willing to share or browse clothes that other users have listed.
-Contributions are welcome! Please submit a pull request with your changes.
+1. Navigate to http://localhost:8000/ in your web browser.
+2. Sign up for an account or log in with an existing account.
+3. sign to event, check the markets around you and start list clothes that you are willing to share.
 
-run and use metrix Covrage 
-coverage run manage.py test
-coverage report
-coverage html
+Run the tests with coverage: coverage run manage.py test
+Generate a coverage report: coverage report
+Generate an HTML coverage report: coverage html
 
-pip install -r requirements.txt
-
-
+Requirements
+The following packages are required for this project:
+makefile
+Copy code
+asgiref==3.6.0
+certifi==2023.5.7
+charset-normalizer==3.1.0
+colorama==0.4.6
+colored==1.4.4
+coverage==7.2.5
+Django==3.2.18
+django-crispy-forms==1.14.0
+django-filter==23.1
+facebook-sdk==3.1.0
+googlemaps==4.10.0
+idna==3.4
+mando==0.7.1
+pi==0.1.2
+Pillow==9.5.0
+pytz==2023.3
+radon==6.0.1
+requests==2.30.0
+six==1.16.0
+sqlparse==0.4.3
+typing_extensions==4.5.0
+urllib3==1.26.4
+You can install these requirements by running: pip install -r requirements.txt
