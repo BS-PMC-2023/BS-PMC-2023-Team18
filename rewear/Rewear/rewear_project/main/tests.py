@@ -164,8 +164,14 @@ class Test(TestCase):
         m = models.market.objects.create(id=1)
         self.client.get('/submit_request/' + str(self.user.id) + '/1/')
 
+        # check that a message has been created
+        self.assertNotEqual(len(models.Message.objects.filter(recipient=self.user)), 1)
+
         response = views.delete_sub(self, m.id, self.user.username)
         self.assertEqual(response.status_code, 200)
+
+        # check that a message has been created
+        self.assertEqual(len(models.Message.objects.filter(recipient=self.user)), 1)
 
     def test_sign_event(self):
         self.user = self.getUser()
@@ -302,6 +308,7 @@ class Test(TestCase):
         self.user = self.getUser()
 
         market = models.market.objects.create(id=1, name='test market', city='test city', address='test address', market_manager=self.user.username)
+        event = models.myEvent.objects.create(user_id=self.user.id, market_id=market.id)
 
         self.method = 'POST'
         self.POST = {}
@@ -309,9 +316,11 @@ class Test(TestCase):
         
         m = models.market.objects.filter(id=1)
         self.assertEqual(len(m), 1)
+        self.assertNotEqual(len(models.Message.objects.filter(recipient=self.user)), 1)
         views.delete_market(self, market.id)
         m = models.market.objects.filter(id=1)
         self.assertEqual(len(m), 0)
+        self.assertEqual(len(models.Message.objects.filter(recipient=self.user)), 1)
 
     def test_edit_profile(self):
         self.user = self.getUser()
